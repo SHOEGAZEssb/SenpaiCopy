@@ -1,0 +1,16 @@
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\bin\x64\Release\SebiCopyWPF.exe.config
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\bin\x64\Release\SebiCopyWPF.exe
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\bin\x64\Release\SebiCopyWPF.pdb
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\MainWindow.baml
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\MainWindow.g.cs
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\App.g.cs
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF_MarkupCompile.cache
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF.g.resources
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF.Properties.Resources.resources
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF.csproj.GenerateResource.Cache
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF.exe
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF.pdb
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\bin\x64\Release\WpfAnimatedGif.dll
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\bin\x64\Release\WpfAnimatedGif.pdb
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\bin\x64\Release\WpfAnimatedGif.xml
+F:\Google Drive\Projekte\Progging\SebiCopyWPF\SebiCopyWPF\obj\x64\Release\SebiCopyWPF.csprojResolveAssemblyReference.cache
