@@ -130,6 +130,12 @@ namespace SebiCopyWPF
       UpdatePictureBox();
     }
 
+    private void btnPrevious_Click(object sender, RoutedEventArgs e)
+    {
+      _currentImageIndex--;
+      UpdatePictureBox();
+    }
+
     /// <summary>
     /// Opens a dialog to select a subfolder and creates checkBoxes for each path.
     /// </summary>
