@@ -68,12 +68,8 @@ namespace SebiCopyWPF
       {
         try
         {
-
           _currentImage = LoadBitmapImage(_pathList[_currentImageIndex]);
-          if (_currentImage.UriSource.LocalPath.EndsWith(".gif"))
-            ImageBehavior.SetAnimatedSource(pictureBoxCurrentImage, _currentImage);
-          else
-            pictureBoxCurrentImage.Source = _currentImage;
+          ImageBehavior.SetAnimatedSource(pictureBoxCurrentImage, _currentImage);
           lblCurrentImageFile.Content = _pathList[_currentImageIndex];
         }
         catch (OutOfMemoryException)
@@ -184,13 +180,13 @@ namespace SebiCopyWPF
     /// <returns>Loaded image file.</returns>
     private static BitmapImage LoadBitmapImage(string fileName)
     {
-        var bitmapImage = new BitmapImage();
-        bitmapImage.BeginInit();
-        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-        bitmapImage.UriSource = new Uri(fileName);
-        bitmapImage.EndInit();
-        bitmapImage.Freeze();
-        return bitmapImage;
+      var bitmapImage = new BitmapImage();
+      bitmapImage.BeginInit();
+      bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+      bitmapImage.UriSource = new Uri(fileName);
+      bitmapImage.EndInit();
+      bitmapImage.Freeze();
+      return bitmapImage;
     }
   }
 }
