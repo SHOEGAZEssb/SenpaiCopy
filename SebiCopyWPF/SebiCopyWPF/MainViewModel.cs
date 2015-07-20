@@ -248,14 +248,19 @@ namespace SebiCopyWPF
       }
 
       if (DeleteImage)
+      {
         File.Delete(_pathList[_currentImageIndex]);
+        _pathList.RemoveAt(_currentImageIndex);
+      }
+      else
+        _currentImageIndex++;
 
       foreach (PathCheckBox c in CheckBoxList)
       {
         c.IsChecked = false;
       }
 
-      _currentImageIndex++;
+      
       UpdatePictureBox();
     }
 
