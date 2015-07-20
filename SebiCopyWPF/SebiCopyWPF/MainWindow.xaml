@@ -30,7 +30,7 @@
         <Label Content="Subfolder Folder:" Grid.Row="2"/>
         <Label x:Name="lblImageFolderPath" Content="None yet lel." Grid.Column="1"/>
         <Label x:Name="lblSubfolderFolderPath" Content="None yet lel." Grid.Column="1" Grid.Row="2"/>
-        <Button x:Name="btnSelectImageFolder" Grid.Column="2" Content="Select..." Click="btnSelectImageFolder_Click"/>
+        <Button x:Name="btnSelectImageFolder" Grid.Column="2" Content="Select..." Click="btnSelectImageFolder_Click" Height="25" VerticalAlignment="Top"/>
         <Button x:Name="btnSelectSubfolderFolder" Grid.Column="2" Grid.Row="2" Content="Select..." Click="btnSelectSubfolderFolder_Click"/>
         <CheckBox x:Name="checkBoxSubSubDirectories" Grid.Row="3" Grid.Column="1" Content="Include Sub-sub Directories" VerticalAlignment="Center" HorizontalAlignment="Center"/>
       </Grid>

@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfAnimatedGif;
 
 namespace SebiCopyWPF
@@ -29,11 +22,17 @@ namespace SebiCopyWPF
     private int _currentImageIndex = 0;
     private BitmapImage _currentImage;
 
+    /// <summary>
+    /// Ctor.
+    /// </summary>
     public MainWindow()
     {
       InitializeComponent();
     }
 
+    /// <summary>
+    /// Lets the user select a folder with images and loads them.
+    /// </summary>
     private void btnSelectImageFolder_Click(object sender, RoutedEventArgs e)
     {
       FolderBrowserDialog dlg = new FolderBrowserDialog();
@@ -60,15 +59,18 @@ namespace SebiCopyWPF
       UpdatePictureBox();
     }
 
+    /// <summary>
+    /// Updates the currently shown image.
+    /// </summary>
     private void UpdatePictureBox()
     {
       if (_pathList.Count > _currentImageIndex)
       {
         try
         {
-          
-          _currentImage = new BitmapImage(new Uri(_pathList[_currentImageIndex]));
-          if (_currentImage.UriSource.AbsolutePath.EndsWith(".gif"))
+
+          _currentImage = LoadBitmapImage(_pathList[_currentImageIndex]);
+          if (_currentImage.UriSource.LocalPath.EndsWith(".gif"))
             ImageBehavior.SetAnimatedSource(pictureBoxCurrentImage, _currentImage);
           else
             pictureBoxCurrentImage.Source = _currentImage;
@@ -93,10 +95,11 @@ namespace SebiCopyWPF
       }
     }
 
+    /// <summary>
+    /// Copies the current image to the selected folders and removes it.
+    /// </summary>
     private void btnCopy_Click(object sender, RoutedEventArgs e)
     {
-      _currentImage = null;
-
       List<string> dirsToCopyTo = new List<string>();
 
       foreach (object c in unfiformGridSubfolders.Children)
@@ -111,7 +114,6 @@ namespace SebiCopyWPF
         File.Copy(_pathList[_currentImageIndex], dir + @"\" + System.IO.Path.GetFileName(_pathList[_currentImageIndex]), true);
       }
 
-      _currentImage = null;
       File.Delete(_pathList[_currentImageIndex]);
 
       foreach (object c in unfiformGridSubfolders.Children)
@@ -123,13 +125,18 @@ namespace SebiCopyWPF
       UpdatePictureBox();
     }
 
+    /// <summary>
+    /// Skips the current image doing nothing with it.
+    /// </summary>
     private void btnIgnore_Click(object sender, RoutedEventArgs e)
     {
-      _currentImage = null;
       _currentImageIndex++;
       UpdatePictureBox();
     }
 
+    /// <summary>
+    /// Opens a dialog to select a subfolder and creates checkBoxes for each path.
+    /// </summary>
     private void btnSelectSubfolderFolder_Click(object sender, RoutedEventArgs e)
     {
       FolderBrowserDialog dlg = new FolderBrowserDialog();
@@ -156,15 +163,34 @@ namespace SebiCopyWPF
           chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
           chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
           chk.Margin = new Thickness(10, 0, 0, 0);
-          
           unfiformGridSubfolders.Children.Add(chk);
         }
       }
     }
 
+    /// <summary>
+    /// Opens the current image in the standard image viewer.
+    /// </summary>
     private void pictureBoxCurrentImage_MouseDown(object sender, MouseButtonEventArgs e)
     {
       Process.Start(lblCurrentImageFile.Content.ToString());
+    }
+
+    /// <summary>
+    /// Loads an image file from the given <paramref name="fileName"/>.
+    /// This does still allow operations done to the file.
+    /// </summary>
+    /// <param name="fileName">Image file to load.</param>
+    /// <returns>Loaded image file.</returns>
+    private static BitmapImage LoadBitmapImage(string fileName)
+    {
+        var bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        bitmapImage.UriSource = new Uri(fileName);
+        bitmapImage.EndInit();
+        bitmapImage.Freeze();
+        return bitmapImage;
     }
   }
 }
