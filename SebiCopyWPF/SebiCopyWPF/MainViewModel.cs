@@ -152,8 +152,8 @@ namespace SebiCopyWPF
         //get all image files
         foreach (string file in files)
         {
-          string test = file.Substring(file.Length - 4, 4);
-          if (file.Substring(file.Length - 4, 4) == ".png" || file.Substring(file.Length - 4, 4) == ".bmp" || file.Substring(file.Length - 4, 4) == ".jpg" || file.Substring(file.Length - 5, 5) == ".jpeg" || file.Substring(file.Length - 4, 4) == ".gif")
+          string lowerFile = file.ToLower();
+          if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
           {
             _pathList.Add(file);
           }
