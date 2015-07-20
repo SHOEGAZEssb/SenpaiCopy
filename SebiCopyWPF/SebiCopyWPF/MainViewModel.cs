@@ -28,6 +28,8 @@ namespace SebiCopyWPF
 
     private bool _deleteImage;
 
+    private PathCheckBox _currentRightClickedCheckBox;
+
     /// <summary>
     /// Gets/sets the currently shown image.
     /// </summary>
@@ -190,6 +192,7 @@ namespace SebiCopyWPF
           chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
           chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
           chk.Margin = new Thickness(10, 0, 0, 0);
+          chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
           CheckBoxList.Add(chk);
         }
       }
@@ -283,6 +286,14 @@ namespace SebiCopyWPF
     }
 
     /// <summary>
+    /// Removes the selected checkBox.
+    /// </summary>
+    public void RemoveCheckBox()
+    {
+      CheckBoxList.Remove(_currentRightClickedCheckBox);
+    }
+
+    /// <summary>
     /// Loads an image file from the given <paramref name="fileName"/>.
     /// This does still allow operations done to the file.
     /// </summary>
@@ -297,6 +308,14 @@ namespace SebiCopyWPF
       bitmapImage.EndInit();
       bitmapImage.Freeze();
       return bitmapImage;
+    }
+
+    /// <summary>
+    /// Sets the current right clicked checkBox.
+    /// </summary>
+    private void CheckBox_RightMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      _currentRightClickedCheckBox = sender as PathCheckBox;
     }
   }
 }

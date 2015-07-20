@@ -15,5 +15,10 @@ namespace SebiCopyWPF
       InitializeComponent();
       DataContext = new MainViewModel();
     }
+
+    private void wrapPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+      (DataContext as MainViewModel).RemoveCheckBox();
+    }
   }
 }
