@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace SebiCopyWPF
+namespace SenpaiCopy
 {
   /// <summary>
   /// Interaction logic for MainWindow.xaml

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace SebiCopyWPF
+namespace SenpaiCopy
 {
   class PathCheckBox : CheckBox
   {

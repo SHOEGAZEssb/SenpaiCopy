@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 
-namespace SebiCopyWPF
+namespace SenpaiCopy
 {
   class AppBootstrapper : BootstrapperBase
   {
