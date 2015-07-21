@@ -191,6 +191,7 @@ namespace SebiCopyWPF
           chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
           chk.Margin = new Thickness(10, 0, 0, 0);
           chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
+          chk.ToolTip = folder;               
           CheckBoxList.Add(chk);
         }
       }
