@@ -13,7 +13,6 @@ namespace SebiCopyWPF
     public MainView()
     {
       InitializeComponent();
-      DataContext = new MainViewModel();
     }
   }
 }

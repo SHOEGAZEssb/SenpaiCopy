@@ -30,6 +30,8 @@ namespace SebiCopyWPF
 
     private PathCheckBox _currentRightClickedCheckBox;
 
+    private ObservableCollection<string> _ignoredPaths;
+
     /// <summary>
     /// Gets/sets the currently shown image.
     /// </summary>
@@ -94,11 +96,20 @@ namespace SebiCopyWPF
     public bool DeleteImage
     {
       get { return _deleteImage; }
-      set 
-      { 
+      set
+      {
         _deleteImage = value;
         NotifyOfPropertyChange(() => CanCopy);
       }
+    }
+
+    /// <summary>
+    /// Gets/sets the ignored paths.
+    /// </summary>
+    public ObservableCollection<string> IgnoredPaths
+    {
+      get { return _ignoredPaths; }
+      private set { _ignoredPaths = value; }
     }
 
     /// <summary>
@@ -134,6 +145,24 @@ namespace SebiCopyWPF
       _checkBoxList = new ObservableCollection<PathCheckBox>();
       IncludeSubDirectories = true;
       DeleteImage = true;
+      LoadIgnoredPaths();
+    }
+
+    private void LoadIgnoredPaths()
+    {
+      IgnoredPaths = new ObservableCollection<string>();
+
+      if (File.Exists("IgnoredPaths.txt"))
+      {
+        string[] paths = File.ReadAllLines("IgnoredPaths.txt");
+
+        foreach (string path in paths)
+        {
+          IgnoredPaths.Add(path);
+        }
+      }
+      else
+        File.Create("IgnoredPaths.txt");
     }
 
     /// <summary>
@@ -184,15 +213,18 @@ namespace SebiCopyWPF
         List<PathCheckBox> _checkBoxes = new List<PathCheckBox>();
         foreach (string folder in subfolders)
         {
-          PathCheckBox chk = new PathCheckBox();
-          chk.Content = new DirectoryInfo(folder).Name;
-          chk.FullPath = folder;
-          chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-          chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-          chk.Margin = new Thickness(10, 0, 0, 0);
-          chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
-          chk.ToolTip = folder;               
-          CheckBoxList.Add(chk);
+          if (!IgnoredPaths.Contains(folder))
+          {
+            PathCheckBox chk = new PathCheckBox();
+            chk.Content = new DirectoryInfo(folder).Name;
+            chk.FullPath = folder;
+            chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            chk.Margin = new Thickness(10, 0, 0, 0);
+            chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
+            chk.ToolTip = folder;
+            CheckBoxList.Add(chk);
+          }
         }
       }
     }
@@ -258,7 +290,7 @@ namespace SebiCopyWPF
       {
         c.IsChecked = false;
       }
-      
+
       UpdatePictureBox();
     }
 
@@ -294,6 +326,16 @@ namespace SebiCopyWPF
     public void RemoveCheckBox()
     {
       CheckBoxList.Remove(_currentRightClickedCheckBox);
+    }
+
+    /// <summary>
+    /// Adds the right clicked checkBox path to the <see cref="IgnorePaths"/>
+    /// </summary>
+    public void IgnorePath()
+    {
+      File.AppendAllText("IgnoredPaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
+      IgnoredPaths.Add(_currentRightClickedCheckBox.FullPath);
+      RemoveCheckBox();
     }
 
     /// <summary>
