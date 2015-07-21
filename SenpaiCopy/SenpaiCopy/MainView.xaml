@@ -64,13 +64,19 @@
               <WrapPanel.ContextMenu>
                 <ContextMenu>
                   <MenuItem Header="Remove CheckBox">
+                    <MenuItem.Icon>
+                      <Image Source="Resources/deletePath.png"/>
+                    </MenuItem.Icon>
                     <i:Interaction.Triggers>
                       <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="RemoveCheckBox"/>
                       </i:EventTrigger>
                     </i:Interaction.Triggers>
                   </MenuItem>
-                  <MenuItem Header="Add path to ignore list.">
+                  <MenuItem Header="Add path to ignore list">
+                    <MenuItem.Icon>
+                      <Image Source="Resources/addIgnore.png"/>
+                    </MenuItem.Icon>
                     <i:Interaction.Triggers>
                       <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="IgnorePath"/>
