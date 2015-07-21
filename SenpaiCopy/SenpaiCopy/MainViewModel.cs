@@ -218,22 +218,31 @@ namespace SenpaiCopy
         List<PathCheckBox> _checkBoxes = new List<PathCheckBox>();
         foreach (string folder in subfolders)
         {
-          if (!IgnoredPaths.Contains(folder))
-          {
-            PathCheckBox chk = new PathCheckBox();
-            chk.Content = new DirectoryInfo(folder).Name;
-            chk.FullPath = folder;
-            chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            chk.Margin = new Thickness(10, 0, 0, 0);
-            chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
-            chk.ToolTip = folder;
-            CheckBoxList.Add(chk);
-          }
+          AddCheckBox(folder);
         }
 
         SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath = dlg.SelectedPath;
         SenpaiCopy.Properties.Settings.Default.Save();
+      }
+    }
+
+    /// <summary>
+    /// Adds a new CheckBox with the given <paramref name="folder"/> to the list.
+    /// </summary>
+    /// <param name="folder">Folder to add.</param>
+    private void AddCheckBox(string folder)
+    {
+      if (!IgnoredPaths.Contains(folder))
+      {
+        PathCheckBox chk = new PathCheckBox();
+        chk.Content = new DirectoryInfo(folder).Name;
+        chk.FullPath = folder;
+        chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+        chk.Margin = new Thickness(10, 0, 0, 0);
+        chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
+        chk.ToolTip = folder;
+        CheckBoxList.Add(chk);
       }
     }
 
@@ -344,6 +353,22 @@ namespace SenpaiCopy
       File.AppendAllText("IgnoredPaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
       IgnoredPaths.Add(_currentRightClickedCheckBox.FullPath);
       RemoveCheckBox();
+    }
+
+    /// <summary>
+    /// Shows a dialog to select a folder to add to the list.
+    /// </summary>
+    public void AddFolder()
+    {
+      FolderBrowserDialog dlg = new FolderBrowserDialog();
+      dlg.SelectedPath = _currentRightClickedCheckBox.FullPath;
+      if(dlg.ShowDialog() == DialogResult.OK)
+      {
+        if (!CheckBoxList.Any(i => i.FullPath == dlg.SelectedPath))
+          AddCheckBox(dlg.SelectedPath);
+        else
+          System.Windows.MessageBox.Show("This folder has already been added!")
+      }
     }
 
     /// <summary>

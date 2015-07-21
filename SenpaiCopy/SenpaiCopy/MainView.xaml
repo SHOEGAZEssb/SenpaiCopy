@@ -83,6 +83,16 @@
                       </i:EventTrigger>
                     </i:Interaction.Triggers>
                   </MenuItem>
+                  <MenuItem Header="Add new folder">
+                    <MenuItem.Icon>
+                      <Image Source="Resources/addFolder.png"/>
+                    </MenuItem.Icon>
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="AddFolder"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </MenuItem>
                 </ContextMenu>
               </WrapPanel.ContextMenu>
             </WrapPanel>
