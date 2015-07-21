@@ -63,7 +63,7 @@
             <WrapPanel>
               <WrapPanel.ContextMenu>
                 <ContextMenu>
-                  <MenuItem Header="Remove from list">
+                  <MenuItem Header="Remove CheckBox">
                     <i:Interaction.Triggers>
                       <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="RemoveCheckBox"/>

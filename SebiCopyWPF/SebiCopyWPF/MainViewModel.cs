@@ -154,9 +154,7 @@ namespace SebiCopyWPF
         {
           string lowerFile = file.ToLower();
           if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
-          {
             _pathList.Add(file);
-          }
         }
       }
 
@@ -259,7 +257,6 @@ namespace SebiCopyWPF
       {
         c.IsChecked = false;
       }
-
       
       UpdatePictureBox();
     }
