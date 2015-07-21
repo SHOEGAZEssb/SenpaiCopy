@@ -171,6 +171,7 @@ namespace SenpaiCopy
     public void SelectImageFolder()
     {
       FolderBrowserDialog dlg = new FolderBrowserDialog();
+      dlg.SelectedPath = SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath;
       if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
       {
         ImagePath = dlg.SelectedPath;
@@ -185,6 +186,9 @@ namespace SenpaiCopy
           if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
             _pathList.Add(file);
         }
+
+        SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
+        SenpaiCopy.Properties.Settings.Default.Save();
       }
 
       UpdatePictureBox();
@@ -196,6 +200,7 @@ namespace SenpaiCopy
     public void SelectFolderPath()
     {
       FolderBrowserDialog dlg = new FolderBrowserDialog();
+      dlg.SelectedPath = SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath;
       if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
       {
         CheckBoxList.Clear();
@@ -226,6 +231,9 @@ namespace SenpaiCopy
             CheckBoxList.Add(chk);
           }
         }
+
+        SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath = dlg.SelectedPath;
+        SenpaiCopy.Properties.Settings.Default.Save();
       }
     }
 

@@ -22,5 +22,29 @@ namespace SenpaiCopy.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastSelectedImagePath {
+            get {
+                return ((string)(this["LastSelectedImagePath"]));
+            }
+            set {
+                this["LastSelectedImagePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastSelectedFolderPath {
+            get {
+                return ((string)(this["LastSelectedFolderPath"]));
+            }
+            set {
+                this["LastSelectedFolderPath"] = value;
+            }
+        }
     }
 }
