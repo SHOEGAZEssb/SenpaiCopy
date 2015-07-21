@@ -367,7 +367,7 @@ namespace SenpaiCopy
         if (!CheckBoxList.Any(i => i.FullPath == dlg.SelectedPath))
           AddCheckBox(dlg.SelectedPath);
         else
-          System.Windows.MessageBox.Show("This folder has already been added!")
+          System.Windows.MessageBox.Show("This folder has already been added!");
       }
     }
 
