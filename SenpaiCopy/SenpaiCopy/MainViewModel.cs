@@ -17,7 +17,7 @@ namespace SenpaiCopy
   /// </summary>
   class MainViewModel : PropertyChangedBase
   {
-    private List<string> _pathList;
+    private ObservableCollection<FileInfo> _pathList;
     private ObservableCollection<PathCheckBox> _checkBoxList;
     private ObservableCollection<PathCheckBox> _filteredCheckBoxList;
     private int _currentImageIndex;
@@ -33,6 +33,14 @@ namespace SenpaiCopy
 
     private ObservableCollection<string> _ignoredPaths;
     private string _pathFilter;
+
+    private FileInfo _selectedImage;
+
+    public ObservableCollection<FileInfo> PathList
+    {
+      get { return _pathList; }
+      private set { _pathList = value; }
+    }
 
     /// <summary>
     /// Gets/sets the currently shown image.
@@ -141,6 +149,23 @@ namespace SenpaiCopy
     }
 
     /// <summary>
+    /// The currently selected image in the list.
+    /// </summary>
+    public FileInfo SelectedImage
+    {
+      get { return _selectedImage; }
+      set 
+      {
+        _selectedImage = value;
+        if (value != null)
+        {
+          _currentImageIndex = PathList.IndexOf(SelectedImage);
+          UpdatePictureBox();
+        }
+      }
+    }
+
+    /// <summary>
     /// Gets if the previous button is enabled.
     /// </summary>
     public bool CanPrevious
@@ -170,7 +195,7 @@ namespace SenpaiCopy
     public MainViewModel()
     {
       _pathFilter = "";
-      _pathList = new List<string>();
+      _pathList = new ObservableCollection<FileInfo>();
       FilteredCheckBoxList = new ObservableCollection<PathCheckBox>();
       CheckBoxList = new ObservableCollection<PathCheckBox>();
       CheckBoxList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CheckBoxList_CollectionChanged);   
@@ -218,7 +243,7 @@ namespace SenpaiCopy
         {
           string lowerFile = file.ToLower();
           if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
-            _pathList.Add(file);
+            _pathList.Add(new FileInfo(file));
         }
 
         SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
@@ -289,11 +314,11 @@ namespace SenpaiCopy
       {
         try
         {
-          CurrentImage = LoadBitmapImage(_pathList[_currentImageIndex]);
+          CurrentImage = LoadBitmapImage(_pathList[_currentImageIndex].FullName);
         }
         catch (OutOfMemoryException)
         {
-          System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + _pathList[_currentImageIndex] + " | Wir skippen das Bild einfach mal.");
+          System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + _pathList[_currentImageIndex].FullName + " | Wir skippen das Bild einfach mal.");
           if (CurrentImage != null) // TODO: check if still needed.
             CurrentImage = null;
 
@@ -326,12 +351,12 @@ namespace SenpaiCopy
 
       foreach (string dir in dirsToCopyTo)
       {
-        File.Copy(_pathList[_currentImageIndex], dir + @"\" + System.IO.Path.GetFileName(_pathList[_currentImageIndex]), true);
+        _pathList[_currentImageIndex].CopyTo(dir + @"\" + _pathList[_currentImageIndex].Name, true);
       }
 
       if (DeleteImage)
       {
-        File.Delete(_pathList[_currentImageIndex]);
+        _pathList[_currentImageIndex].Delete();
         _pathList.RemoveAt(_currentImageIndex);
       }
       else

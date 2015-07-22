@@ -8,6 +8,7 @@
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="3*"/>
+      <ColumnDefinition Width="5"/>
       <ColumnDefinition Width="2*"/>
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
@@ -49,6 +50,9 @@
         <CheckBox Grid.Row="3" Grid.Column="1" Content="Include subdirectories" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IncludeSubDirectories}"/>
       </Grid>
     </GroupBox>
+    
+    <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    
     <Image gif:ImageBehavior.AnimatedSource="{Binding CurrentImage}" Grid.Row="1" Grid.Column="0">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseDown">
@@ -57,7 +61,7 @@
       </i:Interaction.Triggers>
     </Image>
 
-    <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+    <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="*"/>
@@ -65,12 +69,15 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
 
       <Label Grid.Row="0" Content="Filter:"/>
       <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PathFilter, UpdateSourceTrigger=PropertyChanged}"/>
 
-      <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding FilteredCheckBoxList}" 
+      <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+      <ItemsControl  ItemsSource="{Binding FilteredCheckBoxList}" 
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -113,6 +120,10 @@
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
       </ItemsControl>
+      </ScrollViewer>
+
+      <Label Grid.Row="2" Content="Image List"/>
+      <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PathList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedImage}"/>
     </Grid>
 
     <GroupBox Header="Image Control" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
