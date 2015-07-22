@@ -167,7 +167,7 @@
           </i:Interaction.Triggers>
         </Button>
 
-        <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete image" IsChecked="{Binding DeleteImage}"/>
+        <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete image from source folder" IsChecked="{Binding DeleteImage}"/>
       </Grid>
     </GroupBox>
   </Grid>
