@@ -19,6 +19,7 @@ namespace SenpaiCopy
   {
     private List<string> _pathList;
     private ObservableCollection<PathCheckBox> _checkBoxList;
+    private ObservableCollection<PathCheckBox> _filteredCheckBoxList;
     private int _currentImageIndex;
     private ImageSource _currentImage;
     private bool _includeSubDirectories;
@@ -31,6 +32,7 @@ namespace SenpaiCopy
     private PathCheckBox _currentRightClickedCheckBox;
 
     private ObservableCollection<string> _ignoredPaths;
+    private string _pathFilter;
 
     /// <summary>
     /// Gets/sets the currently shown image.
@@ -53,6 +55,19 @@ namespace SenpaiCopy
     {
       get { return _checkBoxList; }
       private set { _checkBoxList = value; }
+    }
+
+    /// <summary>
+    /// Gets a list with the filtered PathCheckBoxes.
+    /// </summary>
+    public ObservableCollection<PathCheckBox> FilteredCheckBoxList
+    {
+      get { return _filteredCheckBoxList; }
+      private set 
+      {
+        _filteredCheckBoxList = value;
+        NotifyOfPropertyChange(() => FilteredCheckBoxList);
+      }
     }
 
     /// <summary>
@@ -113,6 +128,19 @@ namespace SenpaiCopy
     }
 
     /// <summary>
+    /// Gets/sets the string for filtering paths.
+    /// </summary>
+    public string PathFilter
+    {
+      get { return _pathFilter; }
+      set 
+      { 
+        _pathFilter = value;
+        GetPathFilterResults();
+      }
+    }
+
+    /// <summary>
     /// Gets if the previous button is enabled.
     /// </summary>
     public bool CanPrevious
@@ -141,13 +169,19 @@ namespace SenpaiCopy
     /// </summary>
     public MainViewModel()
     {
+      _pathFilter = "";
       _pathList = new List<string>();
-      _checkBoxList = new ObservableCollection<PathCheckBox>();
+      FilteredCheckBoxList = new ObservableCollection<PathCheckBox>();
+      CheckBoxList = new ObservableCollection<PathCheckBox>();
+      CheckBoxList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CheckBoxList_CollectionChanged);   
       IncludeSubDirectories = true;
       DeleteImage = true;
       LoadIgnoredPaths();
     }
 
+    /// <summary>
+    /// Loads the ignored paths from the text file.
+    /// </summary>
     private void LoadIgnoredPaths()
     {
       IgnoredPaths = new ObservableCollection<string>();
@@ -372,6 +406,31 @@ namespace SenpaiCopy
     }
 
     /// <summary>
+    /// Gets the filtered path results for the entered filter.
+    /// </summary>
+    private void GetPathFilterResults()
+    {
+      if (PathFilter != "")
+      {
+        List<PathCheckBox> tempFilteredList = CheckBoxList.Where(i => i.Content.ToString().Contains(PathFilter)).ToList<PathCheckBox>();
+
+        FilteredCheckBoxList.Clear();
+        foreach (PathCheckBox pchk in tempFilteredList)
+        {
+          FilteredCheckBoxList.Add(pchk);
+        }
+      }
+      else
+      {
+        FilteredCheckBoxList.Clear();
+        foreach (PathCheckBox pchk in CheckBoxList)
+        {
+          FilteredCheckBoxList.Add(pchk);
+        }
+      }
+    }
+
+    /// <summary>
     /// Loads an image file from the given <paramref name="fileName"/>.
     /// This does still allow operations done to the file.
     /// </summary>
@@ -394,6 +453,14 @@ namespace SenpaiCopy
     private void CheckBox_RightMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
       _currentRightClickedCheckBox = sender as PathCheckBox;
+    }
+
+    /// <summary>
+    /// Gets the filtered path results when the CheckBoxList is changed.
+    /// </summary>
+    private void CheckBoxList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+      GetPathFilterResults();
     }
   }
 }

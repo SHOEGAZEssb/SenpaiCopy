@@ -56,8 +56,22 @@
         </i:EventTrigger>
       </i:Interaction.Triggers>
     </Image>
-    <ScrollViewer Grid.Column="1" Grid.RowSpan="3" Margin="10,0,-10,0">
-      <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding CheckBoxList}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+    <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Label Grid.Row="0" Content="Filter:"/>
+      <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PathFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+      <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding FilteredCheckBoxList}" 
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
             <WrapPanel>
@@ -99,7 +113,8 @@
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
       </ItemsControl>
-    </ScrollViewer>
+    </Grid>
+
     <GroupBox Header="Image Control" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
       <Grid>
         <Grid.RowDefinitions>
@@ -118,7 +133,7 @@
 
         <Label Content="Current Image:"/>
         <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2"/>
-        
+
         <Button Content="Previous" Grid.Row="1">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
@@ -140,7 +155,7 @@
             </i:EventTrigger>
           </i:Interaction.Triggers>
         </Button>
-        
+
         <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete image" IsChecked="{Binding DeleteImage}"/>
       </Grid>
     </GroupBox>
