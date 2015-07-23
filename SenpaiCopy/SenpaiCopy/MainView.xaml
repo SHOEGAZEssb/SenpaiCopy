@@ -84,7 +84,17 @@
             <WrapPanel>
               <WrapPanel.ContextMenu>
                 <ContextMenu>
-                  <MenuItem Header="Remove CheckBox">
+                    <MenuItem Header="Show in explorer">
+                      <MenuItem.Icon>
+                        <Image Source="Resources/folder.png"/>
+                      </MenuItem.Icon>
+                      <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                          <cal:ActionMessage MethodName="ShowPathInExplorer"/>
+                        </i:EventTrigger>
+                      </i:Interaction.Triggers>
+                    </MenuItem>
+                    <MenuItem Header="Remove CheckBox">
                     <MenuItem.Icon>
                       <Image Source="Resources/deletePath.png"/>
                     </MenuItem.Icon>

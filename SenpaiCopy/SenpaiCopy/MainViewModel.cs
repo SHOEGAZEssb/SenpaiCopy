@@ -501,5 +501,13 @@ namespace SenpaiCopy
     {
       GetPathFilterResults();
     }
+
+    /// <summary>
+    /// Opens the right clicked folder in the explorer.
+    /// </summary>
+    public void ShowPathInExplorer()
+    {
+      Process.Start(_currentRightClickedCheckBox.FullPath);
+    }
   }
 }
