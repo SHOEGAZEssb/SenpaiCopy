@@ -28,6 +28,7 @@ namespace SenpaiCopy
     private string _folderPath;
 
     private bool _deleteImage;
+    private bool _resetCheckBoxes;
 
     private PathCheckBox _currentRightClickedCheckBox;
 
@@ -127,6 +128,15 @@ namespace SenpaiCopy
     }
 
     /// <summary>
+    /// Gets/sets wether the path checkBoxes should be reset after executing.
+    /// </summary>
+    public bool ResetCheckBoxes
+    {
+      get { return _resetCheckBoxes; }
+      set { _resetCheckBoxes = value; }
+    }
+
+    /// <summary>
     /// Gets/sets the ignored paths.
     /// </summary>
     public ObservableCollection<string> IgnoredPaths
@@ -201,6 +211,7 @@ namespace SenpaiCopy
       CheckBoxList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CheckBoxList_CollectionChanged);   
       IncludeSubDirectories = true;
       DeleteImage = true;
+      ResetCheckBoxes = true;
       LoadIgnoredPaths();
     }
 
@@ -362,9 +373,12 @@ namespace SenpaiCopy
       else
         _currentImageIndex++;
 
-      foreach (PathCheckBox c in CheckBoxList)
+      if (ResetCheckBoxes)
       {
-        c.IsChecked = false;
+        foreach (PathCheckBox c in CheckBoxList)
+        {
+          c.IsChecked = false;
+        }
       }
 
       UpdatePictureBox();

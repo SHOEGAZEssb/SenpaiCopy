@@ -140,10 +140,12 @@
           <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="5"/>
           <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5"/>
+          <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Label Content="Current Image:"/>
-        <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2"/>
+        <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2" Grid.ColumnSpan="3"/>
 
         <Button Content="Previous" Grid.Row="1">
           <i:Interaction.Triggers>
@@ -167,7 +169,9 @@
           </i:Interaction.Triggers>
         </Button>
 
-        <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete image from source folder" IsChecked="{Binding DeleteImage}"/>
+        <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete source image" IsChecked="{Binding DeleteImage}"/>
+        <CheckBox Grid.Row="3" Grid.Column="4" Content="Reset CheckBoxes" IsChecked="{Binding ResetCheckBoxes}"/>
+        
       </Grid>
     </GroupBox>
   </Grid>
