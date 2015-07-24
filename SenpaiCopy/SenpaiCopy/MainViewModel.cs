@@ -54,6 +54,7 @@ namespace SenpaiCopy
         _currentImage = value;
         NotifyOfPropertyChange(() => CurrentImage);
         NotifyOfPropertyChange(() => CanCopy);
+        NotifyOfPropertyChange(() => ExecuteButtonColor);
       }
     }
 
@@ -124,6 +125,7 @@ namespace SenpaiCopy
       {
         _deleteImage = value;
         NotifyOfPropertyChange(() => CanCopy);
+        NotifyOfPropertyChange(() => ExecuteButtonColor);
       }
     }
 
@@ -197,6 +199,23 @@ namespace SenpaiCopy
     public bool CanNext
     {
       get { return _pathList.Count - 1 > _currentImageIndex; }
+    }
+
+    /// <summary>
+    /// Gets the color for the execute button.
+    /// </summary>
+    public SolidColorBrush ExecuteButtonColor
+    {
+      get
+      {
+        int checkBoxCount = CheckBoxList.Count(i => (bool)i.IsChecked);
+        if(!CanCopy)
+          return new SolidColorBrush(Colors.Gray);
+        if (DeleteImage && checkBoxCount == 0)
+          return new SolidColorBrush(Colors.Red);
+        else
+          return new SolidColorBrush(Colors.Green);
+      }
     }
 
     /// <summary>
@@ -293,6 +312,7 @@ namespace SenpaiCopy
 
         SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath = dlg.SelectedPath;
         SenpaiCopy.Properties.Settings.Default.Save();
+        NotifyOfPropertyChange(() => ExecuteButtonColor);
       }
     }
 
@@ -311,9 +331,20 @@ namespace SenpaiCopy
         chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
         chk.Margin = new Thickness(10, 0, 0, 0);
         chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
+        chk.Checked += CheckBox_CheckedChanged;
+        chk.Unchecked += CheckBox_CheckedChanged;
         chk.ToolTip = folder;
         CheckBoxList.Add(chk);
       }
+    }
+
+    /// <summary>
+    /// Triggers when a CheckBox gets checked or unchecked.
+    /// Checks if the execute button needs a different color.
+    /// </summary>
+    private void CheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+    {
+      NotifyOfPropertyChange(() => ExecuteButtonColor);
     }
 
     /// <summary>

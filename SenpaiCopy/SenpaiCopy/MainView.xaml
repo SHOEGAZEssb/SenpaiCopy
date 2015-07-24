@@ -164,7 +164,7 @@
             </i:EventTrigger>
           </i:Interaction.Triggers>
         </Button>
-        <Button Content="Execute" Grid.Row="3">
+        <Button Content="Execute" Grid.Row="3" Foreground="{Binding ExecuteButtonColor}" IsEnabled="{Binding CanCopy}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
               <cal:ActionMessage MethodName="Execute"/>
