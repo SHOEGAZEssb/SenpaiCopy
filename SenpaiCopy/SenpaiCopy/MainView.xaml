@@ -132,8 +132,10 @@
       </ItemsControl>
       </ScrollViewer>
 
-      <Label Grid.Row="2" Content="Image List"/>
-      <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PathList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedImage}"/>
+      <Label Grid.Row="2" Content="Filter:"/>
+      <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ImagePathFilter, UpdateSourceTrigger=PropertyChanged}"/>
+      <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding FilteredImagePathList}" DisplayMemberPath="Name" 
+               SelectedItem="{Binding SelectedImage}"/>
     </Grid>
 
     <GroupBox Header="Image Control" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

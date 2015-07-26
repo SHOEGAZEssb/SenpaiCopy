@@ -17,7 +17,8 @@ namespace SenpaiCopy
   /// </summary>
   class MainViewModel : PropertyChangedBase
   {
-    private ObservableCollection<FileInfo> _pathList;
+    private ObservableCollection<FileInfo> _imagePathList;
+    private ObservableCollection<FileInfo> _filteredImagePathList;
     private ObservableCollection<PathCheckBox> _checkBoxList;
     private ObservableCollection<PathCheckBox> _filteredCheckBoxList;
     private int _currentImageIndex;
@@ -34,13 +35,20 @@ namespace SenpaiCopy
 
     private ObservableCollection<string> _ignoredPaths;
     private string _pathFilter;
+    private string _imagePathFilter;
 
     private FileInfo _selectedImage;
 
-    public ObservableCollection<FileInfo> PathList
+    public ObservableCollection<FileInfo> ImagePathList
     {
-      get { return _pathList; }
-      private set { _pathList = value; }
+      get { return _imagePathList; }
+      private set { _imagePathList = value; }
+    }
+
+    public ObservableCollection<FileInfo> FilteredImagePathList
+    {
+      get { return _filteredImagePathList; }
+      private set { _filteredImagePathList = value; }
     }
 
     /// <summary>
@@ -161,6 +169,19 @@ namespace SenpaiCopy
     }
 
     /// <summary>
+    /// Gets/sets the string for filtering images.
+    /// </summary>
+    public string ImagePathFilter
+    {
+      get { return _imagePathFilter; }
+      set
+      {
+        _imagePathFilter = value;
+        GetImagePathFilterResults();
+      }
+    }
+
+    /// <summary>
     /// The currently selected image in the list.
     /// </summary>
     public FileInfo SelectedImage
@@ -171,7 +192,7 @@ namespace SenpaiCopy
         _selectedImage = value;
         if (value != null)
         {
-          _currentImageIndex = PathList.IndexOf(SelectedImage);
+          _currentImageIndex = ImagePathList.IndexOf(SelectedImage);
           UpdatePictureBox();
         }
       }
@@ -198,7 +219,7 @@ namespace SenpaiCopy
     /// </summary>
     public bool CanNext
     {
-      get { return PathList.Count - 1 > _currentImageIndex; }
+      get { return ImagePathList.Count - 1 > _currentImageIndex; }
     }
 
     /// <summary>
@@ -224,7 +245,10 @@ namespace SenpaiCopy
     public MainViewModel()
     {
       _pathFilter = "";
-      PathList = new ObservableCollection<FileInfo>();
+      _imagePathFilter = "";
+      FilteredImagePathList = new ObservableCollection<FileInfo>();
+      ImagePathList = new ObservableCollection<FileInfo>();
+      ImagePathList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ImagePathList_CollectionChanged);
       FilteredCheckBoxList = new ObservableCollection<PathCheckBox>();
       CheckBoxList = new ObservableCollection<PathCheckBox>();
       CheckBoxList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CheckBoxList_CollectionChanged);   
@@ -268,14 +292,14 @@ namespace SenpaiCopy
         //get all files
         string[] files = Directory.GetFiles(dlg.SelectedPath);
 
-        PathList.Clear();
+        ImagePathList.Clear();
 
         //get all image files
         foreach (string file in files)
         {
           string lowerFile = file.ToLower();
           if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
-            PathList.Add(new FileInfo(file));
+            ImagePathList.Add(new FileInfo(file));
         }
 
         SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
@@ -354,15 +378,15 @@ namespace SenpaiCopy
     /// </summary>
     private void UpdatePictureBox()
     {
-      if (PathList.Count > _currentImageIndex)
+      if (ImagePathList.Count > _currentImageIndex)
       {
         try
         {
-          CurrentImage = LoadBitmapImage(PathList[_currentImageIndex].FullName);
+          CurrentImage = LoadBitmapImage(ImagePathList[_currentImageIndex].FullName);
         }
         catch (OutOfMemoryException)
         {
-          System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + PathList[_currentImageIndex].FullName + " | Wir skippen das Bild einfach mal.");
+          System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + ImagePathList[_currentImageIndex].FullName + " | Wir skippen das Bild einfach mal.");
           if (CurrentImage != null) // TODO: check if still needed.
             CurrentImage = null;
 
@@ -395,13 +419,13 @@ namespace SenpaiCopy
 
       foreach (string dir in dirsToCopyTo)
       {
-        PathList[_currentImageIndex].CopyTo(dir + @"\" + PathList[_currentImageIndex].Name, true);
+        ImagePathList[_currentImageIndex].CopyTo(dir + @"\" + ImagePathList[_currentImageIndex].Name, true);
       }
 
       if (DeleteImage)
       {
-        PathList[_currentImageIndex].Delete();
-        PathList.RemoveAt(_currentImageIndex);
+        ImagePathList[_currentImageIndex].Delete();
+        ImagePathList.RemoveAt(_currentImageIndex);
       }
       else
         _currentImageIndex++;
@@ -503,6 +527,31 @@ namespace SenpaiCopy
     }
 
     /// <summary>
+    /// Gets the filtered image results for the entered filter.
+    /// </summary>
+    private void GetImagePathFilterResults()
+    {
+      if(ImagePathFilter != "")
+      {
+        List<FileInfo> tempFilteredList = ImagePathList.Where(i => i.Name.ToLower().Contains(ImagePathFilter.ToLower())).ToList<FileInfo>();
+
+        FilteredImagePathList.Clear();
+        foreach(FileInfo fi in tempFilteredList)
+        {
+          FilteredImagePathList.Add(fi);
+        }
+      }
+      else
+      {
+        FilteredImagePathList.Clear();
+        foreach(FileInfo fi in ImagePathList)
+        {
+          FilteredImagePathList.Add(fi);
+        }
+      }
+    }
+
+    /// <summary>
     /// Loads an image file from the given <paramref name="fileName"/>.
     /// This does still allow operations done to the file.
     /// </summary>
@@ -533,6 +582,16 @@ namespace SenpaiCopy
     private void CheckBoxList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
       GetPathFilterResults();
+    }
+
+    /// <summary>
+    /// Gets the filtered images when the <see cref="ImagePathList"/> is changed.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ImagePathList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+      GetImagePathFilterResults();
     }
 
     /// <summary>
