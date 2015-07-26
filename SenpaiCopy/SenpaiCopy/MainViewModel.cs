@@ -17,27 +17,26 @@ namespace SenpaiCopy
   /// </summary>
   class MainViewModel : PropertyChangedBase
   {
+    #region Member
+
     private ObservableCollection<FileInfo> _imagePathList;
-    private ObservableCollection<FileInfo> _filteredImagePathList;
     private ObservableCollection<PathCheckBox> _checkBoxList;
-    private ObservableCollection<PathCheckBox> _filteredCheckBoxList;
     private int _currentImageIndex;
     private ImageSource _currentImage;
     private bool _includeSubDirectories;
-
     private string _imagePath;
     private string _folderPath;
-
     private bool _deleteImage;
     private bool _resetCheckBoxes;
-
     private PathCheckBox _currentRightClickedCheckBox;
-
     private ObservableCollection<string> _ignoredPaths;
     private string _checkBoxFilter;
     private string _imagePathFilter;
-
     private FileInfo _selectedImage;
+
+    #endregion
+
+    #region Properties
 
     /// <summary>
     /// The list of image paths. 
@@ -175,8 +174,6 @@ namespace SenpaiCopy
       private set { _ignoredPaths = value; }
     }
 
-
-
     /// <summary>
     /// The currently selected image in the list.
     /// </summary>
@@ -225,15 +222,16 @@ namespace SenpaiCopy
     {
       get
       {
-        int checkBoxCount = CheckBoxList.Count(i => (bool)i.IsChecked);
         if(!CanCopy)
           return new SolidColorBrush(Colors.Gray);
-        if (DeleteImage && checkBoxCount == 0)
+        if (DeleteImage && CheckBoxList.Count(i => (bool)i.IsChecked) == 0)
           return new SolidColorBrush(Colors.Red);
         else
           return new SolidColorBrush(Colors.Green);
       }
     }
+
+    #endregion
 
     /// <summary>
     /// Ctor.
@@ -260,7 +258,6 @@ namespace SenpaiCopy
       if (File.Exists("IgnoredPaths.txt"))
       {
         string[] paths = File.ReadAllLines("IgnoredPaths.txt");
-
         foreach (string path in paths)
         {
           IgnoredPaths.Add(path);
@@ -280,11 +277,10 @@ namespace SenpaiCopy
       if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
       {
         ImagePath = dlg.SelectedPath;
+        ImagePathList.Clear();
 
         //get all files
         string[] files = Directory.GetFiles(dlg.SelectedPath);
-
-        ImagePathList.Clear();
 
         //get all image files
         foreach (string file in files)
