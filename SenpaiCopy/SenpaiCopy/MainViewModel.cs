@@ -484,7 +484,7 @@ namespace SenpaiCopy
     {
       if (PathFilter != "")
       {
-        List<PathCheckBox> tempFilteredList = CheckBoxList.Where(i => i.Content.ToString().Contains(PathFilter)).ToList<PathCheckBox>();
+        List<PathCheckBox> tempFilteredList = CheckBoxList.Where(i => i.Content.ToString().ToLower().Contains(PathFilter.ToLower())).ToList<PathCheckBox>();
 
         FilteredCheckBoxList.Clear();
         foreach (PathCheckBox pchk in tempFilteredList)
