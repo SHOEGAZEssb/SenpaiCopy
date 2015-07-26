@@ -74,10 +74,10 @@
       </Grid.RowDefinitions>
 
       <Label Grid.Row="0" Content="Filter:"/>
-      <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PathFilter, UpdateSourceTrigger=PropertyChanged}"/>
+      <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CheckBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
 
       <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-      <ItemsControl  ItemsSource="{Binding FilteredCheckBoxList}" 
+      <ItemsControl  ItemsSource="{Binding CheckBoxList}" 
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -134,7 +134,7 @@
 
       <Label Grid.Row="2" Content="Filter:"/>
       <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ImagePathFilter, UpdateSourceTrigger=PropertyChanged}"/>
-      <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding FilteredImagePathList}" DisplayMemberPath="Name" 
+      <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding ImagePathList}" DisplayMemberPath="Name" 
                SelectedItem="{Binding SelectedImage}"/>
     </Grid>
 

@@ -34,21 +34,36 @@ namespace SenpaiCopy
     private PathCheckBox _currentRightClickedCheckBox;
 
     private ObservableCollection<string> _ignoredPaths;
-    private string _pathFilter;
+    private string _checkBoxFilter;
     private string _imagePathFilter;
 
     private FileInfo _selectedImage;
 
+    /// <summary>
+    /// The list of image paths. 
+    /// </summary>
     public ObservableCollection<FileInfo> ImagePathList
     {
-      get { return _imagePathList; }
-      private set { _imagePathList = value; }
+      get 
+      {
+        if (ImagePathFilter != "")
+          return new ObservableCollection<FileInfo>(_imagePathList.Where(i => i.Name.ToLower().Contains(ImagePathFilter.ToLower())).ToList<FileInfo>());
+        else
+          return _imagePathList;
+      }
     }
 
-    public ObservableCollection<FileInfo> FilteredImagePathList
+    /// <summary>
+    /// Gets/sets the string for filtering images.
+    /// </summary>
+    public string ImagePathFilter
     {
-      get { return _filteredImagePathList; }
-      private set { _filteredImagePathList = value; }
+      get { return _imagePathFilter; }
+      set
+      {
+        _imagePathFilter = value;
+        NotifyOfPropertyChange(() => ImagePathList);
+      }
     }
 
     /// <summary>
@@ -71,20 +86,25 @@ namespace SenpaiCopy
     /// </summary>
     public ObservableCollection<PathCheckBox> CheckBoxList
     {
-      get { return _checkBoxList; }
-      private set { _checkBoxList = value; }
+      get 
+      {
+        if (CheckBoxFilter != "")
+          return new ObservableCollection<PathCheckBox>(_checkBoxList.Where(i => i.Content.ToString().ToLower().Contains(CheckBoxFilter.ToLower())).ToList<PathCheckBox>());
+        else
+          return _checkBoxList;
+      }
     }
 
     /// <summary>
-    /// Gets a list with the filtered PathCheckBoxes.
+    /// Gets/sets the string for filtering paths.
     /// </summary>
-    public ObservableCollection<PathCheckBox> FilteredCheckBoxList
+    public string CheckBoxFilter
     {
-      get { return _filteredCheckBoxList; }
-      private set 
+      get { return _checkBoxFilter; }
+      set
       {
-        _filteredCheckBoxList = value;
-        NotifyOfPropertyChange(() => FilteredCheckBoxList);
+        _checkBoxFilter = value;
+        NotifyOfPropertyChange(() => CheckBoxList);
       }
     }
 
@@ -155,31 +175,7 @@ namespace SenpaiCopy
       private set { _ignoredPaths = value; }
     }
 
-    /// <summary>
-    /// Gets/sets the string for filtering paths.
-    /// </summary>
-    public string PathFilter
-    {
-      get { return _pathFilter; }
-      set 
-      { 
-        _pathFilter = value;
-        GetPathFilterResults();
-      }
-    }
 
-    /// <summary>
-    /// Gets/sets the string for filtering images.
-    /// </summary>
-    public string ImagePathFilter
-    {
-      get { return _imagePathFilter; }
-      set
-      {
-        _imagePathFilter = value;
-        GetImagePathFilterResults();
-      }
-    }
 
     /// <summary>
     /// The currently selected image in the list.
@@ -244,14 +240,10 @@ namespace SenpaiCopy
     /// </summary>
     public MainViewModel()
     {
-      _pathFilter = "";
+      _checkBoxFilter = "";
       _imagePathFilter = "";
-      FilteredImagePathList = new ObservableCollection<FileInfo>();
-      ImagePathList = new ObservableCollection<FileInfo>();
-      ImagePathList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ImagePathList_CollectionChanged);
-      FilteredCheckBoxList = new ObservableCollection<PathCheckBox>();
-      CheckBoxList = new ObservableCollection<PathCheckBox>();
-      CheckBoxList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CheckBoxList_CollectionChanged);   
+      _imagePathList = new ObservableCollection<FileInfo>();
+      _checkBoxList = new ObservableCollection<PathCheckBox>(); 
       IncludeSubDirectories = true;
       DeleteImage = true;
       ResetCheckBoxes = true;
@@ -502,56 +494,6 @@ namespace SenpaiCopy
     }
 
     /// <summary>
-    /// Gets the filtered path results for the entered filter.
-    /// </summary>
-    private void GetPathFilterResults()
-    {
-      if (PathFilter != "")
-      {
-        List<PathCheckBox> tempFilteredList = CheckBoxList.Where(i => i.Content.ToString().ToLower().Contains(PathFilter.ToLower())).ToList<PathCheckBox>();
-
-        FilteredCheckBoxList.Clear();
-        foreach (PathCheckBox pchk in tempFilteredList)
-        {
-          FilteredCheckBoxList.Add(pchk);
-        }
-      }
-      else
-      {
-        FilteredCheckBoxList.Clear();
-        foreach (PathCheckBox pchk in CheckBoxList)
-        {
-          FilteredCheckBoxList.Add(pchk);
-        }
-      }
-    }
-
-    /// <summary>
-    /// Gets the filtered image results for the entered filter.
-    /// </summary>
-    private void GetImagePathFilterResults()
-    {
-      if(ImagePathFilter != "")
-      {
-        List<FileInfo> tempFilteredList = ImagePathList.Where(i => i.Name.ToLower().Contains(ImagePathFilter.ToLower())).ToList<FileInfo>();
-
-        FilteredImagePathList.Clear();
-        foreach(FileInfo fi in tempFilteredList)
-        {
-          FilteredImagePathList.Add(fi);
-        }
-      }
-      else
-      {
-        FilteredImagePathList.Clear();
-        foreach(FileInfo fi in ImagePathList)
-        {
-          FilteredImagePathList.Add(fi);
-        }
-      }
-    }
-
-    /// <summary>
     /// Loads an image file from the given <paramref name="fileName"/>.
     /// This does still allow operations done to the file.
     /// </summary>
@@ -574,24 +516,6 @@ namespace SenpaiCopy
     private void CheckBox_RightMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
       _currentRightClickedCheckBox = sender as PathCheckBox;
-    }
-
-    /// <summary>
-    /// Gets the filtered path results when the CheckBoxList is changed.
-    /// </summary>
-    private void CheckBoxList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-      GetPathFilterResults();
-    }
-
-    /// <summary>
-    /// Gets the filtered images when the <see cref="ImagePathList"/> is changed.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ImagePathList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-      GetImagePathFilterResults();
     }
 
     /// <summary>
