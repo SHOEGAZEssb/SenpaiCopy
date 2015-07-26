@@ -185,7 +185,7 @@ namespace SenpaiCopy
         _selectedImage = value;
         if (value != null)
         {
-          _currentImageIndex = ImagePathList.IndexOf(SelectedImage);
+          _currentImageIndex = _imagePathList.IndexOf(SelectedImage);
           UpdatePictureBox();
         }
       }
@@ -204,7 +204,7 @@ namespace SenpaiCopy
     /// </summary>
     public bool CanCopy
     {
-      get { return CurrentImage != null && (DeleteImage || CheckBoxList.Count(i => (bool)i.IsChecked) != 0); }
+      get { return CurrentImage != null && (DeleteImage || _checkBoxList.Count(i => (bool)i.IsChecked) != 0); }
     }
 
     /// <summary>
@@ -212,7 +212,7 @@ namespace SenpaiCopy
     /// </summary>
     public bool CanNext
     {
-      get { return ImagePathList.Count - 1 > _currentImageIndex; }
+      get { return _imagePathList.Count - 1 > _currentImageIndex; }
     }
 
     /// <summary>
@@ -224,7 +224,7 @@ namespace SenpaiCopy
       {
         if(!CanCopy)
           return new SolidColorBrush(Colors.Gray);
-        if (DeleteImage && CheckBoxList.Count(i => (bool)i.IsChecked) == 0)
+        if (DeleteImage && _checkBoxList.Count(i => (bool)i.IsChecked) == 0)
           return new SolidColorBrush(Colors.Red);
         else
           return new SolidColorBrush(Colors.Green);
@@ -277,7 +277,7 @@ namespace SenpaiCopy
       if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
       {
         ImagePath = dlg.SelectedPath;
-        ImagePathList.Clear();
+        _imagePathList.Clear();
 
         //get all files
         string[] files = Directory.GetFiles(dlg.SelectedPath);
@@ -287,7 +287,7 @@ namespace SenpaiCopy
         {
           string lowerFile = file.ToLower();
           if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
-            ImagePathList.Add(new FileInfo(file));
+            _imagePathList.Add(new FileInfo(file));
         }
 
         SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
@@ -306,7 +306,7 @@ namespace SenpaiCopy
       dlg.SelectedPath = SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath;
       if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
       {
-        CheckBoxList.Clear();
+        _checkBoxList.Clear();
 
         FolderPath = dlg.SelectedPath;
 
@@ -348,7 +348,7 @@ namespace SenpaiCopy
         chk.Checked += CheckBox_CheckedChanged;
         chk.Unchecked += CheckBox_CheckedChanged;
         chk.ToolTip = folder;
-        CheckBoxList.Add(chk);
+        _checkBoxList.Add(chk);
       }
     }
 
@@ -366,15 +366,15 @@ namespace SenpaiCopy
     /// </summary>
     private void UpdatePictureBox()
     {
-      if (ImagePathList.Count > _currentImageIndex)
+      if (_imagePathList.Count > _currentImageIndex)
       {
         try
         {
-          CurrentImage = LoadBitmapImage(ImagePathList[_currentImageIndex].FullName);
+          CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
         }
         catch (OutOfMemoryException)
         {
-          System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + ImagePathList[_currentImageIndex].FullName + " | Wir skippen das Bild einfach mal.");
+          System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + _imagePathList[_currentImageIndex].FullName + " | Wir skippen das Bild einfach mal.");
           if (CurrentImage != null) // TODO: check if still needed.
             CurrentImage = null;
 
@@ -399,7 +399,7 @@ namespace SenpaiCopy
     {
       List<string> dirsToCopyTo = new List<string>();
 
-      foreach (PathCheckBox c in CheckBoxList)
+      foreach (PathCheckBox c in _checkBoxList)
       {
         if ((bool)c.IsChecked)
           dirsToCopyTo.Add(c.FullPath);
@@ -407,20 +407,20 @@ namespace SenpaiCopy
 
       foreach (string dir in dirsToCopyTo)
       {
-        ImagePathList[_currentImageIndex].CopyTo(dir + @"\" + ImagePathList[_currentImageIndex].Name, true);
+        _imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
       }
 
       if (DeleteImage)
       {
-        ImagePathList[_currentImageIndex].Delete();
-        ImagePathList.RemoveAt(_currentImageIndex);
+        _imagePathList[_currentImageIndex].Delete();
+        _imagePathList.RemoveAt(_currentImageIndex);
       }
       else
         _currentImageIndex++;
 
       if (ResetCheckBoxes)
       {
-        foreach (PathCheckBox c in CheckBoxList)
+        foreach (PathCheckBox c in _checkBoxList)
         {
           c.IsChecked = false;
         }
@@ -460,7 +460,7 @@ namespace SenpaiCopy
     /// </summary>
     public void RemoveCheckBox()
     {
-      CheckBoxList.Remove(_currentRightClickedCheckBox);
+      _checkBoxList.Remove(_currentRightClickedCheckBox);
     }
 
     /// <summary>
@@ -482,7 +482,7 @@ namespace SenpaiCopy
       dlg.SelectedPath = _currentRightClickedCheckBox.FullPath;
       if(dlg.ShowDialog() == DialogResult.OK)
       {
-        if (!CheckBoxList.Any(i => i.FullPath == dlg.SelectedPath))
+        if (!_checkBoxList.Any(i => i.FullPath == dlg.SelectedPath))
           AddCheckBox(dlg.SelectedPath);
         else
           System.Windows.MessageBox.Show("This folder has already been added!");
