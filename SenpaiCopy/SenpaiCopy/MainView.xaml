@@ -5,186 +5,191 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cal="http://www.caliburnproject.org">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="5"/>
-      <ColumnDefinition Width="2*"/>
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
-    <GroupBox Header="Paths">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="5"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="3.5*"/>
-          <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Image Folder:"/>
-        <Label Content="Subfolder Folder:" Grid.Row="2"/>
-        <Label Content="{Binding ImagePath}" Grid.Column="1"/>
-        <Label Content="{Binding FolderPath}" Grid.Column="1" Grid.Row="2"/>
-        <Button Grid.Column="2" Content="Select..." Height="25" VerticalAlignment="Top">
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Click">
-              <cal:ActionMessage MethodName="SelectImageFolder"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-        </Button>
-        <Button x:Name="btnSelectSubfolderFolder" Grid.Column="2" Grid.Row="2" Content="Select...">
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Click">
-              <cal:ActionMessage MethodName="SelectFolderPath"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-        </Button>
-        <CheckBox Grid.Row="3" Grid.Column="1" Content="Include subdirectories" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IncludeSubDirectories}"/>
-      </Grid>
-    </GroupBox>
-    
-    <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-    
-    <Image gif:ImageBehavior.AnimatedSource="{Binding CurrentImage}" Grid.Row="1" Grid.Column="0">
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseDown">
-          <cal:ActionMessage MethodName="ShowImage"/>
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
-    </Image>
-
-    <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
-
-      <Label Grid.Row="0" Content="Filter:"/>
-      <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CheckBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
-
-      <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-      <ItemsControl  ItemsSource="{Binding CheckBoxList}" 
-                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <ItemsControl.ItemsPanel>
-          <ItemsPanelTemplate>
-            <WrapPanel>
-              <WrapPanel.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Show in explorer">
-                      <MenuItem.Icon>
-                        <Image Source="Resources/folder.png"/>
-                      </MenuItem.Icon>
-                      <i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Paths">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Image Folder:"/>
+                <Label Content="{Binding ImagePath}" Grid.Column="1"/>
+                <Button Grid.Column="2" Content="Select..." Height="25" VerticalAlignment="Top">
+                    <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                          <cal:ActionMessage MethodName="ShowPathInExplorer"/>
+                            <cal:ActionMessage MethodName="SelectImageFolder"/>
                         </i:EventTrigger>
-                      </i:Interaction.Triggers>
-                    </MenuItem>
-                    <MenuItem Header="Remove CheckBox">
-                    <MenuItem.Icon>
-                      <Image Source="Resources/deletePath.png"/>
-                    </MenuItem.Icon>
-                    <i:Interaction.Triggers>
-                      <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="RemoveCheckBox"/>
-                      </i:EventTrigger>
                     </i:Interaction.Triggers>
-                  </MenuItem>
-                  <MenuItem Header="Add path to ignore list">
-                    <MenuItem.Icon>
-                      <Image Source="Resources/addIgnore.png"/>
-                    </MenuItem.Icon>
+                </Button>
+                <CheckBox Grid.Row="1" Content="Include subdirectories" IsChecked="{Binding IncludeImageSubDirectories}"/>
+                
+                <Border Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0.75,0.75,0.75,0.75"/>
+                
+                <Label Content="Subfolder Folder:" Grid.Row="3"/>          
+                <Label Content="{Binding FolderPath}" Grid.Column="1" Grid.Row="3"/>
+                <Button x:Name="btnSelectSubfolderFolder" Grid.Column="2" Grid.Row="3" Content="Select...">
                     <i:Interaction.Triggers>
-                      <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="IgnorePath"/>
-                      </i:EventTrigger>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="SelectFolderPath"/>
+                        </i:EventTrigger>
                     </i:Interaction.Triggers>
-                  </MenuItem>
-                  <MenuItem Header="Add new folder">
-                    <MenuItem.Icon>
-                      <Image Source="Resources/addFolder.png"/>
-                    </MenuItem.Icon>
-                    <i:Interaction.Triggers>
-                      <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="AddFolder"/>
-                      </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                  </MenuItem>
-                </ContextMenu>
-              </WrapPanel.ContextMenu>
-            </WrapPanel>
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-      </ItemsControl>
-      </ScrollViewer>
+                </Button>
+                <CheckBox Grid.Row="4" Content="Include subdirectories" IsChecked="{Binding IncludeFolderSubDirectories}"/>
+            </Grid>
+        </GroupBox>
 
-      <Label Grid.Row="2" Content="Filter:"/>
-      <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ImagePathFilter, UpdateSourceTrigger=PropertyChanged}"/>
-      <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding ImagePathList}" DisplayMemberPath="Name" 
+        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <Image gif:ImageBehavior.AnimatedSource="{Binding CurrentImage}" Grid.Row="1" Grid.Column="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDown">
+                    <cal:ActionMessage MethodName="ShowImage"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Image>
+
+        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="Filter:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CheckBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+                <ItemsControl  ItemsSource="{Binding CheckBoxList}" 
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel>
+                                <WrapPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Show in explorer">
+                                            <MenuItem.Icon>
+                                                <Image Source="Resources/folder.png"/>
+                                            </MenuItem.Icon>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="ShowPathInExplorer"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </MenuItem>
+                                        <MenuItem Header="Remove CheckBox">
+                                            <MenuItem.Icon>
+                                                <Image Source="Resources/deletePath.png"/>
+                                            </MenuItem.Icon>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="RemoveCheckBox"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </MenuItem>
+                                        <MenuItem Header="Add path to ignore list">
+                                            <MenuItem.Icon>
+                                                <Image Source="Resources/addIgnore.png"/>
+                                            </MenuItem.Icon>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="IgnorePath"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </MenuItem>
+                                        <MenuItem Header="Add new folder">
+                                            <MenuItem.Icon>
+                                                <Image Source="Resources/addFolder.png"/>
+                                            </MenuItem.Icon>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="AddFolder"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </WrapPanel.ContextMenu>
+                            </WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <Label Grid.Row="2" Content="Filter:"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ImagePathFilter, UpdateSourceTrigger=PropertyChanged}"/>
+            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding ImagePathList}" DisplayMemberPath="Name" 
                SelectedItem="{Binding SelectedImage}"/>
+        </Grid>
+
+        <GroupBox Header="Image Control" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Current Image:"/>
+                <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2" Grid.ColumnSpan="3"/>
+
+                <Button Content="Previous" Grid.Row="1">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="Previous"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="Execute" Grid.Row="3" Foreground="{Binding ExecuteButtonColor}" IsEnabled="{Binding CanCopy}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="Execute"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="Next" Grid.Row="5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="Next"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete source image" IsChecked="{Binding DeleteImage}"/>
+                <CheckBox Grid.Row="3" Grid.Column="4" Content="Reset CheckBoxes" IsChecked="{Binding ResetCheckBoxes}"/>
+
+            </Grid>
+        </GroupBox>
     </Grid>
-
-    <GroupBox Header="Image Control" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="5"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="5"/>
-          <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="5"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="5"/>
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <Label Content="Current Image:"/>
-        <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2" Grid.ColumnSpan="3"/>
-
-        <Button Content="Previous" Grid.Row="1">
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Click">
-              <cal:ActionMessage MethodName="Previous"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-        </Button>
-        <Button Content="Execute" Grid.Row="3" Foreground="{Binding ExecuteButtonColor}" IsEnabled="{Binding CanCopy}">
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Click">
-              <cal:ActionMessage MethodName="Execute"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-        </Button>
-        <Button Content="Next" Grid.Row="5">
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Click">
-              <cal:ActionMessage MethodName="Next"/>
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-        </Button>
-
-        <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete source image" IsChecked="{Binding DeleteImage}"/>
-        <CheckBox Grid.Row="3" Grid.Column="4" Content="Reset CheckBoxes" IsChecked="{Binding ResetCheckBoxes}"/>
-        
-      </Grid>
-    </GroupBox>
-  </Grid>
 </Window>
