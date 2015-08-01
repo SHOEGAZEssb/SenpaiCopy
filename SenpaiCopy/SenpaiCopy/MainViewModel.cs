@@ -290,7 +290,7 @@ namespace SenpaiCopy
 				_imagePathList.Clear();
 
 				SearchOption so;
-				if ((bool)IncludeFolderSubDirectories)
+				if ((bool)IncludeImageSubDirectories)
 					so = SearchOption.AllDirectories;
 				else
 					so = SearchOption.TopDirectoryOnly;
