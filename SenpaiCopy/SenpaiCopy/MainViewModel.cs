@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Linq;
+using Microsoft.VisualBasic.FileIO;
 
 namespace SenpaiCopy
 {
@@ -289,11 +290,11 @@ namespace SenpaiCopy
 				ImagePath = dlg.SelectedPath;
 				_imagePathList.Clear();
 
-				SearchOption so;
+				System.IO.SearchOption so;
 				if ((bool)IncludeImageSubDirectories)
-					so = SearchOption.AllDirectories;
+					so = System.IO.SearchOption.AllDirectories;
 				else
-					so = SearchOption.TopDirectoryOnly;
+					so = System.IO.SearchOption.TopDirectoryOnly;
 
 				//get all files
 				string[] files = Directory.GetFiles(dlg.SelectedPath, "*", so);
@@ -326,11 +327,11 @@ namespace SenpaiCopy
 
 				FolderPath = dlg.SelectedPath;
 
-				SearchOption so;
+				System.IO.SearchOption so;
 				if ((bool)IncludeFolderSubDirectories)
-					so = SearchOption.AllDirectories;
+					so = System.IO.SearchOption.AllDirectories;
 				else
-					so = SearchOption.TopDirectoryOnly;
+					so = System.IO.SearchOption.TopDirectoryOnly;
 
 				string[] subfolders = Directory.GetDirectories(dlg.SelectedPath, "*", so);
 
@@ -428,7 +429,7 @@ namespace SenpaiCopy
 
 			if (DeleteImage)
 			{
-				_imagePathList[_currentImageIndex].Delete();
+				FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 				_imagePathList.RemoveAt(_currentImageIndex);
 			}
 			else
