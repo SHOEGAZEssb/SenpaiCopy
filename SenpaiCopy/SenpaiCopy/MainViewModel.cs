@@ -481,7 +481,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Adds the right clicked checkBox path to the <see cref="IgnorePaths"/>
+		/// Adds the right clicked checkBox path to the <see cref="IgnoredPaths"/>
 		/// </summary>
 		public void IgnorePath()
 		{
