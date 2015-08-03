@@ -42,9 +42,26 @@
                 <CheckBox Grid.Row="1" Content="Include subdirectories" IsChecked="{Binding IncludeImageSubDirectories}"/>
                 
                 <Border Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0.75,0.75,0.75,0.75"/>
-                
-                <Label Content="Subfolder Folder:" Grid.Row="3"/>          
-                <Label Content="{Binding FolderPath}" Grid.Column="1" Grid.Row="3"/>
+
+                <Label Content="Subfolder Folder:" Grid.Row="3"/>
+                <Label Content="{Binding FolderPath}" Grid.Column="1" Grid.Row="3">
+                    <Label.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add new folder" IsEnabled="{Binding CanAddFolder}">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/addFolder.png"/>
+                                </MenuItem.Icon>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="AddFolder">
+                                            <cal:Parameter Value="{Binding FolderPath}"/>
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Label.ContextMenu>
+                </Label>
                 <Button x:Name="btnSelectSubfolderFolder" Grid.Column="2" Grid.Row="3" Content="Select...">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">

@@ -150,6 +150,7 @@ namespace SenpaiCopy
 			{
 				_folderPath = value;
 				NotifyOfPropertyChange(() => FolderPath);
+				NotifyOfPropertyChange(() => CanAddFolder);
 			}
 		}
 
@@ -224,6 +225,15 @@ namespace SenpaiCopy
 		public bool CanNext
 		{
 			get { return _imagePathList.Count - 1 > _currentImageIndex; }
+		}
+
+		/// <summary>
+		/// Gets wether the user can click the "Add Folder" button in
+		/// the context menu of the <see cref="FolderPath"/> label.
+		/// </summary>
+		public bool CanAddFolder
+		{
+			get { return FolderPath != null && FolderPath != ""; }
 		}
 
 		/// <summary>
@@ -495,8 +505,18 @@ namespace SenpaiCopy
 		/// </summary>
 		public void AddFolder()
 		{
+			AddFolder(_currentRightClickedCheckBox.FullPath);
+		}
+
+		/// <summary>
+		/// Shows a dialog to select a folder to add to the list,
+		/// setting the dialog to the <paramref name="dialogStartingPath"/> by default.
+		/// </summary>
+		/// <param name="dialogStartingPath">Default selected path of the FolderBrowserDialog.</param>
+		public void AddFolder(string dialogStartingPath)
+		{
 			FolderBrowserDialog dlg = new FolderBrowserDialog();
-			dlg.SelectedPath = _currentRightClickedCheckBox.FullPath;
+			dlg.SelectedPath = dialogStartingPath;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				if (!_checkBoxList.Any(i => i.FullPath == dlg.SelectedPath))
