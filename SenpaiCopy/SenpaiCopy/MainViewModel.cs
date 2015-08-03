@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using System.Windows.Input;
 
 namespace SenpaiCopy
 {
@@ -20,6 +21,7 @@ namespace SenpaiCopy
 	{
 		#region Member
 
+		private SettingsViewModel _settingsViewModel;
 		private ObservableCollection<FileInfo> _imagePathList;
 		private ObservableCollection<PathCheckBox> _checkBoxList;
 		private int _currentImageIndex;
@@ -39,6 +41,12 @@ namespace SenpaiCopy
 		#endregion
 
 		#region Properties
+
+		public SettingsViewModel SettingsViewModel
+		{
+			get { return _settingsViewModel; }
+			private set { _settingsViewModel = value; }
+		}
 
 		/// <summary>
 		/// The list of image paths. 
@@ -259,6 +267,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public MainViewModel()
 		{
+			SettingsViewModel = new SettingsViewModel();
 			_checkBoxFilter = "";
 			_imagePathFilter = "";
 			_imagePathList = new ObservableCollection<FileInfo>();
@@ -557,6 +566,18 @@ namespace SenpaiCopy
 		public void ShowPathInExplorer()
 		{
 			Process.Start(_currentRightClickedCheckBox.FullPath);
+		}
+
+		public void OpenSettingsWindow()
+		{
+			SettingsView sv = new SettingsView();
+			sv.DataContext = SettingsViewModel;
+			sv.ShowDialog();
+		}
+
+		public void FormKeyDown()
+		{
+			int i = 0;
 		}
 	}
 }

@@ -4,7 +4,18 @@
         Title="SenpaiCopy" Height="650" Width="800"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:cal="http://www.caliburnproject.org">
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:local="clr-namespace:SenpaiCopy">
+
+    <i:Interaction.Triggers>
+        <local:InputBindingTrigger>
+            <local:InputBindingTrigger.InputBinding>
+                <KeyBinding Key="Left"/>
+            </local:InputBindingTrigger.InputBinding>
+            <cal:ActionMessage MethodName="FormKeyDown"/>
+        </local:InputBindingTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -177,7 +188,7 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
+                
                 <Label Content="Current Image:"/>
                 <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2" Grid.ColumnSpan="3"/>
 
@@ -202,6 +213,14 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <Button Content="Settings" Grid.Row="5" Grid.Column="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="OpenSettingsWindow"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
 
                 <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete source image" IsChecked="{Binding DeleteImage}"/>
                 <CheckBox Grid.Row="3" Grid.Column="4" Content="Reset CheckBoxes" IsChecked="{Binding ResetCheckBoxes}"/>
