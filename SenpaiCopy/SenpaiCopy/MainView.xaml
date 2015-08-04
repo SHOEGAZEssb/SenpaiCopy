@@ -8,7 +8,13 @@
         xmlns:local="clr-namespace:SenpaiCopy">
 
     <Window.InputBindings>
-        <KeyBinding Key="{Binding SettingsViewModel.PreviousHotkey}" Command="{Binding MyCommand}" 
+        <KeyBinding Key="{Binding SettingsViewModel.PreviousHotkey}" Command="{Binding HotkeyPressedCommand}" 
+            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Key}"/>
+        <KeyBinding Key="{Binding SettingsViewModel.ExecuteHotkey}" Command="{Binding HotkeyPressedCommand}" 
+            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Key}"/>
+        <KeyBinding Key="{Binding SettingsViewModel.NextHotkey}" Command="{Binding HotkeyPressedCommand}" 
+            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Key}"/>
+        <KeyBinding Key="{Binding SettingsViewModel.ClearCheckBoxesHotkey}" Command="{Binding HotkeyPressedCommand}" 
             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Key}"/>
     </Window.InputBindings>
 

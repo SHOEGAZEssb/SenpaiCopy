@@ -37,6 +37,7 @@ namespace SenpaiCopy
 		private string _checkBoxFilter;
 		private string _imagePathFilter;
 		private FileInfo _selectedImage;
+		private ICommand _hotkeyPressedCommand;
 
 		#endregion
 
@@ -216,6 +217,15 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
+		/// Gets/sets the Command for pressed hotkeys.
+		/// </summary>
+		public ICommand HotkeyPressedCommand
+		{
+			get { return _hotkeyPressedCommand; }
+			private set { _hotkeyPressedCommand = value; }
+		}
+
+		/// <summary>
 		/// Gets if the previous button is enabled.
 		/// </summary>
 		public bool CanPrevious
@@ -266,8 +276,6 @@ namespace SenpaiCopy
 
 		#endregion
 
-		public ICommand MyCommand { get; set; }
-
 		/// <summary>
 		/// Ctor.
 		/// </summary>
@@ -282,7 +290,7 @@ namespace SenpaiCopy
 			DeleteImage = true;
 			ResetCheckBoxes = true;
 			LoadIgnoredPaths();
-			MyCommand = new KeyCommand(FormKeyDown);
+			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 		}
 
 		/// <summary>
@@ -463,13 +471,18 @@ namespace SenpaiCopy
 
 			if (ResetCheckBoxes)
 			{
-				foreach (PathCheckBox c in _checkBoxList)
-				{
-					c.IsChecked = false;
-				}
+				ClearCheckBoxes();
 			}
 
 			UpdatePictureBox();
+		}
+
+		private void ClearCheckBoxes()
+		{
+			foreach (PathCheckBox c in _checkBoxList)
+			{
+				c.IsChecked = false;
+			}
 		}
 
 		/// <summary>
@@ -582,9 +595,22 @@ namespace SenpaiCopy
 			sv.ShowDialog();
 		}
 
-		public void FormKeyDown(object parameter)
+		/// <summary>
+		/// Executes the action associated with the pressed hotkey.
+		/// </summary>
+		/// <param name="parameter">Pressed key.</param>
+		public void HotkeyPressed(object parameter)
 		{
-			int i = 0;
+			Key pressedKey = (Key)parameter;
+
+			if (pressedKey == SettingsViewModel.PreviousHotkey && CanPrevious)
+				Previous();
+			else if (pressedKey == SettingsViewModel.ExecuteHotkey && CanCopy)
+				Execute();
+			else if (pressedKey == SettingsViewModel.NextHotkey && CanNext)
+				Next();
+			else if (pressedKey == SettingsViewModel.ClearCheckBoxesHotkey)
+				ClearCheckBoxes();
 		}
 	}
 }
