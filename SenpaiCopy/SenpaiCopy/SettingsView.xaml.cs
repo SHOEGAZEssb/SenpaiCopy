@@ -7,6 +7,9 @@ namespace SenpaiCopy
 	/// </summary>
 	public partial class SettingsView : Window
 	{
+		/// <summary>
+		/// Ctor.
+		/// </summary>
 		public SettingsView()
 		{
 			InitializeComponent();
