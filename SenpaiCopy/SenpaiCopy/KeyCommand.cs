@@ -9,9 +9,9 @@ namespace SenpaiCopy
 {
 	public class KeyCommand : ICommand
 	{
-		Action _execute;
+		Action<object> _execute;
 		public event EventHandler CanExecuteChanged = delegate { };
-		public KeyCommand(Action execute)
+		public KeyCommand(Action<object> execute)
 		{
 			_execute = execute;
 		}
@@ -22,7 +22,7 @@ namespace SenpaiCopy
 
 		public void Execute(object param)
 		{
-			_execute();
+			_execute(param);
 		}
 	}
 }

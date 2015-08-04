@@ -582,7 +582,7 @@ namespace SenpaiCopy
 			sv.ShowDialog();
 		}
 
-		public void FormKeyDown()
+		public void FormKeyDown(object parameter)
 		{
 			int i = 0;
 		}
