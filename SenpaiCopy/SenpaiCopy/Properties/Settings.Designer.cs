@@ -49,7 +49,7 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int PreviousHotkey {
             get {
                 return ((int)(this["PreviousHotkey"]));
@@ -61,7 +61,7 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int ExecuteHotkey {
             get {
                 return ((int)(this["ExecuteHotkey"]));
@@ -73,7 +73,7 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int NextHotkey {
             get {
                 return ((int)(this["NextHotkey"]));
@@ -85,7 +85,7 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int ClearCheckBoxesHotkey {
             get {
                 return ((int)(this["ClearCheckBoxesHotkey"]));

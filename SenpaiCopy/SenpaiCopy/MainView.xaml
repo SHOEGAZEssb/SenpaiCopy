@@ -7,14 +7,9 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:local="clr-namespace:SenpaiCopy">
 
-    <i:Interaction.Triggers>
-        <local:InputBindingTrigger>
-            <local:InputBindingTrigger.InputBinding>
-                <KeyBinding Key="Left"/>
-            </local:InputBindingTrigger.InputBinding>
-            <cal:ActionMessage MethodName="FormKeyDown"/>
-        </local:InputBindingTrigger>
-    </i:Interaction.Triggers>
+    <Window.InputBindings>
+        <KeyBinding Key="{Binding SettingsViewModel.PreviousHotkey}" Command="{Binding MyCommand}"/>
+    </Window.InputBindings>
 
     <Grid>
         <Grid.ColumnDefinitions>

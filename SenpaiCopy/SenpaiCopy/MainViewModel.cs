@@ -45,7 +45,11 @@ namespace SenpaiCopy
 		public SettingsViewModel SettingsViewModel
 		{
 			get { return _settingsViewModel; }
-			private set { _settingsViewModel = value; }
+			private set
+			{
+				_settingsViewModel = value;
+				NotifyOfPropertyChange(() => SettingsViewModel);
+			}
 		}
 
 		/// <summary>
@@ -262,6 +266,8 @@ namespace SenpaiCopy
 
 		#endregion
 
+		public ICommand MyCommand { get; set; }
+
 		/// <summary>
 		/// Ctor.
 		/// </summary>
@@ -276,6 +282,7 @@ namespace SenpaiCopy
 			DeleteImage = true;
 			ResetCheckBoxes = true;
 			LoadIgnoredPaths();
+			MyCommand = new KeyCommand(FormKeyDown);
 		}
 
 		/// <summary>
