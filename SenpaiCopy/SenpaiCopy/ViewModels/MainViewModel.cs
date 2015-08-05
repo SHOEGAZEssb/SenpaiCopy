@@ -425,9 +425,7 @@ namespace SenpaiCopy
 				}
 				catch (Exception ex)
 				{
-					System.Windows.Forms.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
-					_imagePathList.RemoveAt(_currentImageIndex);
-					UpdatePictureBox();
+					HandleError(ex);
 				}
 			}
 			else // no more images.
@@ -460,8 +458,14 @@ namespace SenpaiCopy
 
 			if (DeleteImage)
 			{
-				FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-				_imagePathList.RemoveAt(_currentImageIndex);
+				try
+				{
+					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+				}
+				catch (Exception ex)
+				{
+					HandleError(ex);
+				}
 			}
 			else
 				_currentImageIndex++;
@@ -618,6 +622,17 @@ namespace SenpaiCopy
 			string param = "/select,";
 			param += "\"" + (CurrentImage as BitmapImage).UriSource.LocalPath + "\"";
 			Process.Start("explorer.exe", param);
+		}
+
+		/// <summary>
+		/// Shows an error message and goes to the next image.
+		/// </summary>
+		/// <param name="ex">Exception with the error message.</param>
+		private void HandleError(Exception ex)
+		{
+			System.Windows.Forms.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
+			_imagePathList.RemoveAt(_currentImageIndex);
+			UpdatePictureBox();
 		}
 	}
 }
