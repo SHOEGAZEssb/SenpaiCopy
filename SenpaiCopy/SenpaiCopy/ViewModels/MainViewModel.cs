@@ -423,13 +423,10 @@ namespace SenpaiCopy
 				{
 					CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
 				}
-				catch (OutOfMemoryException)
+				catch (Exception ex)
 				{
-					System.Windows.Forms.MessageBox.Show("The RAM is a lie. Folgendes Bild hat den Error verursacht: " + _imagePathList[_currentImageIndex].FullName + " | Wir skippen das Bild einfach mal.");
-					if (CurrentImage != null) // TODO: check if still needed.
-						CurrentImage = null;
-
-					_currentImageIndex++;
+					System.Windows.Forms.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
+					_imagePathList.RemoveAt(_currentImageIndex);
 					UpdatePictureBox();
 				}
 			}
