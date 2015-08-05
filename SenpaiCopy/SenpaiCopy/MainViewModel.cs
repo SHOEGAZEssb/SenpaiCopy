@@ -612,5 +612,15 @@ namespace SenpaiCopy
 			else if (pressedKey == SettingsViewModel.ClearCheckBoxesHotkey)
 				ClearCheckBoxes();
 		}
+
+		/// <summary>
+		/// Opens the folder containing the current image and selects it.
+		/// </summary>
+		public void CurrentImageLabelClicked()
+		{
+			string param = "/select,";
+			param += "\"" + (CurrentImage as BitmapImage).UriSource.LocalPath + "\"";
+			Process.Start("explorer.exe", param);
+		}
 	}
 }

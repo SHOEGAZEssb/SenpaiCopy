@@ -53,7 +53,7 @@
                     </i:Interaction.Triggers>
                 </Button>
                 <CheckBox Grid.Row="1" Content="Include subdirectories" IsChecked="{Binding IncludeImageSubDirectories}"/>
-                
+
                 <Border Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="0.75,0.75,0.75,0.75"/>
 
                 <Label Content="Subfolder Folder:" Grid.Row="3"/>
@@ -190,9 +190,19 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Label Content="Current Image:"/>
-                <Label Content="{Binding CurrentImage.UriSource.LocalPath}" Grid.Column="2" Grid.ColumnSpan="3"/>
+                <TextBlock Grid.Column="2" Grid.ColumnSpan="3" Margin="5,5,0,0" >
+                    <Hyperlink>
+                        <TextBlock Text="{Binding CurrentImage.UriSource.LocalPath}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                            <cal:ActionMessage MethodName="CurrentImageLabelClicked"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        </TextBlock>
+                    </Hyperlink>
+                </TextBlock>
 
                 <Button Content="Previous" Grid.Row="1">
                     <i:Interaction.Triggers>
