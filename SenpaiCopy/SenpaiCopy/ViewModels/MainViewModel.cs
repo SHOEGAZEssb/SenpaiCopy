@@ -43,6 +43,9 @@ namespace SenpaiCopy
 
 		#region Properties
 
+		/// <summary>
+		/// Gets/sets the <see cref="SettingsViewModel"/> for this ViewModel.
+		/// </summary>
 		public SettingsViewModel SettingsViewModel
 		{
 			get { return _settingsViewModel; }
@@ -54,7 +57,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// The list of image paths. 
+		/// Gets/sets the list of image paths. 
 		/// </summary>
 		public ObservableCollection<FileInfo> ImagePathList
 		{
@@ -96,7 +99,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Gets a list of all PathCheckBoxes
+		/// Gets a list of all PathCheckBoxes.
 		/// </summary>
 		public ObservableCollection<PathCheckBox> CheckBoxList
 		{
@@ -141,7 +144,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// The path to the folder with the images.
+		/// Gets/sets the path to the folder with the images.
 		/// </summary>
 		public string ImagePath
 		{
@@ -154,7 +157,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// The path to the folder of the folders.
+		/// Gets/sets the path to the folder of the folders.
 		/// </summary>
 		public string FolderPath
 		{
@@ -200,7 +203,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// The currently selected image in the list.
+		/// Gets/sets the currently selected image in the list.
 		/// </summary>
 		public FileInfo SelectedImage
 		{
@@ -217,7 +220,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Gets/sets the Command for pressed hotkeys.
+		/// Gets/sets the command for pressed hotkeys.
 		/// </summary>
 		public ICommand HotkeyPressedCommand
 		{
@@ -349,7 +352,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Opens a dialog to select a subfolder and creates checkBoxes for each path.
+		/// Opens a dialog to select a subfolder and creates CheckBoxes for each path.
 		/// </summary>
 		public void SelectFolderPath()
 		{
@@ -478,6 +481,9 @@ namespace SenpaiCopy
 			UpdatePictureBox();
 		}
 
+		/// <summary>
+		/// Unchecks all checked PathCheckBoxes.
+		/// </summary>
 		private void ClearCheckBoxes()
 		{
 			foreach (PathCheckBox c in _checkBoxList)
@@ -513,7 +519,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Removes the selected checkBox.
+		/// Removes the selected CheckBox.
 		/// </summary>
 		public void RemoveCheckBox()
 		{
@@ -574,7 +580,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Sets the current right clicked checkBox.
+		/// Sets the current right clicked CheckBox.
 		/// </summary>
 		private void CheckBox_RightMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
