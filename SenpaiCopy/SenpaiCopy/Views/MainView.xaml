@@ -62,7 +62,7 @@
                         <ContextMenu>
                             <MenuItem Header="Add new folder" IsEnabled="{Binding CanAddFolder}">
                                 <MenuItem.Icon>
-                                    <Image Source="Resources/addFolder.png"/>
+                                    <Image Source="../Resources/addFolder.png"/>
                                 </MenuItem.Icon>
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
@@ -121,7 +121,7 @@
                                     <ContextMenu>
                                         <MenuItem Header="Show in explorer">
                                             <MenuItem.Icon>
-                                                <Image Source="Resources/folder.png"/>
+                                                <Image Source="../Resources/folder.png"/>
                                             </MenuItem.Icon>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
@@ -131,7 +131,7 @@
                                         </MenuItem>
                                         <MenuItem Header="Remove CheckBox">
                                             <MenuItem.Icon>
-                                                <Image Source="Resources/deletePath.png"/>
+                                                <Image Source="../Resources/deletePath.png"/>
                                             </MenuItem.Icon>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
@@ -141,7 +141,7 @@
                                         </MenuItem>
                                         <MenuItem Header="Add path to ignore list">
                                             <MenuItem.Icon>
-                                                <Image Source="Resources/addIgnore.png"/>
+                                                <Image Source="../Resources/addIgnore.png"/>
                                             </MenuItem.Icon>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
@@ -151,7 +151,7 @@
                                         </MenuItem>
                                         <MenuItem Header="Add new folder">
                                             <MenuItem.Icon>
-                                                <Image Source="Resources/addFolder.png"/>
+                                                <Image Source="../Resources/addFolder.png"/>
                                             </MenuItem.Icon>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
