@@ -464,6 +464,7 @@ namespace SenpaiCopy
 				try
 				{
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+					_imagePathList.RemoveAt(_currentImageIndex);
 				}
 				catch (Exception ex)
 				{
