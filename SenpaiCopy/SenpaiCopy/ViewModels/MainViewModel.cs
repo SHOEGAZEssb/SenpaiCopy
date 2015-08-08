@@ -456,7 +456,14 @@ namespace SenpaiCopy
 
 			foreach (string dir in dirsToCopyTo)
 			{
-				_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
+				try
+				{
+					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
+				}
+				catch(Exception ex)
+				{
+					HandleError(ex);
+				}
 			}
 
 			if (DeleteImage)
