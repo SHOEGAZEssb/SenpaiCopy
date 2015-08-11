@@ -80,6 +80,7 @@ namespace SenpaiCopy
 			{
 				_imagePathFilter = value;
 				NotifyOfPropertyChange(() => ImagePathList);
+				NotifyOfPropertyChange(() => ImagePathFilter);
 			}
 		}
 
@@ -122,6 +123,7 @@ namespace SenpaiCopy
 			{
 				_checkBoxFilter = value;
 				NotifyOfPropertyChange(() => CheckBoxList);
+				NotifyOfPropertyChange(() => CheckBoxFilter);
 			}
 		}
 
@@ -647,6 +649,22 @@ namespace SenpaiCopy
 			System.Windows.Forms.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
 			_imagePathList.RemoveAt(_currentImageIndex);
 			UpdatePictureBox();
+		}
+
+		/// <summary>
+		/// Clears the filter of the CheckBoxes.
+		/// </summary>
+		public void ClearCheckBoxFilter()
+		{
+			CheckBoxFilter = "";
+		}
+
+		/// <summary>
+		/// Clears the filter of the ImagePaths.
+		/// </summary>
+		public void ClearImagePathFilter()
+		{
+			ImagePathFilter = "";
 		}
 	}
 }

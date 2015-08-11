@@ -100,6 +100,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -110,8 +113,15 @@
 
             <Label Grid.Row="0" Content="Filter:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CheckBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Row="0" Grid.Column="3" Content="X">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="ClearCheckBoxFilter"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
 
-            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto">
                 <ItemsControl  ItemsSource="{Binding CheckBoxList}" 
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <ItemsControl.ItemsPanel>
@@ -169,7 +179,14 @@
 
             <Label Grid.Row="2" Content="Filter:"/>
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ImagePathFilter, UpdateSourceTrigger=PropertyChanged}"/>
-            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding ImagePathList}" DisplayMemberPath="Name" 
+            <Button Grid.Row="2" Grid.Column="3" Content="X">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="ClearImagePathFilter"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding ImagePathList}" DisplayMemberPath="Name" 
                SelectedItem="{Binding SelectedImage}"/>
         </Grid>
 
