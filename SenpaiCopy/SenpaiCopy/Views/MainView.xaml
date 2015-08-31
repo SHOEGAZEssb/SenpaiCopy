@@ -209,7 +209,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Current Image:"/>
-                <TextBlock Grid.Column="2" Grid.ColumnSpan="3" Margin="5,5,0,0" >
+                <TextBlock Grid.Column="2" Grid.ColumnSpan="3" Margin="0,5,0,0" >
                     <Hyperlink>
                         <TextBlock Text="{Binding CurrentImage.UriSource.LocalPath}">
                         <i:Interaction.Triggers>
