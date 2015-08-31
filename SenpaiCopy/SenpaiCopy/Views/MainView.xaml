@@ -5,7 +5,8 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cal="http://www.caliburnproject.org"
-        xmlns:local="clr-namespace:SenpaiCopy">
+        xmlns:local="clr-namespace:SenpaiCopy" 
+        TaskbarItemInfo="{Binding TaskbarProgress}">
 
     <Window.InputBindings>
         <KeyBinding Key="{Binding SettingsViewModel.PreviousHotkey}" Command="{Binding HotkeyPressedCommand}" 

@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using System.Windows.Input;
+using System.Windows.Shell;
 
 namespace SenpaiCopy
 {
@@ -38,6 +39,14 @@ namespace SenpaiCopy
 		private string _imagePathFilter;
 		private FileInfo _selectedImage;
 		private ICommand _hotkeyPressedCommand;
+		private TaskbarItemInfo _taskbarProgress;
+
+		/// <summary>
+		/// Number of images in this session.
+		/// A new session gets created when 
+		/// a new image folder is selected.
+		/// </summary>
+		private double _sessionCount; 
 
 		#endregion
 
@@ -230,6 +239,15 @@ namespace SenpaiCopy
 			private set { _hotkeyPressedCommand = value; }
 		}
 
+		public TaskbarItemInfo TaskbarProgress
+		{
+			get { return _taskbarProgress; }
+			private set
+			{
+				_taskbarProgress = value;
+				NotifyOfPropertyChange(() => TaskbarProgress);
+			}
+		}
 		/// <summary>
 		/// Gets if the previous button is enabled.
 		/// </summary>
@@ -296,6 +314,7 @@ namespace SenpaiCopy
 			ResetCheckBoxes = true;
 			LoadIgnoredPaths();
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
+			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };		
 		}
 
 		/// <summary>
@@ -345,6 +364,9 @@ namespace SenpaiCopy
 					if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
 						_imagePathList.Add(new FileInfo(file));
 				}
+
+				TaskbarProgress.ProgressValue = 0.0;
+				_sessionCount = _imagePathList.Count;
 
 				SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
 				SenpaiCopy.Properties.Settings.Default.Save();
@@ -427,6 +449,7 @@ namespace SenpaiCopy
 				try
 				{
 					CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
+					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;
 				}
 				catch (Exception ex)
 				{
@@ -437,7 +460,8 @@ namespace SenpaiCopy
 			{
 				CurrentImage = null;
 				_currentImageIndex = 0;
-			}
+				TaskbarProgress.ProgressValue = 1.0;
+      }
 
 			NotifyOfPropertyChange(() => CanPrevious);
 			NotifyOfPropertyChange(() => CanNext);
