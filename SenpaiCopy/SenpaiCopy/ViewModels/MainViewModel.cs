@@ -25,7 +25,12 @@ namespace SenpaiCopy
 		private SettingsViewModel _settingsViewModel;
 		private ObservableCollection<FileInfo> _imagePathList;
 		private ObservableCollection<PathCheckBox> _checkBoxList;
+
+		/// <summary>
+		/// The index of the current image of the <see cref="ImagePathList"/>
+		/// </summary>
 		private int _currentImageIndex;
+
 		private ImageSource _currentImage;
 		private bool _includeImageSubDirectories;
 		private bool _includeFolderSubDirectories;
@@ -46,7 +51,7 @@ namespace SenpaiCopy
 		/// A new session gets created when 
 		/// a new image folder is selected.
 		/// </summary>
-		private double _sessionCount; 
+		private double _sessionCount;
 
 		#endregion
 
@@ -314,7 +319,7 @@ namespace SenpaiCopy
 			ResetCheckBoxes = true;
 			LoadIgnoredPaths();
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
-			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };		
+			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
 		}
 
 		/// <summary>
@@ -342,14 +347,14 @@ namespace SenpaiCopy
 		public void SelectImageFolder()
 		{
 			FolderBrowserDialog dlg = new FolderBrowserDialog();
-			dlg.SelectedPath = SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath;
-			if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			dlg.SelectedPath = Properties.Settings.Default.LastSelectedImagePath;
+			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ImagePath = dlg.SelectedPath;
 				_imagePathList.Clear();
 
 				System.IO.SearchOption so;
-				if ((bool)IncludeImageSubDirectories)
+				if (IncludeImageSubDirectories)
 					so = System.IO.SearchOption.AllDirectories;
 				else
 					so = System.IO.SearchOption.TopDirectoryOnly;
@@ -368,8 +373,8 @@ namespace SenpaiCopy
 				TaskbarProgress.ProgressValue = 0.0;
 				_sessionCount = _imagePathList.Count;
 
-				SenpaiCopy.Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
-				SenpaiCopy.Properties.Settings.Default.Save();
+				Properties.Settings.Default.LastSelectedImagePath = dlg.SelectedPath;
+				Properties.Settings.Default.Save();
 			}
 
 			UpdatePictureBox();
@@ -381,15 +386,15 @@ namespace SenpaiCopy
 		public void SelectFolderPath()
 		{
 			FolderBrowserDialog dlg = new FolderBrowserDialog();
-			dlg.SelectedPath = SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath;
-			if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			dlg.SelectedPath = Properties.Settings.Default.LastSelectedFolderPath;
+			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				_checkBoxList.Clear();
 
 				FolderPath = dlg.SelectedPath;
 
 				System.IO.SearchOption so;
-				if ((bool)IncludeFolderSubDirectories)
+				if (IncludeFolderSubDirectories)
 					so = System.IO.SearchOption.AllDirectories;
 				else
 					so = System.IO.SearchOption.TopDirectoryOnly;
@@ -402,8 +407,8 @@ namespace SenpaiCopy
 					AddCheckBox(folder);
 				}
 
-				SenpaiCopy.Properties.Settings.Default.LastSelectedFolderPath = dlg.SelectedPath;
-				SenpaiCopy.Properties.Settings.Default.Save();
+				Properties.Settings.Default.LastSelectedFolderPath = dlg.SelectedPath;
+				Properties.Settings.Default.Save();
 				NotifyOfPropertyChange(() => ExecuteButtonColor);
 			}
 		}
@@ -420,9 +425,9 @@ namespace SenpaiCopy
 				chk.Content = new DirectoryInfo(folder).Name;
 				chk.FullPath = folder;
 				chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-				chk.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+				chk.VerticalAlignment = VerticalAlignment.Stretch;
 				chk.Margin = new Thickness(10, 0, 0, 0);
-				chk.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(CheckBox_RightMouseDown);
+				chk.MouseRightButtonDown += new MouseButtonEventHandler(CheckBox_RightMouseDown);
 				chk.Checked += CheckBox_CheckedChanged;
 				chk.Unchecked += CheckBox_CheckedChanged;
 				chk.ToolTip = folder;
@@ -461,7 +466,7 @@ namespace SenpaiCopy
 				CurrentImage = null;
 				_currentImageIndex = 0;
 				TaskbarProgress.ProgressValue = 1.0;
-      }
+			}
 
 			NotifyOfPropertyChange(() => CanPrevious);
 			NotifyOfPropertyChange(() => CanNext);
@@ -486,7 +491,7 @@ namespace SenpaiCopy
 				{
 					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					HandleError(ex);
 				}
@@ -616,7 +621,7 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Sets the current right clicked CheckBox.
 		/// </summary>
-		private void CheckBox_RightMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void CheckBox_RightMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			_currentRightClickedCheckBox = sender as PathCheckBox;
 		}
