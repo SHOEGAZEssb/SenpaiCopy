@@ -110,6 +110,10 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => CurrentImage);
 				NotifyOfPropertyChange(() => CanCopy);
 				NotifyOfPropertyChange(() => ExecuteButtonColor);
+				NotifyOfPropertyChange(() => ImageLoaded);
+				NotifyOfPropertyChange(() => ImageWidth);
+				NotifyOfPropertyChange(() => ImageHeight);
+				NotifyOfPropertyChange(() => ImageFileSize);
 			}
 		}
 
@@ -299,6 +303,56 @@ namespace SenpaiCopy
 					return new SolidColorBrush(Colors.Red);
 				else
 					return new SolidColorBrush(Colors.Green);
+			}
+		}
+
+		/// <summary>
+		/// Gets if an image is loaded.
+		/// </summary>
+		public bool ImageLoaded
+		{
+			get { return CurrentImage != null; }
+		}
+
+		/// <summary>
+		/// Gets the width of the current image.
+		/// </summary>
+		public int ImageWidth
+		{
+			get
+			{
+				if (ImageLoaded)
+					return (int)CurrentImage.Width;
+				else
+					return 0;
+			}
+		}
+
+		/// <summary>
+		/// Gets the height of the current image.
+		/// </summary>
+		public int ImageHeight
+		{
+			get
+			{
+				if (ImageLoaded)
+					return (int)CurrentImage.Height;
+				else
+					return 0;
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of the current image in megabytes.
+		/// </summary>
+		public double ImageFileSize
+		{
+			get
+			{
+				if (ImageLoaded)
+					return Math.Round(_imagePathList[_currentImageIndex].Length / 1024.0 / 1024.0, 2);
+				else
+					return 0.0;
 			}
 		}
 

@@ -19,6 +19,10 @@
             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Key}"/>
     </Window.InputBindings>
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -205,8 +209,9 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="5"/>            
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Current Image:"/>
@@ -221,6 +226,14 @@
                         </TextBlock>
                     </Hyperlink>
                 </TextBlock>
+                <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="{Binding ImageWidth}" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}"/>
+                    <Label Content="x" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}"/>
+                    <Label Content="{Binding ImageHeight}" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}"/>
+                    <Label Content="|" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}"/>
+                    <Label Content="{Binding ImageFileSize}" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}"/>
+                    <Label Content="MB" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}"/>
+                </StackPanel>
 
                 <Button Content="Previous" Grid.Row="1">
                     <i:Interaction.Triggers>
