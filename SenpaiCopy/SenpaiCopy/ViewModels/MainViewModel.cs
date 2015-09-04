@@ -360,12 +360,12 @@ namespace SenpaiCopy
 			{
 				if (ImageLoaded)
 				{
-					if(_imagePathList[_currentImageIndex].Extension == ".webm")
+					if (_imagePathList[_currentImageIndex].Extension == ".webm")
 					{
 						var mediaInformations = VlcPlayer.MediaPlayer.GetCurrentMedia().TracksInformations;
-						foreach(var mi in mediaInformations)
+						foreach (var mi in mediaInformations)
 						{
-							if(mi.Type == Vlc.DotNet.Core.Interops.Signatures.MediaTrackTypes.Video)
+							if (mi.Type == Vlc.DotNet.Core.Interops.Signatures.MediaTrackTypes.Video)
 							{
 								return (int)mi.Video.Width;
 							}
@@ -375,7 +375,7 @@ namespace SenpaiCopy
 						return (int)CurrentImage.Width;
 				}
 
-			  return 0;
+				return 0;
 			}
 		}
 
@@ -501,7 +501,7 @@ namespace SenpaiCopy
 				foreach (string file in files)
 				{
 					string lowerFile = file.ToLower();
-					if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif") 
+					if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif")
 						|| lowerFile.EndsWith(".webm"))
 						_imagePathList.Add(new FileInfo(file));
 				}
@@ -597,10 +597,10 @@ namespace SenpaiCopy
 					else
 					{
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
-					  VlcPlayer.MediaPlayer.Stop();
+						VlcPlayer.MediaPlayer.Stop();
 					}
-					
-					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;					
+
+					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;
 				}
 				catch (Exception ex)
 				{
@@ -648,7 +648,7 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					if(VlcPlayerVisible) // check if current file is a .webm
+					if (VlcPlayerVisible) // check if current file is a .webm
 					{
 						VlcPlayer.MediaPlayer.Stop();
 					}
