@@ -448,7 +448,7 @@ namespace SenpaiCopy
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
 			VlcPlayer = new VlcControl();
-			VlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"..\..\..\Libs\Vlc\lib\x86\");
+			VlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"..\..\..\Libs\Vlc\lib\x86-libs\");
 		}
 
 		/// <summary>
