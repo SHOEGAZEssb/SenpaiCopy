@@ -323,7 +323,13 @@ namespace SenpaiCopy
 		/// </summary>
 		public bool VlcPlayerVisible
 		{
-			get { return _imagePathList[_currentImageIndex].Extension == ".webm"; }
+			get
+			{
+				if (_imagePathList.Count == 0)
+					return false;
+				else
+					return _imagePathList[_currentImageIndex].Extension == ".webm";
+			}
 		}
 
 		/// <summary>
