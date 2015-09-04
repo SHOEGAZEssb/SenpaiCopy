@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Shell;
 using Vlc.DotNet.Wpf;
 using System.Reflection;
+using Vlc.DotNet.Core;
 
 namespace SenpaiCopy
 {
@@ -282,7 +283,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public bool CanCopy
 		{
-			get { return CurrentImage != null && (DeleteImage || _checkBoxList.Count(i => (bool)i.IsChecked) != 0); }
+			get { return ImageLoaded && (DeleteImage || _checkBoxList.Count(i => (bool)i.IsChecked) != 0); }
 		}
 
 		/// <summary>
