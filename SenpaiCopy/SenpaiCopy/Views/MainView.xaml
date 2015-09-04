@@ -5,7 +5,8 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cal="http://www.caliburnproject.org"
-        xmlns:local="clr-namespace:SenpaiCopy" 
+        xmlns:local="clr-namespace:SenpaiCopy"
+        xmlns:vlc="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
         TaskbarItemInfo="{Binding TaskbarProgress}">
 
     <Window.InputBindings>
@@ -100,6 +101,9 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Image>
+
+        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding VlcPlayer}" Visibility="{Binding VlcPlayerVisible, Converter={StaticResource BoolToVis}}"/>
+        <!--<vlc:VlcControl  x:Name="VLCCtrl"/>-->
 
         <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
@@ -217,7 +221,7 @@
                 <Label Content="Current Image:"/>
                 <TextBlock Grid.Column="2" Grid.ColumnSpan="3" Margin="0,5,0,0" >
                     <Hyperlink>
-                        <TextBlock Text="{Binding CurrentImage.UriSource.LocalPath}">
+                        <TextBlock Text="{Binding ImageFileName}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDown">
                             <cal:ActionMessage MethodName="CurrentImageLabelClicked"/>

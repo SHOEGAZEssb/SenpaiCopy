@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Vlc.DotNet.Core;
+using Vlc.DotNet.Forms;
 
 namespace SenpaiCopy
 {
@@ -13,6 +16,6 @@ namespace SenpaiCopy
     public MainView()
     {
       InitializeComponent();
-    }
+		}
 	}
 }

@@ -12,6 +12,8 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using System.Windows.Input;
 using System.Windows.Shell;
+using Vlc.DotNet.Wpf;
+using System.Reflection;
 
 namespace SenpaiCopy
 {
@@ -45,6 +47,7 @@ namespace SenpaiCopy
 		private FileInfo _selectedImage;
 		private ICommand _hotkeyPressedCommand;
 		private TaskbarItemInfo _taskbarProgress;
+		private VlcControl _vlcPlayer;
 
 		/// <summary>
 		/// Number of images in this session.
@@ -108,12 +111,7 @@ namespace SenpaiCopy
 			{
 				_currentImage = value;
 				NotifyOfPropertyChange(() => CurrentImage);
-				NotifyOfPropertyChange(() => CanCopy);
-				NotifyOfPropertyChange(() => ExecuteButtonColor);
-				NotifyOfPropertyChange(() => ImageLoaded);
-				NotifyOfPropertyChange(() => ImageWidth);
-				NotifyOfPropertyChange(() => ImageHeight);
-				NotifyOfPropertyChange(() => ImageFileSize);
+				NotifyImagePropertyChanges();
 			}
 		}
 
@@ -257,6 +255,20 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => TaskbarProgress);
 			}
 		}
+
+		/// <summary>
+		/// Gets/sets the vlc player control.
+		/// </summary>
+		public VlcControl VlcPlayer
+		{
+			get { return _vlcPlayer; }
+			private set
+			{
+				_vlcPlayer = value;
+				NotifyOfPropertyChange(() => VlcPlayer);
+			}
+		}
+
 		/// <summary>
 		/// Gets if the previous button is enabled.
 		/// </summary>
@@ -307,11 +319,30 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
+		/// Gets if the VlcPlayer should be visible on the UI.
+		/// </summary>
+		public bool VlcPlayerVisible
+		{
+			get { return _imagePathList[_currentImageIndex].Extension == ".webm"; }
+		}
+
+		/// <summary>
 		/// Gets if an image is loaded.
 		/// </summary>
 		public bool ImageLoaded
 		{
-			get { return CurrentImage != null; }
+			get
+			{
+				if (CurrentImage != null)
+					return true;
+				else
+				{
+					if (_imagePathList.Count == 0)
+						return false;
+					else
+						return _imagePathList[_currentImageIndex].Extension == ".webm";
+				}
+			}
 		}
 
 		/// <summary>
@@ -322,9 +353,23 @@ namespace SenpaiCopy
 			get
 			{
 				if (ImageLoaded)
-					return (int)CurrentImage.Width;
-				else
-					return 0;
+				{
+					if(_imagePathList[_currentImageIndex].Extension == ".webm")
+					{
+						var mediaInformations = VlcPlayer.MediaPlayer.GetCurrentMedia().TracksInformations;
+						foreach(var mi in mediaInformations)
+						{
+							if(mi.Type == Vlc.DotNet.Core.Interops.Signatures.MediaTrackTypes.Video)
+							{
+								return (int)mi.Video.Width;
+							}
+						}
+					}
+					else
+						return (int)CurrentImage.Width;
+				}
+
+			  return 0;
 			}
 		}
 
@@ -336,9 +381,37 @@ namespace SenpaiCopy
 			get
 			{
 				if (ImageLoaded)
-					return (int)CurrentImage.Height;
+				{
+					if (_imagePathList[_currentImageIndex].Extension == ".webm")
+					{
+						var mediaInformations = VlcPlayer.MediaPlayer.GetCurrentMedia().TracksInformations;
+						foreach (var mi in mediaInformations)
+						{
+							if (mi.Type == Vlc.DotNet.Core.Interops.Signatures.MediaTrackTypes.Video)
+							{
+								return (int)mi.Video.Height;
+							}
+						}
+					}
+					else
+						return (int)CurrentImage.Height;
+				}
+
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Gets the name of the current file.
+		/// </summary>
+		public string ImageFileName
+		{
+			get
+			{
+				if (ImageLoaded)
+					return _imagePathList[_currentImageIndex].FullName;
 				else
-					return 0;
+					return "";
 			}
 		}
 
@@ -374,6 +447,8 @@ namespace SenpaiCopy
 			LoadIgnoredPaths();
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
+			VlcPlayer = new VlcControl();
+			VlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"..\..\Libs\lib\Vlc\x86\");
 		}
 
 		/// <summary>
@@ -420,7 +495,8 @@ namespace SenpaiCopy
 				foreach (string file in files)
 				{
 					string lowerFile = file.ToLower();
-					if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif"))
+					if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif") 
+						|| lowerFile.EndsWith(".webm"))
 						_imagePathList.Add(new FileInfo(file));
 				}
 
@@ -507,8 +583,18 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
-					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;
+					if (_imagePathList[_currentImageIndex].Extension == ".webm")
+					{
+						VlcPlayer.MediaPlayer.Play(_imagePathList[_currentImageIndex]);
+						NotifyImagePropertyChanges();
+					}
+					else
+					{
+						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
+					  VlcPlayer.MediaPlayer.Stop();
+					}
+					
+					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;					
 				}
 				catch (Exception ex)
 				{
@@ -524,6 +610,7 @@ namespace SenpaiCopy
 
 			NotifyOfPropertyChange(() => CanPrevious);
 			NotifyOfPropertyChange(() => CanNext);
+			NotifyOfPropertyChange(() => VlcPlayerVisible);
 		}
 
 		/// <summary>
@@ -555,6 +642,11 @@ namespace SenpaiCopy
 			{
 				try
 				{
+					if(VlcPlayerVisible) // check if current file is a .webm
+					{
+						VlcPlayer.MediaPlayer.Stop();
+					}
+
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 					_imagePathList.RemoveAt(_currentImageIndex);
 				}
@@ -748,6 +840,20 @@ namespace SenpaiCopy
 		public void ClearImagePathFilter()
 		{
 			ImagePathFilter = "";
+		}
+
+		/// <summary>
+		/// Notifies the UI of image related changes.
+		/// </summary>
+		private void NotifyImagePropertyChanges()
+		{
+			NotifyOfPropertyChange(() => CanCopy);
+			NotifyOfPropertyChange(() => ExecuteButtonColor);
+			NotifyOfPropertyChange(() => ImageLoaded);
+			NotifyOfPropertyChange(() => ImageWidth);
+			NotifyOfPropertyChange(() => ImageHeight);
+			NotifyOfPropertyChange(() => ImageFileName);
+			NotifyOfPropertyChange(() => ImageFileSize);
 		}
 	}
 }
