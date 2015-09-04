@@ -14,10 +14,5 @@ namespace SenpaiCopy
     {
       InitializeComponent();
     }
-
-		private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-		{
-
-		}
 	}
 }
