@@ -20,5 +20,11 @@
     <Setting Name="ClearCheckBoxesHotkey" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="SupportedFormats" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.bmp;.gif;.ico;.jpg;.jpeg;.png;.tiff;.webm;.wmp</Value>
+    </Setting>
+    <Setting Name="EnabledFormats" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.bmp;.gif;.jpg;.jpeg;.png;.tiff;.webm;.wmp</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

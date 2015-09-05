@@ -502,8 +502,7 @@ namespace SenpaiCopy
 				foreach (string file in files)
 				{
 					string lowerFile = file.ToLower();
-					if (lowerFile.EndsWith(".png") || lowerFile.EndsWith(".bmp") || lowerFile.EndsWith(".jpg") || lowerFile.EndsWith(".jpeg") || lowerFile.EndsWith(".gif")
-						|| lowerFile.EndsWith(".webm"))
+					if(SettingsViewModel.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 						_imagePathList.Add(new FileInfo(file));
 				}
 

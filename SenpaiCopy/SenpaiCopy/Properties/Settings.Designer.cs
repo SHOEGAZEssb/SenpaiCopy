@@ -94,5 +94,29 @@ namespace SenpaiCopy.Properties {
                 this["ClearCheckBoxesHotkey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".bmp;.gif;.ico;.jpg;.jpeg;.png;.tiff;.webm;.wmp")]
+        public string SupportedFormats {
+            get {
+                return ((string)(this["SupportedFormats"]));
+            }
+            set {
+                this["SupportedFormats"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".bmp;.gif;.jpg;.jpeg;.png;.tiff;.webm;.wmp")]
+        public string EnabledFormats {
+            get {
+                return ((string)(this["EnabledFormats"]));
+            }
+            set {
+                this["EnabledFormats"] = value;
+            }
+        }
     }
 }
