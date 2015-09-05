@@ -346,6 +346,8 @@ namespace SenpaiCopy
 				{
 					if (_imagePathList.Count == 0)
 						return false;
+					else if (_imagePathList.Count == _currentImageIndex)
+						return false;
 					else
 						return _imagePathList[_currentImageIndex].Extension == ".webm";
 				}
@@ -853,13 +855,13 @@ namespace SenpaiCopy
 		/// </summary>
 		private void NotifyImagePropertyChanges()
 		{
-			NotifyOfPropertyChange(() => CanCopy);
-			NotifyOfPropertyChange(() => ExecuteButtonColor);
-			NotifyOfPropertyChange(() => ImageLoaded);
-			NotifyOfPropertyChange(() => ImageWidth);
-			NotifyOfPropertyChange(() => ImageHeight);
-			NotifyOfPropertyChange(() => ImageFileName);
-			NotifyOfPropertyChange(() => ImageFileSize);
+				NotifyOfPropertyChange(() => CanCopy);
+				NotifyOfPropertyChange(() => ExecuteButtonColor);
+				NotifyOfPropertyChange(() => ImageLoaded);
+				NotifyOfPropertyChange(() => ImageWidth);
+				NotifyOfPropertyChange(() => ImageHeight);
+				NotifyOfPropertyChange(() => ImageFileName);
+				NotifyOfPropertyChange(() => ImageFileSize);
 		}
 	}
 }
