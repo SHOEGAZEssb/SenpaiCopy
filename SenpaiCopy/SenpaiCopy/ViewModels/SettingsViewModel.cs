@@ -34,7 +34,11 @@ namespace SenpaiCopy
 		public Key PreviousHotkey
 		{
 			get { return _previousHotkey; }
-			set { _previousHotkey = value; }
+			set
+			{
+				_previousHotkey = value;
+				NotifyOfPropertyChange(() => PreviousHotkey);
+			}
 		}
 
 		/// <summary>
@@ -43,7 +47,11 @@ namespace SenpaiCopy
 		public Key ExecuteHotkey
 		{
 			get { return _executeHotkey; }
-			set { _executeHotkey = value; }
+			set
+			{
+				_executeHotkey = value;
+				NotifyOfPropertyChange(() => ExecuteHotkey);
+			}
 		}
 
 		/// <summary>
@@ -52,7 +60,11 @@ namespace SenpaiCopy
 		public Key NextHotkey
 		{
 			get { return _nextHotkey; }
-			set { _nextHotkey = value; }
+			set
+			{
+				_nextHotkey = value;
+				NotifyOfPropertyChange(() => NextHotkey);
+			}
 		}
 
 		/// <summary>
@@ -61,7 +73,11 @@ namespace SenpaiCopy
 		public Key ClearCheckBoxesHotkey
 		{
 			get { return _clearCheckBoxesHotkey; }
-			set { _clearCheckBoxesHotkey = value; }
+			set
+			{
+				_clearCheckBoxesHotkey = value;
+				NotifyOfPropertyChange(() => ClearCheckBoxesHotkey);
+			}
 		}
 
 		/// <summary>
@@ -143,10 +159,6 @@ namespace SenpaiCopy
 			ExecuteHotkey = (Key)Properties.Settings.Default.ExecuteHotkey;
 			NextHotkey = (Key)Properties.Settings.Default.NextHotkey;
 			ClearCheckBoxesHotkey = (Key)Properties.Settings.Default.ClearCheckBoxesHotkey;
-			NotifyOfPropertyChange(() => PreviousHotkey);
-			NotifyOfPropertyChange(() => ExecuteHotkey);
-			NotifyOfPropertyChange(() => NextHotkey);
-			NotifyOfPropertyChange(() => ClearCheckBoxesHotkey);
 
 			EnabledFormats = new ObservableCollection<string>(Properties.Settings.Default.EnabledFormats.Split(';').OrderBy(i => i));
 			List<string> tempSupportedFormats = new List<string>(Properties.Settings.Default.SupportedFormats.Split(';'));
@@ -181,10 +193,6 @@ namespace SenpaiCopy
 			Properties.Settings.Default.ExecuteHotkey = (int)ExecuteHotkey;
 			Properties.Settings.Default.NextHotkey = (int)NextHotkey;
 			Properties.Settings.Default.ClearCheckBoxesHotkey = (int)ClearCheckBoxesHotkey;
-			NotifyOfPropertyChange(() => PreviousHotkey);
-			NotifyOfPropertyChange(() => ExecuteHotkey);
-			NotifyOfPropertyChange(() => NextHotkey);
-			NotifyOfPropertyChange(() => ClearCheckBoxesHotkey);
 
 			Properties.Settings.Default.EnabledFormats = string.Join(";", EnabledFormats.Select(i => i.ToString()).ToArray());
 			Properties.Settings.Default.Save();
