@@ -1,14 +1,11 @@
-﻿using System;
-using System.Windows;
-using Vlc.DotNet.Core;
-using Vlc.DotNet.Forms;
+﻿using System.Windows;
 
 namespace SenpaiCopy
 {
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class MainView : Window
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainView : Window
   {
     /// <summary>
     /// Ctor.

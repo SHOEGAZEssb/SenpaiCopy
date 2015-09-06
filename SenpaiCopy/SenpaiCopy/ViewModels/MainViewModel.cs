@@ -13,8 +13,6 @@ using Microsoft.VisualBasic.FileIO;
 using System.Windows.Input;
 using System.Windows.Shell;
 using Vlc.DotNet.Wpf;
-using System.Reflection;
-using Vlc.DotNet.Core;
 
 namespace SenpaiCopy
 {
