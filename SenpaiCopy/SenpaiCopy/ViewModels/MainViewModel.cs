@@ -13,6 +13,9 @@ using Microsoft.VisualBasic.FileIO;
 using System.Windows.Input;
 using System.Windows.Shell;
 using Vlc.DotNet.Wpf;
+using RestSharp;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace SenpaiCopy
 {
@@ -47,6 +50,17 @@ namespace SenpaiCopy
 		private ICommand _hotkeyPressedCommand;
 		private TaskbarItemInfo _taskbarProgress;
 		private VlcControl _vlcPlayer;
+		private ImageSource _reverseImageSearchButtonImage;
+
+		/// <summary>
+		/// Thread used to do the google reverse image search.
+		/// </summary>
+		private Thread _reverseImageSearchThread;
+
+		/// <summary>
+		/// Current dispatcher. Used in the reverse image search thread.
+		/// </summary>
+		private Dispatcher _dispatcher;
 
 		/// <summary>
 		/// Number of images in this session.
@@ -269,6 +283,19 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
+		/// The current image of the reverse image search button.
+		/// </summary>
+		public ImageSource ReverseImageSearchButtonImage
+		{
+			get { return _reverseImageSearchButtonImage; }
+			private set
+			{
+				_reverseImageSearchButtonImage = value;
+				NotifyOfPropertyChange(() => ReverseImageSearchButtonImage);
+			}
+		}
+
+		/// <summary>
 		/// Gets if the previous button is enabled.
 		/// </summary>
 		public bool CanPrevious
@@ -299,6 +326,14 @@ namespace SenpaiCopy
 		public bool CanAddFolder
 		{
 			get { return FolderPath != null && FolderPath != ""; }
+		}
+
+		/// <summary>
+		/// Gets if the current image can be searched with the google reverse image search.
+		/// </summary>
+		public bool CanReverseImageSearch
+		{
+			get { return CurrentImage != null && ImageFileSize <= 15; }
 		}
 
 		/// <summary>
@@ -456,6 +491,9 @@ namespace SenpaiCopy
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
 			VlcPlayer = new VlcControl();
 			VlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"..\..\..\Libs\Vlc\lib\x86-libs\");
+			ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
+			_reverseImageSearchThread = new Thread(new ThreadStart(GoogleReverseImageSearch));
+			_dispatcher = Dispatcher.CurrentDispatcher;
 		}
 
 		/// <summary>
@@ -502,7 +540,7 @@ namespace SenpaiCopy
 				foreach (string file in files)
 				{
 					string lowerFile = file.ToLower();
-					if(SettingsViewModel.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
+					if (SettingsViewModel.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 						_imagePathList.Add(new FileInfo(file));
 				}
 
@@ -591,7 +629,7 @@ namespace SenpaiCopy
 				{
 					if (_imagePathList[_currentImageIndex].Extension == ".webm")
 					{
-						VlcPlayer.MediaPlayer.Play(_imagePathList[_currentImageIndex]);
+						VlcPlayer.MediaPlayer.Play(_imagePathList[_currentImageIndex], new string[] { "--repeat", "--loop" });
 						NotifyImagePropertyChanges();
 					}
 					else
@@ -853,13 +891,39 @@ namespace SenpaiCopy
 		/// </summary>
 		private void NotifyImagePropertyChanges()
 		{
-				NotifyOfPropertyChange(() => CanCopy);
-				NotifyOfPropertyChange(() => ExecuteButtonColor);
-				NotifyOfPropertyChange(() => ImageLoaded);
-				NotifyOfPropertyChange(() => ImageWidth);
-				NotifyOfPropertyChange(() => ImageHeight);
-				NotifyOfPropertyChange(() => ImageFileName);
-				NotifyOfPropertyChange(() => ImageFileSize);
+			NotifyOfPropertyChange(() => CanCopy);
+			NotifyOfPropertyChange(() => ExecuteButtonColor);
+			NotifyOfPropertyChange(() => ImageLoaded);
+			NotifyOfPropertyChange(() => ImageWidth);
+			NotifyOfPropertyChange(() => ImageHeight);
+			NotifyOfPropertyChange(() => ImageFileName);
+			NotifyOfPropertyChange(() => ImageFileSize);
+			NotifyOfPropertyChange(() => CanReverseImageSearch);
+		}
+
+		/// <summary>
+		/// Starts the reverse image search.
+		/// </summary>
+		public void StartReverseImageSearch()
+		{
+			_reverseImageSearchThread.Start();
+		}
+
+		/// <summary>
+		/// Uploads the current image to google reverse image search.
+		/// </summary>
+		private void GoogleReverseImageSearch()
+		{
+			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"))));
+			var client = new RestClient("http://imagebin.ca");
+			var request = new RestRequest("upload.php", Method.POST);
+			request.AddFile("file", _imagePathList[_currentImageIndex].FullName);
+			var response = client.Execute(request);
+			int index = response.Content.IndexOf("url:") + 4; // + 4 because we want the end of 'url:'
+			int length = response.Content.Length - 1;
+			string imgUrl = response.Content.Substring(index, (response.Content.Length - 1) - index);
+			Process.Start("https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
+			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"))));
 		}
 	}
 }
