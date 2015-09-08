@@ -14,8 +14,8 @@ using System.Windows.Input;
 using System.Windows.Shell;
 using Vlc.DotNet.Wpf;
 using RestSharp;
-using System.Threading;
 using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace SenpaiCopy
 {
@@ -53,12 +53,12 @@ namespace SenpaiCopy
 		private ImageSource _reverseImageSearchButtonImage;
 
 		/// <summary>
-		/// Thread used to do the google reverse image search.
+		/// BackgroundWorker used to do the google reverse image search.
 		/// </summary>
-		private Thread _reverseImageSearchThread;
+		private BackgroundWorker _reverseImageSearchWorker;
 
 		/// <summary>
-		/// Current dispatcher. Used in the reverse image search thread.
+		/// Current dispatcher. Used in the reverse image search BackgroundWorker.
 		/// </summary>
 		private Dispatcher _dispatcher;
 
@@ -492,7 +492,8 @@ namespace SenpaiCopy
 			VlcPlayer = new VlcControl();
 			VlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"..\..\..\Libs\Vlc\lib\x86-libs\");
 			ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
-			_reverseImageSearchThread = new Thread(new ThreadStart(GoogleReverseImageSearch));
+			_reverseImageSearchWorker = new BackgroundWorker();
+			_reverseImageSearchWorker.DoWork += new DoWorkEventHandler(GoogleReverseImageSearch);
 			_dispatcher = Dispatcher.CurrentDispatcher;
 		}
 
@@ -906,13 +907,14 @@ namespace SenpaiCopy
 		/// </summary>
 		public void StartReverseImageSearch()
 		{
-			_reverseImageSearchThread.Start();
+			if(!_reverseImageSearchWorker.IsBusy)
+				_reverseImageSearchWorker.RunWorkerAsync();
 		}
 
 		/// <summary>
 		/// Uploads the current image to google reverse image search.
 		/// </summary>
-		private void GoogleReverseImageSearch()
+		private void GoogleReverseImageSearch(object sender, DoWorkEventArgs e)
 		{
 			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"))));
 			var client = new RestClient("http://imagebin.ca");
