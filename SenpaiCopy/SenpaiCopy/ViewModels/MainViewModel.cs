@@ -923,7 +923,7 @@ namespace SenpaiCopy
 			request.AddParameter("dl_limit", 1);
 			request.AddFile("file", _imagePathList[_currentImageIndex].FullName);
 			var response = client.Execute(request);
-			int index = response.Content.IndexOf("url:") + 4; // + 4 because we want the end of 'url:'
+			int index = response.Content.IndexOf("http");
 			int length = response.Content.Length - 1;
 			string imgUrl = response.Content.Substring(index, (response.Content.Length - 1) - index);
 			Process.Start("https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
