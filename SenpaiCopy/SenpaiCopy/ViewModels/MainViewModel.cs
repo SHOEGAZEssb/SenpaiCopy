@@ -631,7 +631,7 @@ namespace SenpaiCopy
 					if (_imagePathList[_currentImageIndex].Extension == ".webm")
 					{
 						VlcPlayer.MediaPlayer.Play(_imagePathList[_currentImageIndex], new string[] { "--repeat", "--loop" });
-						NotifyImagePropertyChanges();
+						CurrentImage = null;
 					}
 					else
 					{
