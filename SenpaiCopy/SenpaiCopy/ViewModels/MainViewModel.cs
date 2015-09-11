@@ -259,6 +259,9 @@ namespace SenpaiCopy
 			private set { _hotkeyPressedCommand = value; }
 		}
 
+		/// <summary>
+		/// Progress bar in the TaskBar for showing session progress.
+		/// </summary>
 		public TaskbarItemInfo TaskbarProgress
 		{
 			get { return _taskbarProgress; }
@@ -688,9 +691,7 @@ namespace SenpaiCopy
 				try
 				{
 					if (VlcPlayerVisible) // check if current file is a .webm
-					{
 						VlcPlayer.MediaPlayer.Stop();
-					}
 
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 					_imagePathList.RemoveAt(_currentImageIndex);
@@ -704,9 +705,7 @@ namespace SenpaiCopy
 				_currentImageIndex++;
 
 			if (ResetCheckBoxes)
-			{
 				ClearCheckBoxes();
-			}
 
 			UpdatePictureBox();
 		}
