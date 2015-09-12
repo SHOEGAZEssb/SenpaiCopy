@@ -923,7 +923,6 @@ namespace SenpaiCopy
 			request.AddFile("file", _imagePathList[_currentImageIndex].FullName);
 			var response = client.Execute(request);
 			int index = response.Content.IndexOf("http");
-			int length = response.Content.Length - 1;
 			string imgUrl = response.Content.Substring(index, (response.Content.Length - 1) - index);
 			Process.Start("https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
 			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"))));
