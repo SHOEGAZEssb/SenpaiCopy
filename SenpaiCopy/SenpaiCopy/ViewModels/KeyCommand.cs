@@ -4,7 +4,7 @@ using System.Windows.Input;
 namespace SenpaiCopy
 {
 	/// <summary>
-	/// Class that executes a command.
+	/// Class that executes a command. Mainly used for key shortcuts.
 	/// </summary>
 	public class KeyCommand : ICommand
 	{
