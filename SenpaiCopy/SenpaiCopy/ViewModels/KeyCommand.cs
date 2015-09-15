@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Input;
 
 namespace SenpaiCopy
@@ -8,6 +8,9 @@ namespace SenpaiCopy
 	/// </summary>
 	public class KeyCommand : ICommand
 	{
+		/// <summary>
+		/// Method to execute on command execute.
+		/// </summary>
 		private Action<object> _execute;
 
 		/// <summary>
@@ -28,7 +31,7 @@ namespace SenpaiCopy
 		/// Gets if the command can be executed.
 		/// </summary>
 		/// <param name="parameter">Ignored.</param>
-		/// <returns></returns>
+		/// <returns>Bool that indicates if the command can be executed.</returns>
 		public bool CanExecute(object parameter)
 		{
 			return true;
@@ -37,7 +40,7 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Executes the command method with the given <paramref name="param"/>.
 		/// </summary>
-		/// <param name="param"></param>
+		/// <param name="param">Parameter for the method that will be executed.</param>
 		public void Execute(object param)
 		{
 			_execute(param);
