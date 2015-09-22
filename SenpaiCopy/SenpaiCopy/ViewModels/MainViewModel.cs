@@ -917,6 +917,7 @@ namespace SenpaiCopy
 		{
 			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"))));
 			var client = new RestClient("http://imagebin.ca");
+			client.Proxy = null;
 			var request = new RestRequest("upload.php", Method.POST);
 			request.AddParameter("key", "5yjR1+Mgnzh+Wa+ADwUFYaJ4CeUQHpSQ");
 			request.AddParameter("dl_limit", 1);
