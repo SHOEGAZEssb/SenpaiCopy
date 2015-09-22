@@ -147,6 +147,16 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </MenuItem>
+                                        <MenuItem Header="{Binding FavoriteContextMenuItemText}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{Binding FavoriteContextMenuItemImage}"/>
+                                            </MenuItem.Icon>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="AddPathToFavorites"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </MenuItem>
                                         <MenuItem Header="Remove CheckBox">
                                             <MenuItem.Icon>
                                                 <Image Source="../Resources/deletePath.png"/>

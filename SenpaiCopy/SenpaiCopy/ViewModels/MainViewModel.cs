@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -44,6 +45,7 @@ namespace SenpaiCopy
 		private bool _resetCheckBoxes;
 		private PathCheckBox _currentRightClickedCheckBox;
 		private ObservableCollection<string> _ignoredPaths;
+		private ObservableCollection<string> _favoritePaths;
 		private string _checkBoxFilter;
 		private string _imagePathFilter;
 		private FileInfo _selectedImage;
@@ -233,6 +235,12 @@ namespace SenpaiCopy
 			private set { _ignoredPaths = value; }
 		}
 
+		public ObservableCollection<string> FavoritePaths
+		{
+			get { return _favoritePaths; }
+			private set { _favoritePaths = value; }
+		}
+
 		/// <summary>
 		/// Gets/sets the currently selected image in the list.
 		/// </summary>
@@ -295,6 +303,34 @@ namespace SenpaiCopy
 			{
 				_reverseImageSearchButtonImage = value;
 				NotifyOfPropertyChange(() => ReverseImageSearchButtonImage);
+			}
+		}
+
+		/// <summary>
+		/// Gets the text of the favorite context menu item.
+		/// </summary>
+		public string FavoriteContextMenuItemText
+		{
+			get
+			{
+				if ((_currentRightClickedCheckBox.Content as TextBlock).Background == null)
+					return "Add to favorites";
+				else
+					return "Remove from favorites";
+			}
+		}
+
+		/// <summary>
+		/// Gets the image of the favorite context menu item.
+		/// </summary>
+		public ImageSource FavoriteContextMenuItemImage
+		{
+			get
+			{
+				if ((_currentRightClickedCheckBox.Content as TextBlock).Background == null)
+					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/favAdd.png"));
+				else
+					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/favRemove.png"));
 			}
 		}
 
@@ -490,6 +526,7 @@ namespace SenpaiCopy
 			DeleteImage = true;
 			ResetCheckBoxes = true;
 			LoadIgnoredPaths();
+			LoadFavoritePaths();
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
 			VlcPlayer = new VlcControl();
@@ -517,6 +554,25 @@ namespace SenpaiCopy
 			}
 			else
 				File.Create("IgnoredPaths.txt");
+		}
+
+		/// <summary>
+		/// Loads the favorite paths from the text file.
+		/// </summary>
+		private void LoadFavoritePaths()
+		{
+			FavoritePaths = new ObservableCollection<string>();
+
+			if (File.Exists("FavoritePaths.txt"))
+			{
+				string[] paths = File.ReadAllLines("FavoritePaths.txt");
+				foreach (string path in paths)
+				{
+					FavoritePaths.Add(path);
+				}
+			}
+			else
+				File.Create("FavoritePaths.txt");
 		}
 
 		/// <summary>
@@ -600,7 +656,7 @@ namespace SenpaiCopy
 			if (!IgnoredPaths.Contains(folder))
 			{
 				PathCheckBox chk = new PathCheckBox();
-				chk.Content = new DirectoryInfo(folder).Name;
+				chk.Content = new TextBlock() { Text = new DirectoryInfo(folder).Name };
 				chk.FullPath = folder;
 				chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
 				chk.VerticalAlignment = VerticalAlignment.Stretch;
@@ -609,6 +665,10 @@ namespace SenpaiCopy
 				chk.Checked += CheckBox_CheckedChanged;
 				chk.Unchecked += CheckBox_CheckedChanged;
 				chk.ToolTip = folder;
+
+				if (FavoritePaths.Contains(folder))
+					(chk.Content as TextBlock).Background = new SolidColorBrush(Colors.Yellow);
+
 				_checkBoxList.Add(chk);
 			}
 		}
@@ -766,6 +826,26 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
+		/// Adds/removes the right clicked CheckBox to/from the favorites.
+		/// </summary>
+		public void AddPathToFavorites()
+		{
+			if ((_currentRightClickedCheckBox.Content as TextBlock).Background == null)
+			{
+				File.AppendAllText("FavoritePaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
+				FavoritePaths.Add(_currentRightClickedCheckBox.FullPath);
+				(_currentRightClickedCheckBox.Content as TextBlock).Background = new SolidColorBrush(Colors.Yellow);
+			}
+			else
+			{
+				List<string> paths = File.ReadAllLines("FavoritePaths.txt").ToList();
+				paths.Remove(_currentRightClickedCheckBox.FullPath);
+				File.WriteAllLines("FavoritePaths.txt", paths.ToArray());
+				(_currentRightClickedCheckBox.Content as TextBlock).Background = null;
+			}
+		}
+
+		/// <summary>
 		/// Shows a dialog to select a folder to add to the list.
 		/// </summary>
 		public void AddFolder()
@@ -814,6 +894,8 @@ namespace SenpaiCopy
 		private void CheckBox_RightMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			_currentRightClickedCheckBox = sender as PathCheckBox;
+			NotifyOfPropertyChange(() => FavoriteContextMenuItemText);
+			NotifyOfPropertyChange(() => FavoriteContextMenuItemImage);
 		}
 
 		/// <summary>
@@ -906,7 +988,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public void StartReverseImageSearch()
 		{
-			if(!_reverseImageSearchWorker.IsBusy)
+			if (!_reverseImageSearchWorker.IsBusy)
 				_reverseImageSearchWorker.RunWorkerAsync();
 		}
 
