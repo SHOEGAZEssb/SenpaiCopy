@@ -103,7 +103,6 @@
         </Image>
 
         <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding VlcPlayer}" Visibility="{Binding VlcPlayerVisible, Converter={StaticResource BoolToVis}}"/>
-        <!--<vlc:VlcControl  x:Name="VLCCtrl"/>-->
 
         <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
@@ -280,10 +279,8 @@
                     </i:Interaction.Triggers>
                     <Button.Content>
                         <Image gif:ImageBehavior.AnimatedSource="{Binding ReverseImageSearchButtonImage}" Width="16" Height="16"/>
-                        <!--<Image Source="../Resources/google-favicon.png" />-->
                     </Button.Content>
                 </Button>
-
             </Grid>
         </GroupBox>
     </Grid>
