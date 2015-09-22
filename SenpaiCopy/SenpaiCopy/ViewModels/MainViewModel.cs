@@ -1,21 +1,21 @@
 ﻿using Caliburn.Micro;
+using Microsoft.VisualBasic.FileIO;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Linq;
-using Microsoft.VisualBasic.FileIO;
-using System.Windows.Input;
 using System.Windows.Shell;
-using Vlc.DotNet.Wpf;
-using RestSharp;
 using System.Windows.Threading;
-using System.ComponentModel;
+using Vlc.DotNet.Wpf;
 
 namespace SenpaiCopy
 {
@@ -94,7 +94,7 @@ namespace SenpaiCopy
 			get
 			{
 				if (ImagePathFilter != "")
-					return new ObservableCollection<FileInfo>(_imagePathList.Where(i => i.Name.ToLower().Contains(ImagePathFilter.ToLower())).ToList<FileInfo>());
+					return new ObservableCollection<FileInfo>(_imagePathList.Where(i => i.Name.ToLower().Contains(ImagePathFilter.ToLower())).ToList());
 				else
 					return _imagePathList;
 			}
@@ -136,7 +136,7 @@ namespace SenpaiCopy
 			get
 			{
 				if (CheckBoxFilter != "")
-					return new ObservableCollection<PathCheckBox>(_checkBoxList.Where(i => i.Content.ToString().ToLower().Contains(CheckBoxFilter.ToLower())).ToList<PathCheckBox>());
+					return new ObservableCollection<PathCheckBox>(_checkBoxList.Where(i => i.Content.ToString().ToLower().Contains(CheckBoxFilter.ToLower())).ToList());
 				else
 					return _checkBoxList;
 			}

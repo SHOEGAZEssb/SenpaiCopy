@@ -6,13 +6,13 @@ namespace SenpaiCopy
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainView : Window
-  {
-    /// <summary>
-    /// Ctor.
-    /// </summary>
-    public MainView()
-    {
-      InitializeComponent();
+	{
+		/// <summary>
+		/// Ctor.
+		/// </summary>
+		public MainView()
+		{
+			InitializeComponent();
 		}
 	}
 }
