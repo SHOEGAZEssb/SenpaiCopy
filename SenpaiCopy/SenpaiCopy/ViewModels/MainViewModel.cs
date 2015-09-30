@@ -997,18 +997,28 @@ namespace SenpaiCopy
 		/// </summary>
 		private void GoogleReverseImageSearch(object sender, DoWorkEventArgs e)
 		{
-			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"))));
-			var client = new RestClient("http://imagebin.ca");
-			client.Proxy = null;
-			var request = new RestRequest("upload.php", Method.POST);
-			request.AddParameter("key", "5yjR1+Mgnzh+Wa+ADwUFYaJ4CeUQHpSQ");
-			request.AddParameter("dl_limit", 1);
-			request.AddFile("file", _imagePathList[_currentImageIndex].FullName);
-			var response = client.Execute(request);
-			int index = response.Content.IndexOf("http");
-			string imgUrl = response.Content.Substring(index, (response.Content.Length - 1) - index);
-			Process.Start("https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
-			_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"))));
+			try
+			{
+				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"))));
+				var client = new RestClient("http://imagebin.ca");
+				client.Proxy = null;
+				var request = new RestRequest("upload.php", Method.POST);
+				request.AddParameter("key", "5yjR1+Mgnzh+Wa+ADwUFYaJ4CeUQHpSQ");
+				request.AddParameter("dl_limit", 1);
+				request.AddFile("file", _imagePathList[_currentImageIndex].FullName);
+				var response = client.Execute(request);
+				int index = response.Content.IndexOf("http");
+				string imgUrl = response.Content.Substring(index, (response.Content.Length - 1) - index);
+				Process.Start("https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
+			}
+			catch (Exception)
+			{
+				System.Windows.MessageBox.Show("Something went wrong while googling the image.");
+			}
+			finally
+			{
+				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"))));
+			}
 		}
 	}
 }
