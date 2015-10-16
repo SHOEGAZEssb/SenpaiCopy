@@ -140,7 +140,7 @@ namespace SenpaiCopy
       get
       {
         if (CheckBoxFilter != "")
-          return new ObservableCollection<PathCheckBox>(_checkBoxList.Where(i => i.Content.ToString().ToLower().Contains(CheckBoxFilter.ToLower())).ToList());
+          return new ObservableCollection<PathCheckBox>(_checkBoxList.Where(i => (i.Content as TextBlock).Text.ToLower().Contains(CheckBoxFilter.ToLower())).ToList());
         else
           return _checkBoxList;
       }
