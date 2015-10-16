@@ -6,7 +6,6 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:local="clr-namespace:SenpaiCopy"
-        xmlns:vlc="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
         TaskbarItemInfo="{Binding TaskbarProgress}">
 
     <Window.InputBindings>
