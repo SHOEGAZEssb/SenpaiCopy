@@ -687,13 +687,15 @@ namespace SenpaiCopy
 					else
 					{
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
-					}
-
-					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;
+					}					
 				}
 				catch (Exception ex)
 				{
 					HandleError(ex);
+				}
+				finally
+				{
+					TaskbarProgress.ProgressValue = (_sessionCount - _imagePathList.Count) * 1.0 / _sessionCount;
 				}
 			}
 			else // no more images.
