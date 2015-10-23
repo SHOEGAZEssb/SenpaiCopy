@@ -21,7 +21,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="SupportedFormats" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.bmp;.gif;.ico;.jpg;.jpeg;.png;.tiff;.webm;.wmp</Value>
+      <Value Profile="(Default)">.bmp;.gif;.ico;.jpg;.jpeg;.png;.tif;.tiff;.webm;.wmp</Value>
     </Setting>
     <Setting Name="EnabledFormats" Type="System.String" Scope="User">
       <Value Profile="(Default)">.bmp;.gif;.jpg;.jpeg;.png;.tiff;.webm;.wmp</Value>

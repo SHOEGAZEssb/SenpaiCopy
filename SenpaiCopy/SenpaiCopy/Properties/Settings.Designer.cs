@@ -97,7 +97,7 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".bmp;.gif;.ico;.jpg;.jpeg;.png;.tiff;.webm;.wmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".bmp;.gif;.ico;.jpg;.jpeg;.png;.tif;.tiff;.webm;.wmp")]
         public string SupportedFormats {
             get {
                 return ((string)(this["SupportedFormats"]));
