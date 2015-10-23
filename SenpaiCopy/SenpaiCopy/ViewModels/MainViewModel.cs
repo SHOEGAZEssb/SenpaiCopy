@@ -52,7 +52,6 @@ namespace SenpaiCopy
 		private FileInfo _selectedImage;
 		private ICommand _hotkeyPressedCommand;
 		private TaskbarItemInfo _taskbarProgress;
-		//private VlcControl _vlcPlayer;
 		private VlcPlayer _vlcPlayer;
 		private ImageSource _reverseImageSearchButtonImage;
 
@@ -237,6 +236,9 @@ namespace SenpaiCopy
 			private set { _ignoredPaths = value; }
 		}
 
+		/// <summary>
+		/// Gets/sets the favorite paths.
+		/// </summary>
 		public ObservableCollection<string> FavoritePaths
 		{
 			get { return _favoritePaths; }
@@ -514,7 +516,6 @@ namespace SenpaiCopy
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
 			VlcPlayer = new VlcPlayer();
-			//VlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"..\..\..\Libs\Vlc\lib\x86-libs\");
 			ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
 			_reverseImageSearchWorker = new BackgroundWorker();
 			_reverseImageSearchWorker.DoWork += new DoWorkEventHandler(GoogleReverseImageSearch);
