@@ -67,7 +67,7 @@ namespace SenpaiCopy
 
 		/// <summary>
 		/// Number of images in this session.
-		/// A new session gets created when 
+		/// A new session gets created when
 		/// a new image folder is selected.
 		/// </summary>
 		private double _sessionCount;
@@ -90,7 +90,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Gets/sets the list of image paths. 
+		/// Gets/sets the list of image paths.
 		/// </summary>
 		public ObservableCollection<FileInfo> ImagePathList
 		{
@@ -688,7 +688,7 @@ namespace SenpaiCopy
 					else
 					{
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
-					}					
+					}
 				}
 				catch (Exception ex)
 				{
