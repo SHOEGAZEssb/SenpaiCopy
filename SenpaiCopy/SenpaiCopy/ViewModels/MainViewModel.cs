@@ -26,34 +26,17 @@ namespace SenpaiCopy
 	/// </summary>
 	class MainViewModel : PropertyChangedBase
 	{
-		#region Member
-
-		private SettingsViewModel _settingsViewModel;
-		private ObservableCollection<FileInfo> _imagePathList;
-		private ObservableCollection<PathCheckBox> _checkBoxList;
+		#region Private Member
 
 		/// <summary>
 		/// The index of the current image of the <see cref="ImagePathList"/>
 		/// </summary>
 		private int _currentImageIndex;
 
-		private ImageSource _currentImage;
-		private bool _includeImageSubDirectories;
-		private bool _includeFolderSubDirectories;
-		private string _imagePath;
-		private string _folderPath;
-		private bool _deleteImage;
-		private bool _resetCheckBoxes;
+		/// <summary>
+		/// The last right clicked CheckBox.
+		/// </summary>
 		private PathCheckBox _currentRightClickedCheckBox;
-		private ObservableCollection<string> _ignoredPaths;
-		private ObservableCollection<string> _favoritePaths;
-		private string _checkBoxFilter;
-		private string _imagePathFilter;
-		private FileInfo _selectedImage;
-		private ICommand _hotkeyPressedCommand;
-		private TaskbarItemInfo _taskbarProgress;
-		private VlcPlayer _vlcPlayer;
-		private ImageSource _reverseImageSearchButtonImage;
 
 		/// <summary>
 		/// BackgroundWorker used to do the google reverse image search.
@@ -88,6 +71,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => SettingsViewModel);
 			}
 		}
+		private SettingsViewModel _settingsViewModel;
 
 		/// <summary>
 		/// Gets/sets the list of image paths.
@@ -102,6 +86,7 @@ namespace SenpaiCopy
 					return _imagePathList;
 			}
 		}
+		private ObservableCollection<FileInfo> _imagePathList;
 
 		/// <summary>
 		/// Gets/sets the string for filtering images.
@@ -116,6 +101,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ImagePathFilter);
 			}
 		}
+		private string _imagePathFilter;
 
 		/// <summary>
 		/// Gets/sets the currently shown image.
@@ -130,6 +116,7 @@ namespace SenpaiCopy
 				NotifyImagePropertyChanges();
 			}
 		}
+		private ImageSource _currentImage;
 
 		/// <summary>
 		/// Gets a list of all PathCheckBoxes.
@@ -144,6 +131,7 @@ namespace SenpaiCopy
 					return _checkBoxList;
 			}
 		}
+		private ObservableCollection<PathCheckBox> _checkBoxList;
 
 		/// <summary>
 		/// Gets/sets the string for filtering paths.
@@ -158,6 +146,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => CheckBoxFilter);
 			}
 		}
+		private string _checkBoxFilter;
 
 		/// <summary>
 		/// Gets/sets wether subdirectories get included in select image path.
@@ -167,6 +156,7 @@ namespace SenpaiCopy
 			get { return _includeImageSubDirectories; }
 			set { _includeImageSubDirectories = value; }
 		}
+		private bool _includeImageSubDirectories;
 
 		/// <summary>
 		/// Gets/sets wether subdirectories get included in select folder path.
@@ -176,6 +166,7 @@ namespace SenpaiCopy
 			get { return _includeFolderSubDirectories; }
 			set { _includeFolderSubDirectories = value; }
 		}
+		private bool _includeFolderSubDirectories;
 
 		/// <summary>
 		/// Gets/sets the path to the folder with the images.
@@ -189,6 +180,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ImagePath);
 			}
 		}
+		private string _imagePath;
 
 		/// <summary>
 		/// Gets/sets the path to the folder of the folders.
@@ -203,6 +195,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => CanAddFolder);
 			}
 		}
+		private string _folderPath;
 
 		/// <summary>
 		/// Gets/sets wether the image should be deleted after copying.
@@ -217,6 +210,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ExecuteButtonColor);
 			}
 		}
+		private bool _deleteImage;
 
 		/// <summary>
 		/// Gets/sets wether the path checkBoxes should be reset after executing.
@@ -226,6 +220,7 @@ namespace SenpaiCopy
 			get { return _resetCheckBoxes; }
 			set { _resetCheckBoxes = value; }
 		}
+		private bool _resetCheckBoxes;
 
 		/// <summary>
 		/// Gets/sets the ignored paths.
@@ -235,6 +230,7 @@ namespace SenpaiCopy
 			get { return _ignoredPaths; }
 			private set { _ignoredPaths = value; }
 		}
+		private ObservableCollection<string> _ignoredPaths;
 
 		/// <summary>
 		/// Gets/sets the favorite paths.
@@ -244,6 +240,7 @@ namespace SenpaiCopy
 			get { return _favoritePaths; }
 			private set { _favoritePaths = value; }
 		}
+		private ObservableCollection<string> _favoritePaths;
 
 		/// <summary>
 		/// Gets/sets the currently selected image in the list.
@@ -261,6 +258,7 @@ namespace SenpaiCopy
 				}
 			}
 		}
+		private FileInfo _selectedImage;
 
 		/// <summary>
 		/// Gets/sets the command for pressed hotkeys.
@@ -270,6 +268,7 @@ namespace SenpaiCopy
 			get { return _hotkeyPressedCommand; }
 			private set { _hotkeyPressedCommand = value; }
 		}
+		private ICommand _hotkeyPressedCommand;
 
 		/// <summary>
 		/// Progress bar in the TaskBar for showing session progress.
@@ -283,6 +282,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => TaskbarProgress);
 			}
 		}
+		private TaskbarItemInfo _taskbarProgress;
 
 		/// <summary>
 		/// Gets/sets the vlc player control.
@@ -296,6 +296,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => VlcPlayer);
 			}
 		}
+		private VlcPlayer _vlcPlayer;
 
 		/// <summary>
 		/// The current image of the reverse image search button.
@@ -309,6 +310,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ReverseImageSearchButtonImage);
 			}
 		}
+		private ImageSource _reverseImageSearchButtonImage;
 
 		/// <summary>
 		/// Gets the text of the favorite context menu item.
