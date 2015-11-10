@@ -12,20 +12,6 @@ namespace SenpaiCopy
 	/// </summary>
 	class SettingsViewModel : PropertyChangedBase
 	{
-		#region Member
-
-		private Key _previousHotkey;
-		private Key _executeHotkey;
-		private Key _nextHotkey;
-		private Key _clearCheckBoxesHotkey;
-
-		private ObservableCollection<string> _enabledFormats;
-		private ObservableCollection<string> _supportedFormats;
-		private int _enabledIndex;
-		private int _supportedIndex;
-
-		#endregion
-
 		#region Properties
 
 		/// <summary>
@@ -40,6 +26,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => PreviousHotkey);
 			}
 		}
+		private Key _previousHotkey;
 
 		/// <summary>
 		/// The hotkey to execute.
@@ -53,6 +40,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ExecuteHotkey);
 			}
 		}
+		private Key _executeHotkey;
 
 		/// <summary>
 		/// The hotkey to go to the next image.
@@ -66,6 +54,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => NextHotkey);
 			}
 		}
+		private Key _nextHotkey;
 
 		/// <summary>
 		/// The hotkey to clear all CheckBoxes.
@@ -79,6 +68,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ClearCheckBoxesHotkey);
 			}
 		}
+		private Key _clearCheckBoxesHotkey;
 
 		/// <summary>
 		/// The enabled formats.
@@ -88,6 +78,7 @@ namespace SenpaiCopy
 			get { return _enabledFormats; }
 			private set { _enabledFormats = value; }
 		}
+		private ObservableCollection<string> _enabledFormats;
 
 		/// <summary>
 		/// Supported formats.
@@ -97,6 +88,7 @@ namespace SenpaiCopy
 			get { return _supportedFormats; }
 			private set { _supportedFormats = value; }
 		}
+		private ObservableCollection<string> _supportedFormats;
 
 		/// <summary>
 		/// Index of the selected enabled format.
@@ -110,6 +102,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => CanAddToSupported);
 			}
 		}
+		private int _enabledIndex;
 
 		/// <summary>
 		/// Index of the selected supported format.
@@ -123,6 +116,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => CanAddToEnabled);
 			}
 		}
+		private int _supportedIndex;
 
 		/// <summary>
 		/// Gets wether its possible to add to the enabled formats.
