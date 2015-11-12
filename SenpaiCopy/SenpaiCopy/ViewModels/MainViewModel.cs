@@ -672,20 +672,20 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Updates the currently shown image.
 		/// </summary>
-		private async Task UpdatePictureBox()
+		private void UpdatePictureBox()
 		{
 			if (_imagePathList.Count > _currentImageIndex)
 			{
 				try
 				{
-					if (VlcPlayer.State == xZune.Vlc.Interop.Media.MediaState.Playing)
-						await VlcPlayer.StopAsync();
-
 					if (_imagePathList[_currentImageIndex].Extension == ".webm")
 					{
-						VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
-						VlcPlayer.Play();
-						CurrentImage = null;
+						VlcPlayer.BeginStop(ar =>
+						{
+							VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
+							VlcPlayer.Play();
+							CurrentImage = null;
+						});
 					}
 					else
 					{
