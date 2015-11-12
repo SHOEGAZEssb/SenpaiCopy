@@ -742,8 +742,10 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					if (VlcPlayerVisible) // check if current file is a .webm
-						VlcPlayer.Stop();
+					VlcPlayer.BeginStop(ar =>
+					{
+						// do nothing. hacky
+					});
 
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 					_imagePathList.RemoveAt(_currentImageIndex);
