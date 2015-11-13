@@ -5,7 +5,7 @@ namespace SenpaiCopy
 	/// <summary>
 	/// Bootstrapper used to connect View and ViewModel on startup.
 	/// </summary>
-	class AppBootstrapper : BootstrapperBase
+	internal class AppBootstrapper : BootstrapperBase
 	{
 		/// <summary>
 		/// Ctor.

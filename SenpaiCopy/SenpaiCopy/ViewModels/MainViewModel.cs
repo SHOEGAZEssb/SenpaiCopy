@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -24,7 +23,7 @@ namespace SenpaiCopy
 	/// <summary>
 	/// ViewModel for the MainView.
 	/// </summary>
-	class MainViewModel : PropertyChangedBase
+	internal class MainViewModel : PropertyChangedBase
 	{
 		#region Private Member
 
@@ -55,7 +54,7 @@ namespace SenpaiCopy
 		/// </summary>
 		private double _sessionCount;
 
-		#endregion
+		#endregion Private Member
 
 		#region Properties
 
@@ -498,7 +497,7 @@ namespace SenpaiCopy
 			}
 		}
 
-		#endregion
+		#endregion Properties
 
 		/// <summary>
 		/// Ctor.

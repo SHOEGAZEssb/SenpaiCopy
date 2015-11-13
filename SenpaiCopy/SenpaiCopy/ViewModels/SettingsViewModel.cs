@@ -10,7 +10,7 @@ namespace SenpaiCopy
 	/// <summary>
 	/// ViewModel for the <see cref="SettingsView"/>.
 	/// </summary>
-	class SettingsViewModel : PropertyChangedBase
+	internal class SettingsViewModel : PropertyChangedBase
 	{
 		#region Properties
 
@@ -134,7 +134,7 @@ namespace SenpaiCopy
 			get { return EnabledIndex != -1; }
 		}
 
-		#endregion
+		#endregion Properties
 
 		/// <summary>
 		/// Ctor.
