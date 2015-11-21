@@ -746,6 +746,14 @@ namespace SenpaiCopy
 						// do nothing. hacky
 					});
 
+					if(VlcPlayer.State != xZune.Vlc.Interop.Media.MediaState.Stopped)
+					{
+						VlcPlayer.BeginStop(ar =>
+						{
+							// do nothing. hacky
+						});
+					}
+
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 					_imagePathList.RemoveAt(_currentImageIndex);
 				}
