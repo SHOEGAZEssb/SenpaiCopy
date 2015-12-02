@@ -319,7 +319,7 @@ namespace SenpaiCopy
 			get { return _showIgnoredFolders; }
 			set
 			{
-				Visibility visibility = Visibility.Hidden;
+				Visibility visibility = Visibility.Collapsed;
 
 				if (value)
 					visibility = Visibility.Visible;
@@ -677,7 +677,7 @@ namespace SenpaiCopy
 			if (IgnoredPaths.Contains(folder))
 			{
 				chk.Opacity = 0.5;
-				chk.Visibility = Visibility.Hidden;
+				chk.Visibility = Visibility.Collapsed;
 			}
 
 			if (FavoritePaths.Contains(folder))
@@ -864,7 +864,7 @@ namespace SenpaiCopy
 			_currentRightClickedCheckBox.Opacity = 0.5;
 
 			if (!ShowIgnoredFolders)
-				_currentRightClickedCheckBox.Visibility = Visibility.Hidden;
+				_currentRightClickedCheckBox.Visibility = Visibility.Collapsed;
 		}
 
 		/// <summary>
