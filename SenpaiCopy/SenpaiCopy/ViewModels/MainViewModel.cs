@@ -707,8 +707,8 @@ namespace SenpaiCopy
 
 				if (_imagePathList.Count != 0)
 					UpdatePictureBox();
-
-				TaskbarProgress.ProgressValue = 1.0;
+				else
+					TaskbarProgress.ProgressValue = 1.0;
 			}
 
 			NotifyOfPropertyChange(() => CanPrevious);
