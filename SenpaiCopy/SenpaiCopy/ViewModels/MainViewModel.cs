@@ -335,6 +335,8 @@ namespace SenpaiCopy
 		}
 		private bool _showIgnoredFolders;
 
+		#region Read-Only Properties
+
 		/// <summary>
 		/// Gets the text of the favorite context menu item.
 		/// </summary>
@@ -548,6 +550,8 @@ namespace SenpaiCopy
 					return 0.0;
 			}
 		}
+
+		#endregion Read-Only Properties
 
 		#endregion Properties
 
