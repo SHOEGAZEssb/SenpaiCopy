@@ -805,7 +805,14 @@ namespace SenpaiCopy
 		/// </summary>
 		public void ShowImage()
 		{
-			Process.Start((CurrentImage as BitmapImage).UriSource.LocalPath);
+			try
+			{
+				Process.Start((CurrentImage as BitmapImage).UriSource.LocalPath);
+			}
+			catch(Exception ex)
+			{
+				HandleError(ex);
+			}
 		}
 
 		/// <summary>
