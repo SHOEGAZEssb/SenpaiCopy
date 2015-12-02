@@ -883,7 +883,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Adds the right clicked checkBox path to the <see cref="IgnoredPaths"/>
+		/// Adds/removes the right clicked CheckBox path to/from the <see cref="IgnoredPaths"/>
 		/// </summary>
 		public void IgnorePath()
 		{
@@ -906,7 +906,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Adds/removes the right clicked CheckBox to/from the favorites.
+		/// Adds/removes the right clicked CheckBox to/from the <see cref="FavoritePaths"/>.
 		/// </summary>
 		public void AddPathToFavorites()
 		{
