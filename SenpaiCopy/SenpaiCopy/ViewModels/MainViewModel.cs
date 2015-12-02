@@ -967,7 +967,7 @@ namespace SenpaiCopy
 		/// <param name="ex">Exception with the error message.</param>
 		private void HandleError(Exception ex)
 		{
-			System.Windows.Forms.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
+			System.Windows.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
 			_imagePathList.RemoveAt(_currentImageIndex);
 			UpdatePictureBox();
 		}
