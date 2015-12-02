@@ -915,7 +915,15 @@ namespace SenpaiCopy
 		/// </summary>
 		public void ShowPathInExplorer()
 		{
-			Process.Start(_currentRightClickedCheckBox.FullPath);
+			try
+			{
+				Process.Start(_currentRightClickedCheckBox.FullPath);
+			}
+			catch(Exception)
+			{
+				System.Windows.MessageBox.Show("Error opening the folder. CheckBox will be removed.");
+				RemoveCheckBox();
+			}
 		}
 
 		public void OpenSettingsWindow()
