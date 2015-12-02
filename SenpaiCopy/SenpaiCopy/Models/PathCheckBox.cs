@@ -7,7 +7,7 @@ namespace SenpaiCopy
 	/// </summary>
 	internal class PathCheckBox : CheckBox
 	{
-		private string _fullPath;
+		#region Properties
 
 		/// <summary>
 		/// Path to the folder.
@@ -20,5 +20,8 @@ namespace SenpaiCopy
 				_fullPath = value;
 			}
 		}
+		private string _fullPath;
+
+		#endregion
 	}
 }
