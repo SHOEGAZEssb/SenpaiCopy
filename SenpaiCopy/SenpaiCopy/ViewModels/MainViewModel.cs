@@ -704,6 +704,10 @@ namespace SenpaiCopy
 			{
 				CurrentImage = null;
 				_currentImageIndex = 0;
+
+				if (_imagePathList.Count != 0)
+					UpdatePictureBox();
+
 				TaskbarProgress.ProgressValue = 1.0;
 			}
 
