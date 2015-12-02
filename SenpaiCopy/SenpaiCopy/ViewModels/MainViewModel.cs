@@ -312,6 +312,30 @@ namespace SenpaiCopy
 		private ImageSource _reverseImageSearchButtonImage;
 
 		/// <summary>
+		/// Gets/sets if ignored folders should be shown.
+		/// </summary>
+		public bool ShowIgnoredFolders
+		{
+			get { return _showIgnoredFolders; }
+			set
+			{
+				Visibility visibility = Visibility.Hidden;
+
+				if (value)
+					visibility = Visibility.Visible;
+
+				foreach (PathCheckBox chk in _checkBoxList)
+				{
+					if (IgnoredPaths.Contains(chk.FullPath))
+						chk.Visibility = visibility;
+				}
+
+				_showIgnoredFolders = value;
+			}
+		}
+		private bool _showIgnoredFolders;
+
+		/// <summary>
 		/// Gets the text of the favorite context menu item.
 		/// </summary>
 		public string FavoriteContextMenuItemText
@@ -639,24 +663,27 @@ namespace SenpaiCopy
 		/// <param name="folder">Folder to add.</param>
 		private void AddCheckBox(string folder)
 		{
-			if (!IgnoredPaths.Contains(folder))
+			PathCheckBox chk = new PathCheckBox();
+			chk.Content = new TextBlock() { Text = new DirectoryInfo(folder).Name };
+			chk.FullPath = folder;
+			chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+			chk.VerticalAlignment = VerticalAlignment.Stretch;
+			chk.Margin = new Thickness(10, 0, 0, 0);
+			chk.MouseRightButtonDown += new MouseButtonEventHandler(CheckBox_RightMouseDown);
+			chk.Checked += CheckBox_CheckedChanged;
+			chk.Unchecked += CheckBox_CheckedChanged;
+			chk.ToolTip = folder;
+
+			if (IgnoredPaths.Contains(folder))
 			{
-				PathCheckBox chk = new PathCheckBox();
-				chk.Content = new TextBlock() { Text = new DirectoryInfo(folder).Name };
-				chk.FullPath = folder;
-				chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-				chk.VerticalAlignment = VerticalAlignment.Stretch;
-				chk.Margin = new Thickness(10, 0, 0, 0);
-				chk.MouseRightButtonDown += new MouseButtonEventHandler(CheckBox_RightMouseDown);
-				chk.Checked += CheckBox_CheckedChanged;
-				chk.Unchecked += CheckBox_CheckedChanged;
-				chk.ToolTip = folder;
-
-				if (FavoritePaths.Contains(folder))
-					(chk.Content as TextBlock).Background = new SolidColorBrush(Colors.Yellow);
-
-				_checkBoxList.Add(chk);
+				chk.Opacity = 0.5;
+				chk.Visibility = Visibility.Hidden;
 			}
+
+			if (FavoritePaths.Contains(folder))
+				(chk.Content as TextBlock).Background = new SolidColorBrush(Colors.Yellow);
+
+			_checkBoxList.Add(chk);
 		}
 
 		/// <summary>
@@ -750,7 +777,7 @@ namespace SenpaiCopy
 						// do nothing. hacky
 					});
 
-					if(VlcPlayer.State != xZune.Vlc.Interop.Media.MediaState.Stopped)
+					if (VlcPlayer.State != xZune.Vlc.Interop.Media.MediaState.Stopped)
 					{
 						VlcPlayer.BeginStop(ar =>
 						{
@@ -813,7 +840,7 @@ namespace SenpaiCopy
 			{
 				Process.Start((CurrentImage as BitmapImage).UriSource.LocalPath);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				HandleError(ex);
 			}
@@ -834,7 +861,10 @@ namespace SenpaiCopy
 		{
 			File.AppendAllText("IgnoredPaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
 			IgnoredPaths.Add(_currentRightClickedCheckBox.FullPath);
-			RemoveCheckBox();
+			_currentRightClickedCheckBox.Opacity = 0.5;
+
+			if (!ShowIgnoredFolders)
+				_currentRightClickedCheckBox.Visibility = Visibility.Hidden;
 		}
 
 		/// <summary>
@@ -919,7 +949,7 @@ namespace SenpaiCopy
 			{
 				Process.Start(_currentRightClickedCheckBox.FullPath);
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				System.Windows.MessageBox.Show("Error opening the folder. CheckBox will be removed.");
 				RemoveCheckBox();
