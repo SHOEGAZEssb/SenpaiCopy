@@ -363,6 +363,34 @@ namespace SenpaiCopy
 			}
 		}
 
+    /// <summary>
+    /// Gets the text of the ignore path context menu item.
+    /// </summary>
+    public string IgnoreContextMenuItemText
+    {
+      get
+      {
+        if (_currentRightClickedCheckBox.Opacity == 0.5)
+          return "Remove path from ignore list";
+        else
+          return "Add path to ignore list";
+      }
+    }
+
+    /// <summary>
+    /// Gets the image of the ignore path context menu item.
+    /// </summary>
+    public ImageSource IgnoreContextMenuItemImage
+    {
+      get
+      {
+        if (_currentRightClickedCheckBox.Opacity == 0.5)
+          return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/deleteIgnore.png"));
+        else
+          return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/addIgnore.png")); 
+      }
+    }
+
 		/// <summary>
 		/// Gets if the previous button is enabled.
 		/// </summary>
@@ -859,12 +887,22 @@ namespace SenpaiCopy
 		/// </summary>
 		public void IgnorePath()
 		{
-			File.AppendAllText("IgnoredPaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
-			IgnoredPaths.Add(_currentRightClickedCheckBox.FullPath);
-			_currentRightClickedCheckBox.Opacity = 0.5;
+      if (_currentRightClickedCheckBox.Opacity == 1.0)
+      {
+        File.AppendAllText("IgnoredPaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
+        IgnoredPaths.Add(_currentRightClickedCheckBox.FullPath);
+        _currentRightClickedCheckBox.Opacity = 0.5;
 
-			if (!ShowIgnoredFolders)
-				_currentRightClickedCheckBox.Visibility = Visibility.Collapsed;
+        if (!ShowIgnoredFolders)
+          _currentRightClickedCheckBox.Visibility = Visibility.Collapsed;
+      }
+      else
+      {
+        List<string> ignoredPaths = File.ReadAllLines("IgnoredPaths.txt").ToList();
+        ignoredPaths.Remove(_currentRightClickedCheckBox.FullPath);
+        File.WriteAllLines("IgnoredPaths.txt", ignoredPaths.ToArray());
+        _currentRightClickedCheckBox.Opacity = 1.0;
+      }
 		}
 
 		/// <summary>
@@ -938,6 +976,8 @@ namespace SenpaiCopy
 			_currentRightClickedCheckBox = sender as PathCheckBox;
 			NotifyOfPropertyChange(() => FavoriteContextMenuItemText);
 			NotifyOfPropertyChange(() => FavoriteContextMenuItemImage);
+      NotifyOfPropertyChange(() => IgnoreContextMenuItemText);
+      NotifyOfPropertyChange(() => IgnoreContextMenuItemImage);
 		}
 
 		/// <summary>

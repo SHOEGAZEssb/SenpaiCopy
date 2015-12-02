@@ -169,9 +169,9 @@
                         </i:EventTrigger>
                       </i:Interaction.Triggers>
                     </MenuItem>
-                    <MenuItem Header="Add path to ignore list">
+                    <MenuItem Header="{Binding IgnoreContextMenuItemText}">
                       <MenuItem.Icon>
-                        <Image Source="../Resources/addIgnore.png" />
+                        <Image Source="{Binding IgnoreContextMenuItemImage}" />
                       </MenuItem.Icon>
                       <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
