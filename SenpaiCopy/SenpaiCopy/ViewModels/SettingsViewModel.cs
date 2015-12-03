@@ -118,9 +118,9 @@ namespace SenpaiCopy
 		}
 		private int _supportedIndex;
 
-    #region Read-Only Properties
+		#region Read-Only Properties
 
-    /// <summary>
+		/// <summary>
 		/// Gets wether its possible to add to the enabled formats.
 		/// </summary>
 		public bool CanAddToEnabled
@@ -136,11 +136,11 @@ namespace SenpaiCopy
 			get { return EnabledIndex != -1; }
 		}
 
-    #endregion Read-Only Properties
+		#endregion Read-Only Properties
 
-    #endregion Properties
+		#endregion Properties
 
-    /// <summary>
+		/// <summary>
 		/// Ctor.
 		/// </summary>
 		public SettingsViewModel()

@@ -1047,7 +1047,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Clears the filter of the CheckBoxes.
+		/// Clears the <see cref="CheckBoxFilter"/>.
 		/// </summary>
 		public void ClearCheckBoxFilter()
 		{
@@ -1055,7 +1055,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Clears the filter of the ImagePaths.
+		/// Clears the <see cref="ImagePathFilter"/>.
 		/// </summary>
 		public void ClearImagePathFilter()
 		{
