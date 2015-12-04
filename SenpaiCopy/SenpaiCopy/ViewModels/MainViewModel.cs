@@ -389,7 +389,7 @@ namespace SenpaiCopy
 				if (_currentRightClickedCheckBox.Opacity == 0.5)
 					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/deleteIgnore.png"));
 				else
-					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/addIgnore.png")); 
+					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/addIgnore.png"));
 			}
 		}
 
@@ -746,9 +746,7 @@ namespace SenpaiCopy
 						});
 					}
 					else
-					{
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
-					}
 				}
 				catch (Exception ex)
 				{
