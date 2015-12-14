@@ -226,6 +226,7 @@
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="5" />
           <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="5" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
@@ -241,7 +242,7 @@
                         </TextBlock>
                     </Hyperlink>
                 </TextBlock>
-        <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
           <Label Content="{Binding ImageWidth}" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}" />
           <Label Content="x" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}" />
           <Label Content="{Binding ImageHeight}" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}" />
@@ -287,9 +288,9 @@
         </Button>
 
         <CheckBox Grid.Row="3" Grid.Column="2" Content="Delete source image" IsChecked="{Binding DeleteImage}" VerticalAlignment="Center" />
-        <CheckBox Grid.Row="3" Grid.Column="4" Content="Reset CheckBoxes" IsChecked="{Binding ResetCheckBoxes}" VerticalAlignment="Center" />
+        <CheckBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset CheckBoxes" IsChecked="{Binding ResetCheckBoxes}" VerticalAlignment="Center" />
 
-        <Button Grid.Row="5" Grid.Column="5" IsEnabled="{Binding CanReverseImageSearch}" HorizontalAlignment="Right">
+        <Button Grid.Row="5" Grid.Column="6" IsEnabled="{Binding CanReverseImageSearch}" HorizontalAlignment="Right">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
               <cal:ActionMessage MethodName="StartReverseImageSearch" />
