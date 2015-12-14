@@ -1030,6 +1030,9 @@ namespace SenpaiCopy
 			}
 		}
 
+		/// <summary>
+		/// Shows the <see cref="SettingsView"/>.
+		/// </summary>
 		public void OpenSettingsWindow()
 		{
 			SettingsView sv = new SettingsView();
