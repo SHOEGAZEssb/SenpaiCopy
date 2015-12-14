@@ -23,6 +23,12 @@
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
   </Window.Resources>
 
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Closing">
+      <cal:ActionMessage MethodName="MainViewClose" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="3*" />

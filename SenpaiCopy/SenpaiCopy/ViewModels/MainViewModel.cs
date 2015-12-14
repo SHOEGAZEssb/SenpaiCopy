@@ -1154,5 +1154,16 @@ namespace SenpaiCopy
 				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"))));
 			}
 		}
+
+		/// <summary>
+		/// Shuts down the app.
+		/// </summary>
+		/// <remarks>
+		/// Only needed when there is still a <see cref="StatisticView"/> open.
+		/// </remarks>
+		public void MainViewClose()
+		{
+			App.Current.Shutdown();
+		}
 	}
 }
