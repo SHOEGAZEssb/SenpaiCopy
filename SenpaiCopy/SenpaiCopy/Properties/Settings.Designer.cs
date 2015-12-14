@@ -118,5 +118,77 @@ namespace SenpaiCopy.Properties {
                 this["EnabledFormats"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableStatisticTracking {
+            get {
+                return ((bool)(this["EnableStatisticTracking"]));
+            }
+            set {
+                this["EnableStatisticTracking"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DeletedImagesStatistic {
+            get {
+                return ((int)(this["DeletedImagesStatistic"]));
+            }
+            set {
+                this["DeletedImagesStatistic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CopiedImagesStatistic {
+            get {
+                return ((int)(this["CopiedImagesStatistic"]));
+            }
+            set {
+                this["CopiedImagesStatistic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double DeletedImagesSizeStatistic {
+            get {
+                return ((double)(this["DeletedImagesSizeStatistic"]));
+            }
+            set {
+                this["DeletedImagesSizeStatistic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double CopiedImagesSizeStatistic {
+            get {
+                return ((double)(this["CopiedImagesSizeStatistic"]));
+            }
+            set {
+                this["CopiedImagesSizeStatistic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int StartupStatistic {
+            get {
+                return ((int)(this["StartupStatistic"]));
+            }
+            set {
+                this["StartupStatistic"] = value;
+            }
+        }
     }
 }

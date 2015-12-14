@@ -23,8 +23,9 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="0.25*" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="5" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
@@ -100,7 +101,10 @@
         </Button>
       </Grid>
     </GroupBox>
-    <Button Grid.Row="2" Grid.Column="1" Content="Save">
+    <GroupBox Grid.Column="0" Grid.Row="1" Header="Statistics">
+      <CheckBox Grid.Row="0" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center"/>
+    </GroupBox>
+    <Button Grid.Row="3" Grid.Column="1" Content="Save">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="Click">
           <cal:ActionMessage MethodName="Save">
@@ -109,7 +113,7 @@
         </i:EventTrigger>
       </i:Interaction.Triggers>
     </Button>
-    <Button Grid.Row="2" Grid.Column="3" Content="Cancel">
+    <Button Grid.Row="3" Grid.Column="3" Content="Cancel">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="Click">
           <cal:ActionMessage MethodName="Cancel">

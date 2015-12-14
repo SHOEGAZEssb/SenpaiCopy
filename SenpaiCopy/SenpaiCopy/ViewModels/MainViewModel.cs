@@ -73,6 +73,20 @@ namespace SenpaiCopy
 		private SettingsViewModel _settingsViewModel;
 
 		/// <summary>
+		/// Gets/sets the <see cref="StatisticViewModel"/> for this ViewModel.
+		/// </summary>
+		public StatisticViewModel StatisticViewModel
+		{
+			get { return _statisticViewModel; }
+			private set
+			{
+				_statisticViewModel = value;
+				NotifyOfPropertyChange(() => StatisticViewModel);
+			}
+		}
+		private StatisticViewModel _statisticViewModel;
+
+		/// <summary>
 		/// Gets/sets the list of image paths.
 		/// </summary>
 		public ObservableCollection<FileInfo> ImagePathList
@@ -561,6 +575,11 @@ namespace SenpaiCopy
 		public MainViewModel()
 		{
 			SettingsViewModel = new SettingsViewModel();
+			StatisticViewModel = new StatisticViewModel();
+
+			if(SettingsViewModel.EnableStatisticTracking)
+				StatisticViewModel.Startups++;
+
 			_checkBoxFilter = "";
 			_imagePathFilter = "";
 			_imagePathList = new ObservableCollection<FileInfo>();
@@ -791,6 +810,12 @@ namespace SenpaiCopy
 				try
 				{
 					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
+
+					if (SettingsViewModel.EnableStatisticTracking)
+					{
+						StatisticViewModel.CopiedImages++;
+						StatisticViewModel.CopiedImagesSize += ImageFileSize;
+					}
 				}
 				catch (Exception ex)
 				{
@@ -816,6 +841,13 @@ namespace SenpaiCopy
 					}
 
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+
+					if (SettingsViewModel.EnableStatisticTracking)
+					{
+						StatisticViewModel.DeletedImages++;
+						StatisticViewModel.DeletedImagesSize += ImageFileSize;
+					}
+
 					_imagePathList.RemoveAt(_currentImageIndex);
 				}
 				catch (Exception ex)
@@ -1003,6 +1035,16 @@ namespace SenpaiCopy
 			SettingsView sv = new SettingsView();
 			sv.DataContext = SettingsViewModel;
 			sv.ShowDialog();
+		}
+
+		/// <summary>
+		/// Shows the <see cref="StatisticView"/>.
+		/// </summary>
+		public void OpenStatisticWindow()
+		{
+			StatisticView sv = new StatisticView();
+			sv.DataContext = StatisticViewModel;
+			sv.Show();
 		}
 
 		/// <summary>

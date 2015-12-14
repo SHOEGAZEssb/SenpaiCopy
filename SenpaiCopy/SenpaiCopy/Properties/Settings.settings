@@ -26,5 +26,23 @@
     <Setting Name="EnabledFormats" Type="System.String" Scope="User">
       <Value Profile="(Default)">.bmp;.gif;.jpg;.jpeg;.png;.tiff;.webm;.wmp</Value>
     </Setting>
+    <Setting Name="EnableStatisticTracking" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DeletedImagesStatistic" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CopiedImagesStatistic" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DeletedImagesSizeStatistic" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CopiedImagesSizeStatistic" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="StartupStatistic" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

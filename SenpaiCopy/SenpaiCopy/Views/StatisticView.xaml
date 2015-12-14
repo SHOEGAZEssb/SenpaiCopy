@@ -1,0 +1,58 @@
+﻿<Window x:Class="SenpaiCopy.StatisticView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SenpaiCopy"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cal="http://www.caliburnproject.org"
+        mc:Ignorable="d"
+        Title="Statistic" Height="300" Width="300">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="5" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="5" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="5" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="5" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="5" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+
+    <Label Grid.Row="1" Grid.Column="1" Content="Deleted images:" HorizontalAlignment="Right"/>
+    <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Content="{Binding DeletedImages}"/>
+    <Label Grid.Row="1" Grid.Column="3" Content="Images" />
+    <Label Grid.Row="2" Grid.Column="1" FontSize="10" Content="For a total of:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+    <Label HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2" Content="{Binding DeletedImagesSize}"/>
+    <Label Content="MB" Grid.Row="2" Grid.Column="3"/>
+
+    <Label Grid.Row="4" Grid.Column="1" Content="Copied images:" HorizontalAlignment="Right"/>
+    <Label Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Content="{Binding CopiedImages}"/>
+    <Label Grid.Row="4" Grid.Column="3" Content="Images" />
+    <Label Grid.Row="5" Grid.Column="1" FontSize="10" Content="For a total of:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+    <Label HorizontalAlignment="Right" Grid.Row="5" Grid.Column="2" Content="{Binding CopiedImagesSize}"/>
+    <Label Content="MB" Grid.Row="5" Grid.Column="3"/>
+
+    <Label Grid.Row="7" Grid.Column="1" Content="Program startups:" HorizontalAlignment="Right"/>
+    <Label Grid.Row="7" Grid.Column="2" Content="{Binding Startups}" HorizontalAlignment="Right" />
+    <Label Grid.Row="7" Grid.Column="3" Content="Times" />
+
+    <Button Grid.Row="9" Grid.Column="1" Content="Reset Statistic">
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Click">
+          <cal:ActionMessage MethodName="ResetStatistic"/>
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+    </Button>
+  </Grid>
+</Window>

@@ -118,6 +118,20 @@ namespace SenpaiCopy
 		}
 		private int _supportedIndex;
 
+		/// <summary>
+		/// Gets/sets if statistics should be tracked.
+		/// </summary>
+		public bool EnableStatisticTracking
+		{
+			get { return _enableStatisticTracking; }
+			set
+			{
+				_enableStatisticTracking = value;
+				NotifyOfPropertyChange(() => EnableStatisticTracking);
+			}
+		}
+		private bool _enableStatisticTracking;
+
 		#region Read-Only Properties
 
 		/// <summary>
@@ -161,6 +175,8 @@ namespace SenpaiCopy
 			EnabledFormats = new ObservableCollection<string>(Properties.Settings.Default.EnabledFormats.Split(';').OrderBy(i => i));
 			List<string> tempSupportedFormats = new List<string>(Properties.Settings.Default.SupportedFormats.Split(';'));
 			SupportedFormats = new ObservableCollection<string>(tempSupportedFormats.Where(i => !EnabledFormats.Contains(i)).OrderBy(i => i));
+
+			EnableStatisticTracking = Properties.Settings.Default.EnableStatisticTracking;
 		}
 
 		/// <summary>
@@ -193,6 +209,9 @@ namespace SenpaiCopy
 			Properties.Settings.Default.ClearCheckBoxesHotkey = (int)ClearCheckBoxesHotkey;
 
 			Properties.Settings.Default.EnabledFormats = string.Join(";", EnabledFormats.Select(i => i.ToString()).ToArray());
+
+			Properties.Settings.Default.EnableStatisticTracking = EnableStatisticTracking;
+
 			Properties.Settings.Default.Save();
 			(((sender as FrameworkElement).Parent as FrameworkElement).Parent as Window).Close(); //TODO ULTRA HACKY CHECK THIS!!!!!
 		}
