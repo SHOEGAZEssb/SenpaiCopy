@@ -10,113 +10,113 @@
         mc:Ignorable="d"
         Title="Settings" Height="300" Width="500" WindowStyle="None">
 
-    <Window.Resources>
-        <ObjectDataProvider MethodName="GetValues"
+  <Window.Resources>
+    <ObjectDataProvider MethodName="GetValues"
                     ObjectType="{x:Type sys:Enum}"
                     x:Key="KeyDataProvider">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Key" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </Window.Resources>
+      <ObjectDataProvider.MethodParameters>
+        <x:Type TypeName="Key" />
+      </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+  </Window.Resources>
 
-    <Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="0.25*" />
+      <RowDefinition Height="5" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="0.5*" />
+      <ColumnDefinition Width="5" />
+      <ColumnDefinition Width="0.5*" />
+      <ColumnDefinition Width="5" />
+    </Grid.ColumnDefinitions>
+
+    <GroupBox Header="Hotkeys" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="0.25*" />
-            <RowDefinition Height="5" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="5" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="5" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="5" />
+          <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="5" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="5" />
+          <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <GroupBox Header="Hotkeys" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="5" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Previous:" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Execute:" />
+        <Label Grid.Row="4" Grid.Column="0" Content="Next:" />
+        <Label Grid.Row="6" Grid.Column="0" Content="Clear CheckBoxes:" />
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Previous:" />
-                <Label Grid.Row="2" Grid.Column="0" Content="Execute:" />
-                <Label Grid.Row="4" Grid.Column="0" Content="Next:" />
-                <Label Grid.Row="6" Grid.Column="0" Content="Clear CheckBoxes:" />
+        <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding PreviousHotkey}" />
+        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding ExecuteHotkey}" />
+        <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding NextHotkey}" />
+        <ComboBox Grid.Row="6" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding ClearCheckBoxesHotkey}" />
+      </Grid>
+    </GroupBox>
+    <GroupBox Grid.Column="1" Grid.ColumnSpan="3" Header="Formats">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.5*" />
+          <ColumnDefinition Width="2.5" />
+          <ColumnDefinition Width="20" />
+          <ColumnDefinition Width="2.5" />
+          <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="25" />
+          <RowDefinition Height="0.5*" />
+          <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
 
-                <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding PreviousHotkey}" />
-                <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding ExecuteHotkey}" />
-                <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding NextHotkey}" />
-                <ComboBox Grid.Row="6" Grid.Column="2" ItemsSource="{Binding Source={StaticResource KeyDataProvider}}" SelectedValue="{Binding ClearCheckBoxesHotkey}" />
-            </Grid>
-        </GroupBox>
-        <GroupBox Grid.Column="1" Grid.ColumnSpan="3" Header="Formats">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="2.5" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="2.5" />
-                    <ColumnDefinition Width="0.5*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="0.5*" />
-                    <RowDefinition Height="0.5*" />
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Content="Enabled" />
-                <Label Grid.Row="0" Grid.Column="4" Content="Supported" />
-                <ListBox Grid.Row="1"  Grid.RowSpan="2" ItemsSource="{Binding EnabledFormats}" SelectedIndex="{Binding EnabledIndex}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+        <Label Grid.Row="0" Content="Enabled" />
+        <Label Grid.Row="0" Grid.Column="4" Content="Supported" />
+        <ListBox Grid.Row="1"  Grid.RowSpan="2" ItemsSource="{Binding EnabledFormats}" SelectedIndex="{Binding EnabledIndex}" ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Height="125" />
-                <Button Grid.Row="1" Grid.Column="2" Content="&lt;&#61;" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding CanAddToEnabled}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="AddToEnabled" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <ListBox Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" ItemsSource="{Binding SupportedFormats}" SelectedIndex="{Binding SupportedIndex}"
+        <Button Grid.Row="1" Grid.Column="2" Content="&lt;&#61;" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding CanAddToEnabled}">
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Click">
+              <cal:ActionMessage MethodName="AddToEnabled" />
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+        </Button>
+        <ListBox Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" ItemsSource="{Binding SupportedFormats}" SelectedIndex="{Binding SupportedIndex}"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" Height="125" />
-                <Button Grid.Column="2" Grid.Row="2" Content="&#61;&gt;" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding CanAddToSupported}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="AddToSupported" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </Grid>
-        </GroupBox>
-        <Button Grid.Row="2" Grid.Column="1" Content="Save">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <cal:ActionMessage MethodName="Save">
-                        <cal:Parameter Value="$view" />
-                    </cal:ActionMessage>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+        <Button Grid.Column="2" Grid.Row="2" Content="&#61;&gt;" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding CanAddToSupported}">
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Click">
+              <cal:ActionMessage MethodName="AddToSupported" />
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
         </Button>
-        <Button Grid.Row="2" Grid.Column="3" Content="Cancel">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <cal:ActionMessage MethodName="Cancel">
-                        <cal:Parameter Value="$view" />
-                    </cal:ActionMessage>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
-    </Grid>
+      </Grid>
+    </GroupBox>
+    <Button Grid.Row="2" Grid.Column="1" Content="Save">
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Click">
+          <cal:ActionMessage MethodName="Save">
+            <cal:Parameter Value="$view" />
+          </cal:ActionMessage>
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+    </Button>
+    <Button Grid.Row="2" Grid.Column="3" Content="Cancel">
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Click">
+          <cal:ActionMessage MethodName="Cancel">
+            <cal:Parameter Value="$view" />
+          </cal:ActionMessage>
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+    </Button>
+  </Grid>
 </Window>
