@@ -16,6 +16,7 @@
       <RowDefinition Height="5" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="5" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
@@ -39,15 +40,18 @@
     <Label Grid.Row="4" Grid.Column="1" Content="Copied images:" HorizontalAlignment="Right"/>
     <Label Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Content="{Binding CopiedImages}"/>
     <Label Grid.Row="4" Grid.Column="3" Content="Images" />
-    <Label Grid.Row="5" Grid.Column="1" FontSize="10" Content="For a total of:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-    <Label HorizontalAlignment="Right" Grid.Row="5" Grid.Column="2" Content="{Binding CopiedImagesSize}"/>
-    <Label Content="MB" Grid.Row="5" Grid.Column="3"/>
+    <Label Grid.Row="5" Grid.Column="1" Content="Total copies:" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+    <Label Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Content="{Binding TotalCopiedImages}"/>
+    <Label Grid.Row="5" Grid.Column="3" Content="Images" />
+    <Label Grid.Row="6" Grid.Column="1" FontSize="10" Content="For a total of:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+    <Label Grid.Row="6" Grid.Column="2" HorizontalAlignment="Right" Content="{Binding TotalCopiedImagesSize}"/>
+    <Label Content="MB" Grid.Row="6" Grid.Column="3"/>
 
-    <Label Grid.Row="7" Grid.Column="1" Content="Program startups:" HorizontalAlignment="Right"/>
-    <Label Grid.Row="7" Grid.Column="2" Content="{Binding Startups}" HorizontalAlignment="Right" />
-    <Label Grid.Row="7" Grid.Column="3" Content="Times" />
+    <Label Grid.Row="8" Grid.Column="1" Content="Program startups:" HorizontalAlignment="Right"/>
+    <Label Grid.Row="8" Grid.Column="2" Content="{Binding Startups}" HorizontalAlignment="Right" />
+    <Label Grid.Row="8" Grid.Column="3" Content="Times" />
 
-    <Button Grid.Row="9" Grid.Column="1" Content="Reset Statistic">
+    <Button Grid.Row="10" Grid.Column="1" Content="Reset Statistic">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="Click">
           <cal:ActionMessage MethodName="ResetStatistic"/>

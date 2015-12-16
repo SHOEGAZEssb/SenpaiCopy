@@ -805,6 +805,9 @@ namespace SenpaiCopy
 					dirsToCopyTo.Add(c.FullPath);
 			}
 
+			if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count != 0)
+				StatisticViewModel.CopiedImages++;
+
 			foreach (string dir in dirsToCopyTo)
 			{
 				try
@@ -813,8 +816,8 @@ namespace SenpaiCopy
 
 					if (SettingsViewModel.EnableStatisticTracking)
 					{
-						StatisticViewModel.CopiedImages++;
-						StatisticViewModel.CopiedImagesSize += ImageFileSize;
+						StatisticViewModel.TotalCopiedImages++;
+						StatisticViewModel.TotalCopiedImagesSize += ImageFileSize;
 					}
 				}
 				catch (Exception ex)
@@ -842,7 +845,7 @@ namespace SenpaiCopy
 
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 
-					if (SettingsViewModel.EnableStatisticTracking)
+					if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count == 0)
 					{
 						StatisticViewModel.DeletedImages++;
 						StatisticViewModel.DeletedImagesSize += ImageFileSize;

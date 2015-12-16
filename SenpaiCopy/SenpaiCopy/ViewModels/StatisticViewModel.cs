@@ -27,6 +27,10 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Gets/sets the total size of deleted images.
 		/// </summary>
+		/// <remarks>
+		/// Only images that only got deleted 
+		/// and not copied should count this up.
+		/// </remarks>
 		public double DeletedImagesSize
 		{
 			get { return Properties.Settings.Default.DeletedImagesSizeStatistic; }
@@ -55,14 +59,28 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Gets/sets the total size of copied images.
 		/// </summary>
-		public double CopiedImagesSize
+		public double TotalCopiedImagesSize
 		{
 			get { return Properties.Settings.Default.CopiedImagesSizeStatistic; }
 			set
 			{
 				Properties.Settings.Default.CopiedImagesSizeStatistic = Math.Round(value, 2);
 				Properties.Settings.Default.Save();
-				NotifyOfPropertyChange(() => CopiedImagesSize);
+				NotifyOfPropertyChange(() => TotalCopiedImagesSize);
+			}
+		}
+
+		/// <summary>
+		/// Gets/sets the total amount of copies made.
+		/// </summary>
+		public int TotalCopiedImages
+		{
+			get { return Properties.Settings.Default.TotalCopiedImagesStatistic; }
+			set
+			{
+				Properties.Settings.Default.TotalCopiedImagesStatistic = value;
+				Properties.Settings.Default.Save();
+				NotifyOfPropertyChange(() => TotalCopiedImages);
 			}
 		}
 
@@ -90,7 +108,7 @@ namespace SenpaiCopy
 			DeletedImages = 0;
 			DeletedImagesSize = 0.0;
 			CopiedImages = 0;
-			CopiedImagesSize = 0.0;
+			TotalCopiedImagesSize = 0.0;
 			Startups = 0;
 		}
 	}
