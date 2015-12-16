@@ -159,6 +159,8 @@ namespace SenpaiCopy
 		/// </summary>
 		public SettingsViewModel()
 		{
+			SupportedIndex = -1;
+			EnabledIndex = -1;
 			LoadSettings();
 		}
 
