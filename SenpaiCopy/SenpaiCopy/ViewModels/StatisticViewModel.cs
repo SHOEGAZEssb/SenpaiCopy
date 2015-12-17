@@ -28,7 +28,7 @@ namespace SenpaiCopy
 		/// Gets/sets the total size of deleted images.
 		/// </summary>
 		/// <remarks>
-		/// Only images that only got deleted 
+		/// Only images that only got deleted
 		/// and not copied should count this up.
 		/// </remarks>
 		public double DeletedImagesSize
