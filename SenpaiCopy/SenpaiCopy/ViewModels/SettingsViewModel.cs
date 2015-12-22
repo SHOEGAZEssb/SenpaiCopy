@@ -135,7 +135,7 @@ namespace SenpaiCopy
 		#region Read-Only Properties
 
 		/// <summary>
-		/// Gets wether its possible to add to the enabled formats.
+		/// Gets whether its possible to add to the enabled formats.
 		/// </summary>
 		public bool CanAddToEnabled
 		{
@@ -143,7 +143,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Gets wether its possible to add to the supported formats.
+		/// Gets whether its possible to add to the supported formats.
 		/// </summary>
 		public bool CanAddToSupported
 		{

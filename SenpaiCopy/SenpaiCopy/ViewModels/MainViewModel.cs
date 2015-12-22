@@ -38,7 +38,7 @@ namespace SenpaiCopy
 		private PathCheckBox _currentRightClickedCheckBox;
 
 		/// <summary>
-		/// BackgroundWorker used to do the google reverse image search.
+		/// BackgroundWorker used to do the Google reverse image search.
 		/// </summary>
 		private BackgroundWorker _reverseImageSearchWorker;
 
@@ -162,7 +162,7 @@ namespace SenpaiCopy
 		private string _checkBoxFilter;
 
 		/// <summary>
-		/// Gets/sets wether subdirectories get included in select image path.
+		/// Gets/sets whether subdirectories get included in select image path.
 		/// </summary>
 		public bool IncludeImageSubDirectories
 		{
@@ -172,7 +172,7 @@ namespace SenpaiCopy
 		private bool _includeImageSubDirectories;
 
 		/// <summary>
-		/// Gets/sets wether subdirectories get included in select folder path.
+		/// Gets/sets whether subdirectories get included in select folder path.
 		/// </summary>
 		public bool IncludeFolderSubDirectories
 		{
@@ -211,7 +211,7 @@ namespace SenpaiCopy
 		private string _folderPath;
 
 		/// <summary>
-		/// Gets/sets wether the image should be deleted after copying.
+		/// Gets/sets whether the image should be deleted after copying.
 		/// </summary>
 		public bool DeleteImage
 		{
@@ -226,7 +226,7 @@ namespace SenpaiCopy
 		private bool _deleteImage;
 
 		/// <summary>
-		/// Gets/sets wether the path checkBoxes should be reset after executing.
+		/// Gets/sets whether the path checkBoxes should be reset after executing.
 		/// </summary>
 		public bool ResetCheckBoxes
 		{
@@ -298,7 +298,7 @@ namespace SenpaiCopy
 		private TaskbarItemInfo _taskbarProgress;
 
 		/// <summary>
-		/// Gets/sets the vlc player control.
+		/// Gets/sets the VLC player control.
 		/// </summary>
 		public VlcPlayer VlcPlayer
 		{
@@ -432,7 +432,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Gets wether the user can click the "Add Folder" button in
+		/// Gets whether the user can click the "Add Folder" button in
 		/// the context menu of the <see cref="FolderPath"/> label.
 		/// </summary>
 		public bool CanAddFolder
@@ -441,7 +441,7 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Gets if the current image can be searched with the google reverse image search.
+		/// Gets if the current image can be searched with the Google reverse image search.
 		/// </summary>
 		public bool CanReverseImageSearch
 		{
