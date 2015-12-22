@@ -812,7 +812,7 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
+					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, false);
 
 					if (SettingsViewModel.EnableStatisticTracking)
 					{
