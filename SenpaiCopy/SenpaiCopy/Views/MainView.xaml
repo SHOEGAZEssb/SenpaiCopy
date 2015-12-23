@@ -229,7 +229,10 @@
           <DataTemplate>
             <TextBlock Text="{Binding Name}">
               <TextBlock.ToolTip>
-                <local:ImageToolTipPreview FileName="{Binding FullName}"/>
+                <StackPanel>
+                  <local:ImageToolTipPreview FileName="{Binding FullName}"/>
+                  <TextBlock Text="{Binding FullName}"/>
+                </StackPanel>          
               </TextBlock.ToolTip>
             </TextBlock>
           </DataTemplate>
