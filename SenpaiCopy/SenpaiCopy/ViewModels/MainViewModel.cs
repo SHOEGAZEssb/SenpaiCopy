@@ -489,9 +489,7 @@ namespace SenpaiCopy
 					return true;
 				else
 				{
-					if (_imagePathList.Count == 0)
-						return false;
-					else if (_imagePathList.Count == _currentImageIndex)
+					if (_imagePathList.Count == 0 || _imagePathList.Count == _currentImageIndex)
 						return false;
 					else
 						return _imagePathList[_currentImageIndex].Extension == ".webm";
