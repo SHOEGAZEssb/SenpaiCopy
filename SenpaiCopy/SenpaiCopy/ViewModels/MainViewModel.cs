@@ -810,6 +810,10 @@ namespace SenpaiCopy
 			{
 				try
 				{
+          if (File.Exists(dir + @"\" + _imagePathList[_currentImageIndex].Name) && SettingsViewModel.WarnIfOverwrite)
+            System.Windows.MessageBox.Show("The file " + _imagePathList[_currentImageIndex].Name + " already exists in " + dir
+                                            + ".\r\nThe current image will be copied as " + _imagePathList[_currentImageIndex].Name + " (n).");
+
 					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, false);
 
 					if (SettingsViewModel.EnableStatisticTracking)
@@ -841,7 +845,11 @@ namespace SenpaiCopy
 						});
 					}
 
-					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+          RecycleOption recycleOption = RecycleOption.DeletePermanently;
+          if (SettingsViewModel.SendToRecycleBin)
+            recycleOption = RecycleOption.SendToRecycleBin;
+
+					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
 
 					if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count == 0)
 					{

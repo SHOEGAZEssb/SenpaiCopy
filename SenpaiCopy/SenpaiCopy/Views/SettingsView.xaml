@@ -103,10 +103,27 @@
         </Button>
       </Grid>
     </GroupBox>
-    <GroupBox Grid.Column="0" Grid.Row="1" Header="Statistics">
-      <CheckBox Grid.Row="0" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center">
-        <CheckBox.ToolTip>If checked, will track certain things in the programm. See statistic window.</CheckBox.ToolTip>
-      </CheckBox>
+    <GroupBox Grid.Column="0" Grid.Row="1" Header="Miscellaneous">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="5"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="5"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="5"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <CheckBox Grid.Row="1" Content="Send deleted files to recycle bin" IsChecked="{Binding SendToRecycleBin}" VerticalAlignment="Center">
+          <CheckBox.ToolTip>If checked, deleted images will be send to the recycle bin.</CheckBox.ToolTip>
+        </CheckBox>
+        <CheckBox Grid.Row="3" Content="Warn if file would be overwritten" IsChecked="{Binding WarnIfOverwrite}" VerticalAlignment="Center">
+          <CheckBox.ToolTip>If checked, a message box will pop up if a file would have been overwritten while copying.</CheckBox.ToolTip>
+        </CheckBox>
+        <CheckBox Grid.Row="5" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center">
+          <CheckBox.ToolTip>If checked, will track certain things in the programm. See statistic window.</CheckBox.ToolTip>
+        </CheckBox>
+      </Grid>
     </GroupBox>
     <Button Grid.Row="3" Grid.Column="1" Content="Save">
       <i:Interaction.Triggers>
