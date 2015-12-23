@@ -223,8 +223,18 @@
         </i:Interaction.Triggers>
         <Button.ToolTip>Clears the image list filter.</Button.ToolTip>
       </Button>
-      <ListBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding ImagePathList}" DisplayMemberPath="Name"
-               SelectedItem="{Binding SelectedImage}" />
+      <ListBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding ImagePathList}"
+               SelectedItem="{Binding SelectedImage}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}">
+              <TextBlock.ToolTip>
+                <local:ImageToolTipPreview FileName="{Binding FullName}"/>
+              </TextBlock.ToolTip>
+            </TextBlock>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
     </Grid>
 
     <GroupBox Header="Image Control" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
