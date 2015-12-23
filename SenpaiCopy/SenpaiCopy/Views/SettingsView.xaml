@@ -99,7 +99,7 @@
               <cal:ActionMessage MethodName="AddToSupported" />
             </i:EventTrigger>
           </i:Interaction.Triggers>
-          <Button.ToolTip>Removes the selected fromat from the enabled formats.</Button.ToolTip>
+          <Button.ToolTip>Removes the selected format from the enabled formats.</Button.ToolTip>
         </Button>
       </Grid>
     </GroupBox>
