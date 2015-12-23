@@ -60,13 +60,20 @@ namespace SenpaiCopy
       if (fileName == "" || fileName.EndsWith(".webm"))
         return null;
 
-      var bitmapImage = new BitmapImage();
-      bitmapImage.BeginInit();
-      bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-      bitmapImage.UriSource = new Uri(fileName);
-      bitmapImage.EndInit();
-      bitmapImage.Freeze();
-      return bitmapImage;
+      try
+      {
+        var bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        bitmapImage.UriSource = new Uri(fileName);
+        bitmapImage.EndInit();
+        bitmapImage.Freeze();
+        return bitmapImage;
+      }
+      catch(Exception)
+      {
+        return null;
+      }
     }
   }
 }
