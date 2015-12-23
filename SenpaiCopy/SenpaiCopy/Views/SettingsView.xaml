@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="Settings" Height="300" Width="500" WindowStyle="ToolWindow">
+        Title="Settings" Height="300" Width="500" WindowStyle="None">
 
   <Window.Resources>
     <ObjectDataProvider MethodName="GetValues"
