@@ -89,6 +89,7 @@
               <cal:ActionMessage MethodName="AddToEnabled" />
             </i:EventTrigger>
           </i:Interaction.Triggers>
+          <Button.ToolTip>Adds the selected supported format to the enabled formats.</Button.ToolTip>
         </Button>
         <ListBox Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" ItemsSource="{Binding SupportedFormats}" SelectedIndex="{Binding SupportedIndex}"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" Height="125" />
@@ -98,11 +99,14 @@
               <cal:ActionMessage MethodName="AddToSupported" />
             </i:EventTrigger>
           </i:Interaction.Triggers>
+          <Button.ToolTip>Removes the selected fromat from the enabled formats.</Button.ToolTip>
         </Button>
       </Grid>
     </GroupBox>
     <GroupBox Grid.Column="0" Grid.Row="1" Header="Statistics">
-      <CheckBox Grid.Row="0" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center"/>
+      <CheckBox Grid.Row="0" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center">
+        <CheckBox.ToolTip>If checked, will track certain things in the programm. See statistic window.</CheckBox.ToolTip>
+      </CheckBox>
     </GroupBox>
     <Button Grid.Row="3" Grid.Column="1" Content="Save">
       <i:Interaction.Triggers>
@@ -112,6 +116,7 @@
           </cal:ActionMessage>
         </i:EventTrigger>
       </i:Interaction.Triggers>
+      <Button.ToolTip>Saves the settings and closes the window.</Button.ToolTip>
     </Button>
     <Button Grid.Row="3" Grid.Column="3" Content="Cancel">
       <i:Interaction.Triggers>
@@ -121,6 +126,7 @@
           </cal:ActionMessage>
         </i:EventTrigger>
       </i:Interaction.Triggers>
+      <Button.ToolTip>Discards the settings and closes the window.</Button.ToolTip>
     </Button>
   </Grid>
 </Window>

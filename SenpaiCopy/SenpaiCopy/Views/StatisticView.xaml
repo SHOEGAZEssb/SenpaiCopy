@@ -57,6 +57,7 @@
           <cal:ActionMessage MethodName="ResetStatistic"/>
         </i:EventTrigger>
       </i:Interaction.Triggers>
+      <Button.ToolTip>Resets the statistic.</Button.ToolTip>
     </Button>
   </Grid>
 </Window>
