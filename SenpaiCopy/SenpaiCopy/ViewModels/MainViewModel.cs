@@ -23,7 +23,7 @@ namespace SenpaiCopy
 	/// <summary>
 	/// ViewModel for the MainView.
 	/// </summary>
-	internal class MainViewModel : PropertyChangedBase
+	public class MainViewModel : PropertyChangedBase
 	{
 		#region Private Member
 
@@ -35,7 +35,7 @@ namespace SenpaiCopy
 		/// <summary>
 		/// The last right clicked CheckBox.
 		/// </summary>
-		private PathCheckBox _currentRightClickedCheckBox;
+		private SenpaiDirectory _currentRightClickedDirectory;
 
 		/// <summary>
 		/// BackgroundWorker used to do the Google reverse image search.
@@ -134,17 +134,17 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Gets a list of all PathCheckBoxes.
 		/// </summary>
-		public ObservableCollection<PathCheckBox> CheckBoxList
+		public ObservableCollection<SenpaiDirectory> CheckBoxList
 		{
 			get
 			{
 				if (CheckBoxFilter != "")
-					return new ObservableCollection<PathCheckBox>(_checkBoxList.Where(i => (i.Content as TextBlock).Text.ToLower().Contains(CheckBoxFilter.ToLower())).ToList());
+					return new ObservableCollection<SenpaiDirectory>(_directoryList.Where(i => i.Path.ToLower().Contains(CheckBoxFilter.ToLower())).ToList());
 				else
-					return _checkBoxList;
+					return _directoryList;
 			}
 		}
-		private ObservableCollection<PathCheckBox> _checkBoxList;
+		private ObservableCollection<SenpaiDirectory> _directoryList;
 
 		/// <summary>
 		/// Gets/sets the string for filtering paths.
@@ -338,7 +338,7 @@ namespace SenpaiCopy
 				if (value)
 					visibility = Visibility.Visible;
 
-				foreach (PathCheckBox chk in _checkBoxList)
+				foreach (SenpaiDirectory chk in _directoryList)
 				{
 					if (IgnoredPaths.Contains(chk.FullPath))
 						chk.Visibility = visibility;
@@ -358,7 +358,7 @@ namespace SenpaiCopy
 		{
 			get
 			{
-				if ((_currentRightClickedCheckBox.Content as TextBlock).Background == null)
+				if (_currentRightClickedDirectory.BackgroundColor == null)
 					return "Add to favorites";
 				else
 					return "Remove from favorites";
@@ -372,7 +372,7 @@ namespace SenpaiCopy
 		{
 			get
 			{
-				if ((_currentRightClickedCheckBox.Content as TextBlock).Background == null)
+				if (_currentRightClickedDirectory.BackgroundColor == null)
 					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/favAdd.png"));
 				else
 					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/favRemove.png"));
@@ -386,7 +386,7 @@ namespace SenpaiCopy
 		{
 			get
 			{
-				if (_currentRightClickedCheckBox.Opacity == 0.5)
+				if (_currentRightClickedDirectory.Opacity == 0.5)
 					return "Remove path from ignore list";
 				else
 					return "Add path to ignore list";
@@ -400,7 +400,7 @@ namespace SenpaiCopy
 		{
 			get
 			{
-				if (_currentRightClickedCheckBox.Opacity == 0.5)
+				if (_currentRightClickedDirectory.Opacity == 0.5)
 					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/deleteIgnore.png"));
 				else
 					return new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/addIgnore.png"));
@@ -420,7 +420,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public bool CanCopy
 		{
-			get { return ImageLoaded && (DeleteImage || _checkBoxList.Count(i => (bool)i.IsChecked) != 0); }
+			get { return ImageLoaded && (DeleteImage || _directoryList.Count(i => i.Checked) != 0); }
 		}
 
 		/// <summary>
@@ -457,7 +457,7 @@ namespace SenpaiCopy
 			{
 				if (!CanCopy)
 					return new SolidColorBrush(Colors.Gray);
-				if (DeleteImage && _checkBoxList.Count(i => (bool)i.IsChecked) == 0)
+				if (DeleteImage && _directoryList.Count(i => i.Checked) == 0)
 					return new SolidColorBrush(Colors.Red);
 				else
 					return new SolidColorBrush(Colors.Green);
@@ -581,7 +581,7 @@ namespace SenpaiCopy
 			_checkBoxFilter = "";
 			_imagePathFilter = "";
 			_imagePathList = new ObservableCollection<FileInfo>();
-			_checkBoxList = new ObservableCollection<PathCheckBox>();
+			_directoryList = new ObservableCollection<SenpaiDirectory>();
 			IncludeFolderSubDirectories = true;
 			DeleteImage = true;
 			ResetCheckBoxes = true;
@@ -682,7 +682,7 @@ namespace SenpaiCopy
 			dlg.SelectedPath = Properties.Settings.Default.LastSelectedFolderPath;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				_checkBoxList.Clear();
+				_directoryList.Clear();
 
 				FolderPath = dlg.SelectedPath;
 
@@ -694,7 +694,7 @@ namespace SenpaiCopy
 
 				string[] subfolders = Directory.GetDirectories(dlg.SelectedPath, "*", so);
 
-				List<PathCheckBox> _checkBoxes = new List<PathCheckBox>();
+				List<SenpaiDirectory> _checkBoxes = new List<SenpaiDirectory>();
 				foreach (string folder in subfolders)
 				{
 					AddCheckBox(folder);
@@ -712,27 +712,18 @@ namespace SenpaiCopy
 		/// <param name="folder">Folder to add.</param>
 		private void AddCheckBox(string folder)
 		{
-			PathCheckBox chk = new PathCheckBox();
-			chk.Content = new TextBlock() { Text = new DirectoryInfo(folder).Name };
-			chk.FullPath = folder;
-			chk.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-			chk.VerticalAlignment = VerticalAlignment.Stretch;
-			chk.Margin = new Thickness(10, 0, 0, 0);
-			chk.MouseRightButtonDown += new MouseButtonEventHandler(CheckBox_RightMouseDown);
-			chk.Checked += CheckBox_CheckedChanged;
-			chk.Unchecked += CheckBox_CheckedChanged;
-			chk.ToolTip = folder;
+			SenpaiDirectory dir = new SenpaiDirectory(folder, this);
 
 			if (IgnoredPaths.Contains(folder))
 			{
-				chk.Opacity = 0.5;
-				chk.Visibility = Visibility.Collapsed;
+				dir.Opacity = 0.5;
+				dir.Visibility = Visibility.Collapsed;
 			}
 
 			if (FavoritePaths.Contains(folder))
-				(chk.Content as TextBlock).Background = new SolidColorBrush(Colors.Yellow);
+				dir.BackgroundColor = new SolidColorBrush(Colors.Yellow);
 
-			_checkBoxList.Add(chk);
+			_directoryList.Add(dir);
 		}
 
 		/// <summary>
@@ -797,10 +788,10 @@ namespace SenpaiCopy
 		{
 			List<string> dirsToCopyTo = new List<string>();
 
-			foreach (PathCheckBox c in _checkBoxList)
+			foreach (SenpaiDirectory dir in _directoryList)
 			{
-				if ((bool)c.IsChecked)
-					dirsToCopyTo.Add(c.FullPath);
+				if (dir.Checked)
+					dirsToCopyTo.Add(dir.FullPath);
 			}
 
 			if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count != 0)
@@ -878,9 +869,9 @@ namespace SenpaiCopy
 		/// </summary>
 		private void ClearCheckBoxes()
 		{
-			foreach (PathCheckBox c in _checkBoxList)
+			foreach (SenpaiDirectory dir in _directoryList)
 			{
-				c.IsChecked = false;
+				dir.Checked = false;
 			}
 		}
 
@@ -922,7 +913,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public void RemoveCheckBox()
 		{
-			_checkBoxList.Remove(_currentRightClickedCheckBox);
+			_directoryList.Remove(_currentRightClickedDirectory);
 		}
 
 		/// <summary>
@@ -930,21 +921,21 @@ namespace SenpaiCopy
 		/// </summary>
 		public void IgnorePath()
 		{
-			if (_currentRightClickedCheckBox.Opacity == 1.0)
+			if (_currentRightClickedDirectory.Opacity == 1.0)
 			{
-				File.AppendAllText("IgnoredPaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
-				IgnoredPaths.Add(_currentRightClickedCheckBox.FullPath);
-				_currentRightClickedCheckBox.Opacity = 0.5;
+				File.AppendAllText("IgnoredPaths.txt", _currentRightClickedDirectory.FullPath + "\r\n");
+				IgnoredPaths.Add(_currentRightClickedDirectory.FullPath);
+				_currentRightClickedDirectory.Opacity = 0.5;
 
 				if (!ShowIgnoredFolders)
-					_currentRightClickedCheckBox.Visibility = Visibility.Collapsed;
+					_currentRightClickedDirectory.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
 				List<string> ignoredPaths = File.ReadAllLines("IgnoredPaths.txt").ToList();
-				ignoredPaths.Remove(_currentRightClickedCheckBox.FullPath);
+				ignoredPaths.Remove(_currentRightClickedDirectory.FullPath);
 				File.WriteAllLines("IgnoredPaths.txt", ignoredPaths.ToArray());
-				_currentRightClickedCheckBox.Opacity = 1.0;
+				_currentRightClickedDirectory.Opacity = 1.0;
 			}
 		}
 
@@ -953,18 +944,18 @@ namespace SenpaiCopy
 		/// </summary>
 		public void AddPathToFavorites()
 		{
-			if ((_currentRightClickedCheckBox.Content as TextBlock).Background == null)
+			if (_currentRightClickedDirectory.BackgroundColor == null)
 			{
-				File.AppendAllText("FavoritePaths.txt", _currentRightClickedCheckBox.FullPath + "\r\n");
-				FavoritePaths.Add(_currentRightClickedCheckBox.FullPath);
-				(_currentRightClickedCheckBox.Content as TextBlock).Background = new SolidColorBrush(Colors.Yellow);
+				File.AppendAllText("FavoritePaths.txt", _currentRightClickedDirectory.FullPath + "\r\n");
+				FavoritePaths.Add(_currentRightClickedDirectory.FullPath);
+				_currentRightClickedDirectory.BackgroundColor = new SolidColorBrush(Colors.Yellow);
 			}
 			else
 			{
 				List<string> paths = File.ReadAllLines("FavoritePaths.txt").ToList();
-				paths.Remove(_currentRightClickedCheckBox.FullPath);
+				paths.Remove(_currentRightClickedDirectory.FullPath);
 				File.WriteAllLines("FavoritePaths.txt", paths.ToArray());
-				(_currentRightClickedCheckBox.Content as TextBlock).Background = null;
+				_currentRightClickedDirectory.BackgroundColor = null;
 			}
 		}
 
@@ -973,7 +964,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public void AddFolder()
 		{
-			AddFolder(_currentRightClickedCheckBox.FullPath);
+			AddFolder(_currentRightClickedDirectory.FullPath);
 		}
 
 		/// <summary>
@@ -987,7 +978,7 @@ namespace SenpaiCopy
 			dlg.SelectedPath = dialogStartingPath;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				if (!_checkBoxList.Any(i => i.FullPath == dlg.SelectedPath))
+				if (!_directoryList.Any(i => i.FullPath == dlg.SelectedPath))
 					AddCheckBox(dlg.SelectedPath);
 				else
 					System.Windows.MessageBox.Show("This folder has already been added!");
@@ -1014,9 +1005,9 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Sets the current right clicked CheckBox.
 		/// </summary>
-		private void CheckBox_RightMouseDown(object sender, MouseButtonEventArgs e)
+		public void Directory_RightMouseDown(SenpaiDirectory dir)
 		{
-			_currentRightClickedCheckBox = sender as PathCheckBox;
+			_currentRightClickedDirectory = dir;
 			NotifyOfPropertyChange(() => FavoriteContextMenuItemText);
 			NotifyOfPropertyChange(() => FavoriteContextMenuItemImage);
 			NotifyOfPropertyChange(() => IgnoreContextMenuItemText);
@@ -1030,7 +1021,7 @@ namespace SenpaiCopy
 		{
 			try
 			{
-				Process.Start(_currentRightClickedCheckBox.FullPath);
+				Process.Start(_currentRightClickedDirectory.FullPath);
 			}
 			catch (Exception)
 			{

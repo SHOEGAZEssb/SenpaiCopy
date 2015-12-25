@@ -10,7 +10,7 @@ namespace SenpaiCopy
 	/// <summary>
 	/// ViewModel for the <see cref="SettingsView"/>.
 	/// </summary>
-	internal class SettingsViewModel : PropertyChangedBase
+	public class SettingsViewModel : PropertyChangedBase
 	{
 		#region Properties
 

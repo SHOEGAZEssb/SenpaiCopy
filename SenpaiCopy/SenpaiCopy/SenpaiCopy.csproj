@@ -124,6 +124,9 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\KeyCommand.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
+    <Compile Include="Views\FolderToolTipPreview.xaml.cs">
+      <DependentUpon>FolderToolTipPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImageToolTipPreview.xaml.cs">
       <DependentUpon>ImageToolTipPreview.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
     <Compile Include="Views\StatisticView.xaml.cs">
       <DependentUpon>StatisticView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\FolderToolTipPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ImageToolTipPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,7 +169,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\PathCheckBox.cs" />
+    <Compile Include="Models\SenpaiDirectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

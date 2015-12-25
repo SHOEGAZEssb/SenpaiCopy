@@ -148,8 +148,26 @@
       </CheckBox>
 
       <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto">
-        <ItemsControl  ItemsSource="{Binding CheckBoxList}"
+        <ItemsControl ItemsSource="{Binding CheckBoxList}"
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <CheckBox Content="{Binding Path}" IsChecked="{Binding Checked}" Opacity="{Binding Opacity}" Background="{Binding BackgroundColor}"
+                        Visibility="{Binding Visibility}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0">
+                <CheckBox.ToolTip>
+                  <StackPanel>
+                    <local:FolderToolTipPreview FolderPath="{Binding FullPath}"/>
+                    <TextBlock Text="{Binding FullPath}"/>
+                  </StackPanel>
+                </CheckBox.ToolTip>
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="MouseRightButtonDown">
+                    <cal:ActionMessage MethodName="Directory_RightClicked"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </CheckBox>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
               <WrapPanel>
@@ -232,7 +250,7 @@
                 <StackPanel>
                   <local:ImageToolTipPreview FileName="{Binding FullName}"/>
                   <TextBlock Text="{Binding FullName}"/>
-                </StackPanel>          
+                </StackPanel>
               </TextBlock.ToolTip>
             </TextBlock>
           </DataTemplate>

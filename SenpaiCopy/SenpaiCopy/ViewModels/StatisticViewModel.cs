@@ -6,7 +6,7 @@ namespace SenpaiCopy
 	/// <summary>
 	/// ViewModel for the <see cref="StatisticView"/>.
 	/// </summary>
-	class StatisticViewModel : PropertyChangedBase
+	public class StatisticViewModel : PropertyChangedBase
 	{
 		#region Properties
 
