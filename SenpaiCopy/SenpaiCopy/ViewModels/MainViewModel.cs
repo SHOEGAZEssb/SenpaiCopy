@@ -575,7 +575,7 @@ namespace SenpaiCopy
 			SettingsViewModel = new SettingsViewModel();
 			StatisticViewModel = new StatisticViewModel();
 
-			if(SettingsViewModel.EnableStatisticTracking)
+			if (SettingsViewModel.EnableStatisticTracking)
 				StatisticViewModel.Startups++;
 
 			_checkBoxFilter = "";
@@ -801,9 +801,9 @@ namespace SenpaiCopy
 			{
 				try
 				{
-          if (File.Exists(dir + @"\" + _imagePathList[_currentImageIndex].Name) && SettingsViewModel.WarnIfOverwrite)
-            System.Windows.MessageBox.Show("The file " + _imagePathList[_currentImageIndex].Name + " already exists in " + dir
-                                            + ".\r\nThe current image will be copied as " + _imagePathList[_currentImageIndex].Name + " (n).");
+					if (File.Exists(dir + @"\" + _imagePathList[_currentImageIndex].Name) && SettingsViewModel.WarnIfOverwrite)
+						System.Windows.MessageBox.Show("The file " + _imagePathList[_currentImageIndex].Name + " already exists in " + dir
+																						+ ".\r\nThe current image will be copied as " + _imagePathList[_currentImageIndex].Name + " (n).");
 
 					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, false);
 
@@ -836,9 +836,9 @@ namespace SenpaiCopy
 						});
 					}
 
-          RecycleOption recycleOption = RecycleOption.DeletePermanently;
-          if (SettingsViewModel.SendToRecycleBin)
-            recycleOption = RecycleOption.SendToRecycleBin;
+					RecycleOption recycleOption = RecycleOption.DeletePermanently;
+					if (SettingsViewModel.SendToRecycleBin)
+						recycleOption = RecycleOption.SendToRecycleBin;
 
 					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
 
