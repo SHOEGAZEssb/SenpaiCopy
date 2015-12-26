@@ -152,8 +152,9 @@
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <CheckBox Content="{Binding Path}" IsChecked="{Binding Checked}" Opacity="{Binding Opacity}" Background="{Binding BackgroundColor}"
+              <CheckBox IsChecked="{Binding Checked}" Opacity="{Binding Opacity}"
                         Visibility="{Binding Visibility}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0">
+                <TextBlock Text="{Binding Path}" Background="{Binding BackgroundColor}"/>
                 <CheckBox.ToolTip>
                   <StackPanel>
                     <local:FolderToolTipPreview FolderPath="{Binding FullPath}"/>
