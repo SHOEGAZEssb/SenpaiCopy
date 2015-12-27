@@ -63,8 +63,13 @@ namespace SenpaiCopy
 					string lowerFile = file.ToLower();
 					if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 					{
-						ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
-						break;
+						try
+						{
+							ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
+							break;
+						}
+						catch(Exception)
+						{ }
 					}
 				}
 			}
@@ -78,23 +83,13 @@ namespace SenpaiCopy
 		/// <returns>Loaded image file.</returns>
 		private static BitmapImage LoadBitmapImage(string fileName)
 		{
-			if (fileName == "" || fileName.EndsWith(".webm"))
-				return null;
-
-			try
-			{
-				var bitmapImage = new BitmapImage();
-				bitmapImage.BeginInit();
-				bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-				bitmapImage.UriSource = new Uri(fileName);
-				bitmapImage.EndInit();
-				bitmapImage.Freeze();
-				return bitmapImage;
-			}
-			catch (Exception)
-			{
-				return null;
-			}
+			var bitmapImage = new BitmapImage();
+			bitmapImage.BeginInit();
+			bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+			bitmapImage.UriSource = new Uri(fileName);
+			bitmapImage.EndInit();
+			bitmapImage.Freeze();
+			return bitmapImage;
 		}
 	}
 }
