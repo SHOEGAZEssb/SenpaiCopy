@@ -19,7 +19,7 @@ namespace SenpaiCopy
 		/// DependencyProperty of <see cref="FolderPath"/>
 		/// </summary>
 		public static readonly DependencyProperty FolderPathProperty = DependencyProperty.Register("FolderPath", typeof(string),
-		 typeof(FolderToolTipPreview), new PropertyMetadata("", OnCurrentTimePropertyChanged));
+		 typeof(FolderToolTipPreview), new PropertyMetadata("", OnFolderPathPropertyChanged));
 
 		/// <summary>
 		/// Path of the folder.
@@ -45,7 +45,7 @@ namespace SenpaiCopy
 		/// </summary>
 		/// <param name="source">DependencyObject that triggered this event.</param>
 		/// <param name="e">EventArgs that contain the set value.</param>
-		private static void OnCurrentTimePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+		private static void OnFolderPathPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
 		{
 			FolderToolTipPreview control = source as FolderToolTipPreview;
 			if (control.DataContext != null)

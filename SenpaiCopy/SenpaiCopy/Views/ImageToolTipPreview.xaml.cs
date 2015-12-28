@@ -17,7 +17,7 @@ namespace SenpaiCopy
 		/// DependencyProperty of <see cref="FileName"/>
 		/// </summary>
 		public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string),
-		 typeof(ImageToolTipPreview), new PropertyMetadata("", OnCurrentTimePropertyChanged));
+		 typeof(ImageToolTipPreview), new PropertyMetadata("", OnFileNamePropertyChanged));
 
 		/// <summary>
 		/// File name of the image.
@@ -43,7 +43,7 @@ namespace SenpaiCopy
 		/// </summary>
 		/// <param name="source">DependencyObject that triggered this event.</param>
 		/// <param name="e">EventArgs that contain the set value.</param>
-		private static void OnCurrentTimePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+		private static void OnFileNamePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
 		{
 			ImageToolTipPreview control = source as ImageToolTipPreview;
 			ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(e.NewValue.ToString()));
