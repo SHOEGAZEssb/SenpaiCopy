@@ -63,13 +63,16 @@ namespace SenpaiCopy
 					string lowerFile = file.ToLower();
 					if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 					{
-						try
+						if (lowerFile != "" && !lowerFile.EndsWith(".webm"))
 						{
-							ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
-							break;
+							try
+							{
+								ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
+								break;
+							}
+							catch (Exception)
+							{ }
 						}
-						catch(Exception)
-						{ }
 					}
 				}
 			}
