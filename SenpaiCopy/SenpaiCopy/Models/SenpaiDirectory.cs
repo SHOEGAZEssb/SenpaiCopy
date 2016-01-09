@@ -147,5 +147,13 @@ namespace SenpaiCopy
 		{
 			_mainViewModel.Directory_RightMouseDown(this);
 		}
+
+		/// <summary>
+		/// Triggers when checked changed.
+		/// </summary>
+		public void Directory_CheckedCHanged()
+		{
+			_mainViewModel.Directory_CheckedChanged();
+		}
 	}
 }

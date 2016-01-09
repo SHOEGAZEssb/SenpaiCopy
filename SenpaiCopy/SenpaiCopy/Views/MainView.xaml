@@ -165,6 +165,12 @@
                   <i:EventTrigger EventName="MouseRightButtonDown">
                     <cal:ActionMessage MethodName="Directory_RightClicked"/>
                   </i:EventTrigger>
+                  <i:EventTrigger EventName="Checked">
+                    <cal:ActionMessage MethodName="Directory_CheckedChanged"/>
+                  </i:EventTrigger>
+                  <i:EventTrigger EventName="Unchecked">
+                    <cal:ActionMessage MethodName="Directory_CheckedChanged"/>
+                  </i:EventTrigger>
                 </i:Interaction.Triggers>
               </CheckBox>
             </DataTemplate>

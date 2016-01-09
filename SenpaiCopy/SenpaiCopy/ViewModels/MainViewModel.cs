@@ -730,7 +730,7 @@ namespace SenpaiCopy
 		/// Triggers when a CheckBox gets checked or unchecked.
 		/// Checks if the execute button needs a different color.
 		/// </summary>
-		private void CheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+		public void Directory_CheckedChanged()
 		{
 			NotifyOfPropertyChange(() => ExecuteButtonColor);
 		}
