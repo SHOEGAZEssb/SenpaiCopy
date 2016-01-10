@@ -996,6 +996,7 @@ namespace SenpaiCopy
 			var bitmapImage = new BitmapImage();
 			bitmapImage.BeginInit();
 			bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+			bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
 			bitmapImage.UriSource = new Uri(fileName);
 			bitmapImage.EndInit();
 			bitmapImage.Freeze();
