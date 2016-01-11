@@ -322,7 +322,7 @@
           </i:Interaction.Triggers>
           <Button.ToolTip>Copies the current image to the checked directories and deletes it, if desired.</Button.ToolTip>
         </Button>
-        <Button Content="Next" Grid.Row="5">
+        <Button Content="Next" Grid.Row="5" IsEnabled="{Binding CanNext}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
               <cal:ActionMessage MethodName="Next" />
