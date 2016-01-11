@@ -589,7 +589,7 @@ namespace SenpaiCopy
 			LoadFavoritePaths();
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
-			VlcPlayer = new VlcPlayer();
+			VlcPlayer = new VlcPlayer() { EndBehavior = EndBehavior.Repeat };
 			ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
 			_reverseImageSearchWorker = new BackgroundWorker();
 			_reverseImageSearchWorker.DoWork += new DoWorkEventHandler(GoogleReverseImageSearch);
@@ -746,7 +746,7 @@ namespace SenpaiCopy
 				{
 					if (_imagePathList[_currentImageIndex].Extension == ".webm")
 					{
-						VlcPlayer.BeginStop(ar =>
+						VlcPlayer.BeginStop(() =>
 						{
 							VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
 							VlcPlayer.Play();
@@ -823,32 +823,22 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					VlcPlayer.BeginStop(ar =>
+					VlcPlayer.BeginStop(() =>
 					{
-						// do nothing. hacky
-					});
+						RecycleOption recycleOption = RecycleOption.DeletePermanently;
+						if (SettingsViewModel.SendToRecycleBin)
+							recycleOption = RecycleOption.SendToRecycleBin;
 
-					if (VlcPlayer.State != xZune.Vlc.Interop.Media.MediaState.Stopped)
-					{
-						VlcPlayer.BeginStop(ar =>
+						FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
+
+						if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count == 0)
 						{
-							// do nothing. hacky
-						});
-					}
+							StatisticViewModel.DeletedImages++;
+							StatisticViewModel.DeletedImagesSize += ImageFileSize;
+						}
 
-					RecycleOption recycleOption = RecycleOption.DeletePermanently;
-					if (SettingsViewModel.SendToRecycleBin)
-						recycleOption = RecycleOption.SendToRecycleBin;
-
-					FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
-
-					if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count == 0)
-					{
-						StatisticViewModel.DeletedImages++;
-						StatisticViewModel.DeletedImagesSize += ImageFileSize;
-					}
-
-					_imagePathList.RemoveAt(_currentImageIndex);
+						_imagePathList.RemoveAt(_currentImageIndex);
+					});
 				}
 				catch (Exception ex)
 				{
