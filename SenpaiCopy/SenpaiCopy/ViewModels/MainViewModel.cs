@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -738,21 +739,14 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Updates the currently shown image.
 		/// </summary>
-		private void UpdatePictureBox()
+		private async void UpdatePictureBox()
 		{
 			if (_imagePathList.Count > _currentImageIndex)
 			{
 				try
 				{
 					if (_imagePathList[_currentImageIndex].Extension == ".webm")
-					{
-						VlcPlayer.BeginStop(() =>
-						{
-							VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
-							VlcPlayer.Play();
-							CurrentImage = null;
-						});
-					}
+						await LoadNewVideo();
 					else
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
 				}
@@ -782,9 +776,23 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
+		/// Loads a new video.
+		/// </summary>
+		private async Task LoadNewVideo()
+		{
+			await Task.Run(() =>
+			{
+				VlcPlayer.Stop();
+				VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
+				VlcPlayer.Play();
+				CurrentImage = null;
+			});
+		}
+
+		/// <summary>
 		/// Copies the current image to the selected folders.
 		/// </summary>
-		public void Execute()
+		public async void Execute()
 		{
 			List<string> dirsToCopyTo = new List<string>();
 
@@ -823,22 +831,15 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					VlcPlayer.BeginStop(() =>
+					await RemoveCurrentImage();
+
+					if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count == 0)
 					{
-						RecycleOption recycleOption = RecycleOption.DeletePermanently;
-						if (SettingsViewModel.SendToRecycleBin)
-							recycleOption = RecycleOption.SendToRecycleBin;
+						StatisticViewModel.DeletedImages++;
+						StatisticViewModel.DeletedImagesSize += ImageFileSize;
+					}
 
-						FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
-
-						if (SettingsViewModel.EnableStatisticTracking && dirsToCopyTo.Count == 0)
-						{
-							StatisticViewModel.DeletedImages++;
-							StatisticViewModel.DeletedImagesSize += ImageFileSize;
-						}
-
-						_imagePathList.RemoveAt(_currentImageIndex);
-					});
+					_imagePathList.RemoveAt(_currentImageIndex);
 				}
 				catch (Exception ex)
 				{
@@ -852,6 +853,20 @@ namespace SenpaiCopy
 				ClearCheckBoxes();
 
 			UpdatePictureBox();
+		}
+
+		private async Task RemoveCurrentImage()
+		{
+			await Task.Run(() =>
+			{
+				VlcPlayer.Stop();
+
+				RecycleOption recycleOption = RecycleOption.DeletePermanently;
+				if (SettingsViewModel.SendToRecycleBin)
+					recycleOption = RecycleOption.SendToRecycleBin;
+
+				FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
+			});
 		}
 
 		/// <summary>
