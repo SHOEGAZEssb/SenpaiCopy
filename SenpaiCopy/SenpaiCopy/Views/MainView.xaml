@@ -306,7 +306,7 @@
           <Label Content="MB" Visibility="{Binding ImageLoaded, Converter={StaticResource BoolToVis}}" />
         </StackPanel>
 
-        <Button Content="Previous" Grid.Row="1">
+        <Button Content="Previous" Grid.Row="1" IsEnabled="{Binding CanPrevious}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
               <cal:ActionMessage MethodName="Previous" />
