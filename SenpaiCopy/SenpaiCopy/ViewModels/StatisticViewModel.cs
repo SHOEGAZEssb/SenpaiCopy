@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using System;
+using System.Windows;
 
 namespace SenpaiCopy
 {
@@ -105,11 +106,14 @@ namespace SenpaiCopy
 		/// </summary>
 		public void ResetStatistic()
 		{
-			DeletedImages = 0;
-			DeletedImagesSize = 0.0;
-			CopiedImages = 0;
-			TotalCopiedImagesSize = 0.0;
-			Startups = 0;
+			if (MessageBox.Show("Do you really want to reset all statistics?", "Reset Statistic", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+			{
+				DeletedImages = 0;
+				DeletedImagesSize = 0.0;
+				CopiedImages = 0;
+				TotalCopiedImagesSize = 0.0;
+				Startups = 0;
+			}
 		}
 	}
 }
