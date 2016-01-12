@@ -121,7 +121,7 @@
           <CheckBox.ToolTip>If checked, a message box will pop up if a file would have been overwritten while copying.</CheckBox.ToolTip>
         </CheckBox>
         <CheckBox Grid.Row="5" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center">
-          <CheckBox.ToolTip>If checked, will track certain things in the programm. See statistic window.</CheckBox.ToolTip>
+          <CheckBox.ToolTip>If checked, will track certain things in the program. See statistic window.</CheckBox.ToolTip>
         </CheckBox>
       </Grid>
     </GroupBox>

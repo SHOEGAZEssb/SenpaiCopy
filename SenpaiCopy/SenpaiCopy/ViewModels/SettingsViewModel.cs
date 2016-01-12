@@ -118,33 +118,33 @@ namespace SenpaiCopy
 		}
 		private int _supportedIndex;
 
-    /// <summary>
-    /// Gets/sets if deleted files should be sent to the recycle bin.
-    /// </summary>
-    public bool SendToRecycleBin
-    {
-      get { return _sendToRecycleBin; }
-      set
-      {
-        _sendToRecycleBin = value;
-        NotifyOfPropertyChange(() => SendToRecycleBin);
-      }
-    }
-    private bool _sendToRecycleBin;
+		/// <summary>
+		/// Gets/sets if deleted files should be sent to the recycle bin.
+		/// </summary>
+		public bool SendToRecycleBin
+		{
+			get { return _sendToRecycleBin; }
+			set
+			{
+				_sendToRecycleBin = value;
+				NotifyOfPropertyChange(() => SendToRecycleBin);
+			}
+		}
+		private bool _sendToRecycleBin;
 
-    /// <summary>
-    /// Gets/sets if a message box should pop up, if a file already exists.
-    /// </summary>
-    public bool WarnIfOverwrite
-    {
-      get { return _warnIfOverwrite; }
-      set
-      {
-        _warnIfOverwrite = value;
-        NotifyOfPropertyChange(() => WarnIfOverwrite);
-      }
-    }
-    private bool _warnIfOverwrite;
+		/// <summary>
+		/// Gets/sets if a message box should pop up, if a file already exists.
+		/// </summary>
+		public bool WarnIfOverwrite
+		{
+			get { return _warnIfOverwrite; }
+			set
+			{
+				_warnIfOverwrite = value;
+				NotifyOfPropertyChange(() => WarnIfOverwrite);
+			}
+		}
+		private bool _warnIfOverwrite;
 
 		/// <summary>
 		/// Gets/sets if statistics should be tracked.
@@ -206,8 +206,8 @@ namespace SenpaiCopy
 			List<string> tempSupportedFormats = new List<string>(Properties.Settings.Default.SupportedFormats.Split(';'));
 			SupportedFormats = new ObservableCollection<string>(tempSupportedFormats.Where(i => !EnabledFormats.Contains(i)).OrderBy(i => i));
 
-      SendToRecycleBin = Properties.Settings.Default.SendToRecycleBin;
-      WarnIfOverwrite = Properties.Settings.Default.WarnIfOverwrite;
+			SendToRecycleBin = Properties.Settings.Default.SendToRecycleBin;
+			WarnIfOverwrite = Properties.Settings.Default.WarnIfOverwrite;
 			EnableStatisticTracking = Properties.Settings.Default.EnableStatisticTracking;
 		}
 
@@ -242,8 +242,8 @@ namespace SenpaiCopy
 
 			Properties.Settings.Default.EnabledFormats = string.Join(";", EnabledFormats.Select(i => i.ToString()).ToArray());
 
-      Properties.Settings.Default.SendToRecycleBin = SendToRecycleBin;
-      Properties.Settings.Default.WarnIfOverwrite = WarnIfOverwrite;
+			Properties.Settings.Default.SendToRecycleBin = SendToRecycleBin;
+			Properties.Settings.Default.WarnIfOverwrite = WarnIfOverwrite;
 			Properties.Settings.Default.EnableStatisticTracking = EnableStatisticTracking;
 
 			Properties.Settings.Default.Save();
