@@ -591,6 +591,11 @@ namespace SenpaiCopy
 			HotkeyPressedCommand = new KeyCommand(HotkeyPressed);
 			TaskbarProgress = new TaskbarItemInfo() { ProgressState = TaskbarItemProgressState.Normal };
 			VlcPlayer = new VlcPlayer() { EndBehavior = EndBehavior.Repeat };
+			if (Environment.Is64BitProcess)
+				VlcPlayer.LibVlcPath = @"..\..\..\Libs\Vlc\lib\x64-libs";
+			else
+				VlcPlayer.LibVlcPath = @"..\..\..\Libs\Vlc\lib\x86-libs";
+
 			ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
 			_reverseImageSearchWorker = new BackgroundWorker();
 			_reverseImageSearchWorker.DoWork += new DoWorkEventHandler(GoogleReverseImageSearch);
