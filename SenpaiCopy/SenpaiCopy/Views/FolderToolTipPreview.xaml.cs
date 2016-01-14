@@ -63,7 +63,7 @@ namespace SenpaiCopy
 					string lowerFile = file.ToLower();
 					if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 					{
-						if (lowerFile != "" && !MainViewModel.VideoFormats.Any(f => lowerFile.EndsWith(f)))
+						if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
 						{
 							try
 							{

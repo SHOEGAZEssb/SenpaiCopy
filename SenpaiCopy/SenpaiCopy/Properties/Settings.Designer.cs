@@ -97,18 +97,6 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".avi;.bmp;.gif;.ico;.jpg;.jpeg;.png;.tif;.tiff;.webm;.wmp")]
-        public string SupportedFormats {
-            get {
-                return ((string)(this["SupportedFormats"]));
-            }
-            set {
-                this["SupportedFormats"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(".bmp;.gif;.jpg;.jpeg;.png;.tiff;.webm;.wmp")]
         public string EnabledFormats {
             get {
@@ -224,6 +212,30 @@ namespace SenpaiCopy.Properties {
             }
             set {
                 this["WarnIfOverwrite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".bmp;.gif;.ico;.jpg;.jpeg;.png;.tif;.tiff;.wmp")]
+        public string SupportedImageFormats {
+            get {
+                return ((string)(this["SupportedImageFormats"]));
+            }
+            set {
+                this["SupportedImageFormats"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".avi;.webm")]
+        public string SupportedVlcFormats {
+            get {
+                return ((string)(this["SupportedVlcFormats"]));
+            }
+            set {
+                this["SupportedVlcFormats"] = value;
             }
         }
     }

@@ -12,6 +12,8 @@ namespace SenpaiCopy
 	/// </summary>
 	public class SettingsViewModel : PropertyChangedBase
 	{
+
+
 		#region Properties
 
 		/// <summary>
@@ -81,14 +83,32 @@ namespace SenpaiCopy
 		private ObservableCollection<string> _enabledFormats;
 
 		/// <summary>
-		/// Supported formats.
+		/// Gets/sets a list with supported image formats.
 		/// </summary>
-		public ObservableCollection<string> SupportedFormats
+		public List<string> SupportedImageFormats
 		{
-			get { return _supportedFormats; }
-			private set { _supportedFormats = value; }
+			get { return _supportedImageFormats; }
+			private set
+			{
+				_supportedImageFormats = value;
+				NotifyOfPropertyChange(() => SupportedFormats);
+			}
 		}
-		private ObservableCollection<string> _supportedFormats;
+		private List<string> _supportedImageFormats;
+
+		/// <summary>
+		/// Gets/sets a list with supported formats that require to be played by the VlcPlayer.
+		/// </summary>
+		public List<string> SupportedVlcFormats
+		{
+			get { return _supportedVlcFormats; }
+			private set
+			{
+				_supportedVlcFormats = value;
+				NotifyOfPropertyChange(() => SupportedFormats);
+			}
+		}
+		private List<string> _supportedVlcFormats;
 
 		/// <summary>
 		/// Index of the selected enabled format.
@@ -178,6 +198,14 @@ namespace SenpaiCopy
 			get { return EnabledIndex != -1; }
 		}
 
+		/// <summary>
+		/// Supported formats.
+		/// </summary>
+		public ObservableCollection<string> SupportedFormats
+		{
+			get { return new ObservableCollection<string>(SupportedImageFormats.Concat(SupportedVlcFormats).Where(i => !EnabledFormats.Contains(i)).OrderBy(i => i)); }
+		}
+
 		#endregion Read-Only Properties
 
 		#endregion Properties
@@ -203,8 +231,8 @@ namespace SenpaiCopy
 			ClearCheckBoxesHotkey = (Key)Properties.Settings.Default.ClearCheckBoxesHotkey;
 
 			EnabledFormats = new ObservableCollection<string>(Properties.Settings.Default.EnabledFormats.Split(';').OrderBy(i => i));
-			List<string> tempSupportedFormats = new List<string>(Properties.Settings.Default.SupportedFormats.Split(';'));
-			SupportedFormats = new ObservableCollection<string>(tempSupportedFormats.Where(i => !EnabledFormats.Contains(i)).OrderBy(i => i));
+			SupportedImageFormats = new List<string>(Properties.Settings.Default.SupportedImageFormats.Split(';'));
+			SupportedVlcFormats = new List<string>(Properties.Settings.Default.SupportedVlcFormats.Split(';'));
 
 			SendToRecycleBin = Properties.Settings.Default.SendToRecycleBin;
 			WarnIfOverwrite = Properties.Settings.Default.WarnIfOverwrite;
@@ -217,7 +245,8 @@ namespace SenpaiCopy
 		public void AddToEnabled()
 		{
 			EnabledFormats.Add(SupportedFormats[SupportedIndex]);
-			SupportedFormats.RemoveAt(SupportedIndex);
+			//SupportedFormats.RemoveAt(SupportedIndex);
+			NotifyOfPropertyChange(() => SupportedFormats);
 		}
 
 		/// <summary>
@@ -225,8 +254,9 @@ namespace SenpaiCopy
 		/// </summary>
 		public void AddToSupported()
 		{
-			SupportedFormats.Add(EnabledFormats[EnabledIndex]);
+			//SupportedFormats.Add(EnabledFormats[EnabledIndex]);
 			EnabledFormats.RemoveAt(EnabledIndex);
+			NotifyOfPropertyChange(() => SupportedFormats);
 		}
 
 		/// <summary>

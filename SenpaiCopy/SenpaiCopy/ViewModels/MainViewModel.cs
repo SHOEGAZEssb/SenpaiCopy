@@ -474,7 +474,7 @@ namespace SenpaiCopy
 				if (_imagePathList.Count == 0)
 					return false;
 				else
-					return VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension);
+					return SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension);
 			}
 		}
 
@@ -492,7 +492,7 @@ namespace SenpaiCopy
 					if (_imagePathList.Count == 0 || _imagePathList.Count == _currentImageIndex)
 						return false;
 					else
-						return VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension);
+						return SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension);
 				}
 			}
 		}
@@ -506,7 +506,7 @@ namespace SenpaiCopy
 			{
 				if (ImageLoaded)
 				{
-					if (VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension))
+					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Width;
 					else
 						return (int)CurrentImage.Width;
@@ -525,7 +525,7 @@ namespace SenpaiCopy
 			{
 				if (ImageLoaded)
 				{
-					if (VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension))
+					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Height;
 					else
 						return (int)CurrentImage.Height;
@@ -562,11 +562,6 @@ namespace SenpaiCopy
 					return 0.0;
 			}
 		}
-
-		/// <summary>
-		/// Contains image formats that need to be displayed with the <see cref="VlcPlayer"/>.
-		/// </summary>
-		public static readonly string[] VideoFormats = new string[] { ".avi", ".webm" };
 
 		#endregion Read-Only Properties
 
@@ -754,7 +749,7 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					if (VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension))
+					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						await LoadNewVideo();
 					else
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);

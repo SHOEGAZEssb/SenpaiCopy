@@ -47,7 +47,7 @@ namespace SenpaiCopy
 		private static void OnFileNamePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
 		{
 			ImageToolTipPreview control = source as ImageToolTipPreview;
-			ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(e.NewValue.ToString()));
+			ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(e.NewValue.ToString(), control));
 		}
 
 		/// <summary>
@@ -55,10 +55,11 @@ namespace SenpaiCopy
 		/// This does still allow operations done to the file.
 		/// </summary>
 		/// <param name="fileName">Image file to load.</param>
+		/// <param name="control">Reference to the control that triggered the Load.</param>
 		/// <returns>Loaded image file.</returns>
-		private static BitmapImage LoadBitmapImage(string fileName)
+		private static BitmapImage LoadBitmapImage(string fileName, ImageToolTipPreview control)
 		{
-			if (fileName == "" || MainViewModel.VideoFormats.Any(f => fileName.EndsWith(f)))
+			if (fileName == "" || Properties.Settings.Default.SupportedVlcFormats.Split(';').Any(f => fileName.EndsWith(f)))
 				return null;
 
 			try
