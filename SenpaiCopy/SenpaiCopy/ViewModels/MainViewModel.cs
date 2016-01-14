@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -475,7 +474,7 @@ namespace SenpaiCopy
 				if (_imagePathList.Count == 0)
 					return false;
 				else
-					return _imagePathList[_currentImageIndex].Extension == ".webm";
+					return VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension);
 			}
 		}
 
@@ -493,7 +492,7 @@ namespace SenpaiCopy
 					if (_imagePathList.Count == 0 || _imagePathList.Count == _currentImageIndex)
 						return false;
 					else
-						return _imagePathList[_currentImageIndex].Extension == ".webm";
+						return VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension);
 				}
 			}
 		}
@@ -507,7 +506,7 @@ namespace SenpaiCopy
 			{
 				if (ImageLoaded)
 				{
-					if (_imagePathList[_currentImageIndex].Extension == ".webm")
+					if (VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Width;
 					else
 						return (int)CurrentImage.Width;
@@ -526,7 +525,7 @@ namespace SenpaiCopy
 			{
 				if (ImageLoaded)
 				{
-					if (_imagePathList[_currentImageIndex].Extension == ".webm")
+					if (VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Height;
 					else
 						return (int)CurrentImage.Height;
@@ -563,6 +562,11 @@ namespace SenpaiCopy
 					return 0.0;
 			}
 		}
+
+		/// <summary>
+		/// Contains image formats that need to be displayed with the <see cref="VlcPlayer"/>.
+		/// </summary>
+		public static readonly string[] VideoFormats = new string[] { ".avi", ".webm" };
 
 		#endregion Read-Only Properties
 
@@ -750,7 +754,7 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					if (_imagePathList[_currentImageIndex].Extension == ".webm")
+					if (VideoFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						await LoadNewVideo();
 					else
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);

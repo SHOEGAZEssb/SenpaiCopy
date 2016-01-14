@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -57,7 +58,7 @@ namespace SenpaiCopy
 		/// <returns>Loaded image file.</returns>
 		private static BitmapImage LoadBitmapImage(string fileName)
 		{
-			if (fileName == "" || fileName.EndsWith(".webm"))
+			if (fileName == "" || MainViewModel.VideoFormats.Any(f => fileName.EndsWith(f)))
 				return null;
 
 			try
