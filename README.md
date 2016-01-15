@@ -5,6 +5,7 @@ It also allows for quickly searching an image on google.
 SenpaiCopy is made for people with huge amounts of folders to sort images into.
 
 # Supported Formats
+* .avi
 * .bmp
 * .gif
 * .ico
