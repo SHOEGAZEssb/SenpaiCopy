@@ -9,8 +9,8 @@ SenpaiCopy is made for people with huge amounts of folders to sort images into.
 * .bmp
 * .gif
 * .ico
-* .jpg
+* .jpg / .jpeg
 * .png
-* .tif
+* .tif / .tiff
 * .webm
 * .wmp
