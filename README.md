@@ -10,6 +10,7 @@ SenpaiCopy is made for people with huge amounts of folders to sort images into.
 * .gif
 * .ico
 * .jpg / .jpeg
+* .mp4
 * .png
 * .tif / .tiff
 * .webm

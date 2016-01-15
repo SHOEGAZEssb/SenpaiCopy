@@ -229,7 +229,7 @@ namespace SenpaiCopy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".avi;.webm")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".avi;.mp4;.webm")]
         public string SupportedVlcFormats {
             get {
                 return ((string)(this["SupportedVlcFormats"]));

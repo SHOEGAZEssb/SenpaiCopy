@@ -54,7 +54,7 @@
       <Value Profile="(Default)">.bmp;.gif;.ico;.jpg;.jpeg;.png;.tif;.tiff;.wmp</Value>
     </Setting>
     <Setting Name="SupportedVlcFormats" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.avi;.webm</Value>
+      <Value Profile="(Default)">.avi;.mp4;.webm</Value>
     </Setting>
   </Settings>
 </SettingsFile>
