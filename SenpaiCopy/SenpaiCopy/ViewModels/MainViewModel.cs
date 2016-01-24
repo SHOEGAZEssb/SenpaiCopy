@@ -817,7 +817,7 @@ namespace SenpaiCopy
 						System.Windows.MessageBox.Show("The file " + _imagePathList[_currentImageIndex].Name + " already exists in " + dir
 																						+ ".\r\nThe current image will be copied as " + _imagePathList[_currentImageIndex].Name + " (n).");
 
-					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, false);
+					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, SettingsViewModel.WarnIfOverwrite);
 
 					if (SettingsViewModel.EnableStatisticTracking)
 					{
