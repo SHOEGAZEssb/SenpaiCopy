@@ -814,10 +814,15 @@ namespace SenpaiCopy
 				try
 				{
 					if (File.Exists(dir + @"\" + _imagePathList[_currentImageIndex].Name) && SettingsViewModel.WarnIfOverwrite)
+					{
 						System.Windows.MessageBox.Show("The file " + _imagePathList[_currentImageIndex].Name + " already exists in " + dir
 																						+ ".\r\nThe current image will be copied as " + _imagePathList[_currentImageIndex].Name + " (n).");
 
-					_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, SettingsViewModel.WarnIfOverwrite);
+						string newPath = MakeNewPathIfExists(_imagePathList[_currentImageIndex].Name);
+						_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + newPath, false);
+					}
+					else
+						_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, false);
 
 					if (SettingsViewModel.EnableStatisticTracking)
 					{
@@ -857,6 +862,29 @@ namespace SenpaiCopy
 				ClearCheckBoxes();
 
 			UpdatePictureBox();
+		}
+
+		/// <summary>
+		/// Finds a new path to use if the given file already exists.
+		/// </summary>
+		/// <param name="fullPath">Path to check.</param>
+		/// <returns>New path which can be used.</returns>
+		private string MakeNewPathIfExists(string fullPath)
+		{
+			int count = 1;
+
+			string fileNameOnly = Path.GetFileNameWithoutExtension(fullPath);
+			string extension = Path.GetExtension(fullPath);
+			string path = Path.GetDirectoryName(fullPath);
+			string newFullPath = fullPath;
+
+			while (File.Exists(newFullPath))
+			{
+				string tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
+				newFullPath = Path.Combine(path, tempFileName + extension);
+			}
+
+			return newFullPath;
 		}
 
 		private async Task RemoveCurrentImage()
