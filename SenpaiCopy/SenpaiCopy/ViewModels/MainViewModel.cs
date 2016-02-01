@@ -813,16 +813,13 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					if (File.Exists(dir + @"\" + _imagePathList[_currentImageIndex].Name) && SettingsViewModel.WarnIfOverwrite)
+					if (File.Exists(dir + @"\" + _imagePathList[_currentImageIndex].Name) && !SettingsViewModel.OverwriteFiles)
 					{
-						System.Windows.MessageBox.Show("The file " + _imagePathList[_currentImageIndex].Name + " already exists in " + dir
-																						+ ".\r\nThe current image will be copied as " + _imagePathList[_currentImageIndex].Name + " (n).");
-
-						string newPath = MakeNewPathIfExists(_imagePathList[_currentImageIndex].Name);
-						_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + newPath, false);
+						string newPath = MakeNewPathIfExists(_imagePathList[_currentImageIndex].FullName);
+						_imagePathList[_currentImageIndex].CopyTo(newPath, false);
 					}
 					else
-						_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, false);
+						_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
 
 					if (SettingsViewModel.EnableStatisticTracking)
 					{

@@ -12,8 +12,6 @@ namespace SenpaiCopy
 	/// </summary>
 	public class SettingsViewModel : PropertyChangedBase
 	{
-
-
 		#region Properties
 
 		/// <summary>
@@ -153,18 +151,20 @@ namespace SenpaiCopy
 		private bool _sendToRecycleBin;
 
 		/// <summary>
-		/// Gets/sets if a message box should pop up, if a file already exists.
+		/// Gets/sets if files that already exist in the target folder
+		/// should be overwritten. If not, the source file gets renamed
+		/// before copying.
 		/// </summary>
-		public bool WarnIfOverwrite
+		public bool OverwriteFiles
 		{
-			get { return _warnIfOverwrite; }
+			get { return _overwriteFiles; }
 			set
 			{
-				_warnIfOverwrite = value;
-				NotifyOfPropertyChange(() => WarnIfOverwrite);
+				_overwriteFiles = value;
+				NotifyOfPropertyChange(() => OverwriteFiles);
 			}
 		}
-		private bool _warnIfOverwrite;
+		private bool _overwriteFiles;
 
 		/// <summary>
 		/// Gets/sets if statistics should be tracked.
@@ -235,7 +235,7 @@ namespace SenpaiCopy
 			SupportedVlcFormats = new List<string>(Properties.Settings.Default.SupportedVlcFormats.Split(';'));
 
 			SendToRecycleBin = Properties.Settings.Default.SendToRecycleBin;
-			WarnIfOverwrite = Properties.Settings.Default.WarnIfOverwrite;
+			OverwriteFiles = Properties.Settings.Default.WarnIfOverwrite;
 			EnableStatisticTracking = Properties.Settings.Default.EnableStatisticTracking;
 		}
 
@@ -273,7 +273,7 @@ namespace SenpaiCopy
 			Properties.Settings.Default.EnabledFormats = string.Join(";", EnabledFormats.Select(i => i.ToString()).ToArray());
 
 			Properties.Settings.Default.SendToRecycleBin = SendToRecycleBin;
-			Properties.Settings.Default.WarnIfOverwrite = WarnIfOverwrite;
+			Properties.Settings.Default.WarnIfOverwrite = OverwriteFiles;
 			Properties.Settings.Default.EnableStatisticTracking = EnableStatisticTracking;
 
 			Properties.Settings.Default.Save();
