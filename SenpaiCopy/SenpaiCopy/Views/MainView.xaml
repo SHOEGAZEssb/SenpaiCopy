@@ -314,13 +314,17 @@
           </i:Interaction.Triggers>
           <Button.ToolTip>Does nothing to the current image and goes to the previous image in the list.</Button.ToolTip>
         </Button>
-        <Button Content="Execute" Grid.Row="3" Foreground="{Binding ExecuteButtonColor}" IsEnabled="{Binding CanCopy}">
+        <Button Grid.Row="3" Foreground="{Binding ExecuteButtonColor}" IsEnabled="{Binding CanCopy}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
               <cal:ActionMessage MethodName="Execute" />
             </i:EventTrigger>
           </i:Interaction.Triggers>
           <Button.ToolTip>Copies the current image to the checked directories and deletes it, if desired.</Button.ToolTip>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Execute"/>
+            <TextBlock Text="{Binding ExecuteButtonCountText}"/>
+          </StackPanel>
         </Button>
         <Button Content="Next" Grid.Row="5" IsEnabled="{Binding CanNext}">
           <i:Interaction.Triggers>

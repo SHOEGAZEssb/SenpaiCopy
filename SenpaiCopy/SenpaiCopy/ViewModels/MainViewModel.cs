@@ -563,6 +563,18 @@ namespace SenpaiCopy
 			}
 		}
 
+		/// <summary>
+		/// Get/sets the text of the count of the execute button.
+		/// </summary>
+		public string ExecuteButtonCountText
+		{
+			get
+			{
+				int count = CheckBoxList.Count(i => i.Checked);
+				return " (" + count + ")";
+			}
+		}
+
 		#endregion Read-Only Properties
 
 		#endregion Properties
@@ -738,6 +750,7 @@ namespace SenpaiCopy
 		public void Directory_CheckedChanged()
 		{
 			NotifyOfPropertyChange(() => ExecuteButtonColor);
+			NotifyOfPropertyChange(() => ExecuteButtonCountText);
 		}
 
 		/// <summary>
