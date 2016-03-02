@@ -99,7 +99,7 @@ namespace SenpaiCopy
 		/// Gets/sets the background color.
 		/// </summary>
 		/// <remarks>
-		/// Used ofr visualization.
+		/// Used for visualization.
 		/// Yellow if <see cref="FullPath"/> is on the favorite list.
 		/// Null otherwise.
 		/// </remarks>
