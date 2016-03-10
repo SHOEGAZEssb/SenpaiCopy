@@ -81,7 +81,7 @@ namespace SenpaiCopy
 		/// </summary>
 		/// <remarks>
 		/// Used for visualization.
-		/// Collapsed when <see cref="FullPath"/> is ignored..
+		/// Collapsed when <see cref="FullPath"/> is ignored.
 		/// Visible otherwise.
 		/// </remarks>
 		public Visibility Visibility
@@ -149,9 +149,9 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
-		/// Triggers when checked changed.
+		/// Triggers when the CheckedChanged event of this directory fires.
 		/// </summary>
-		public void Directory_CheckedCHanged()
+		public void Directory_CheckedChanged()
 		{
 			_mainViewModel.Directory_CheckedChanged();
 		}
