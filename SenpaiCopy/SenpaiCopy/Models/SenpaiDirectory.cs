@@ -115,7 +115,7 @@ namespace SenpaiCopy
 		private SolidColorBrush _backgroundColor;
 
 		/// <summary>
-		/// Gets/sets the reference to the <see cref="MainViewModel"/>.
+		/// Gets/sets the reference to the <see cref="SenpaiCopy.MainViewModel"/>/>.
 		/// </summary>
 		public MainViewModel MainViewModel
 		{
@@ -137,7 +137,7 @@ namespace SenpaiCopy
 			Path = new DirectoryInfo(fullPath).Name;
 			Opacity = 1.0;
 			Visibility = Visibility.Visible;
-			_mainViewModel = mainViewModel;
+			MainViewModel = mainViewModel;
 		}
 
 		/// <summary>
@@ -145,7 +145,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public void Directory_RightClicked()
 		{
-			_mainViewModel.Directory_RightMouseDown(this);
+			MainViewModel.Directory_RightMouseDown(this);
 		}
 
 		/// <summary>
@@ -153,7 +153,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public void Directory_CheckedChanged()
 		{
-			_mainViewModel.Directory_CheckedChanged();
+			MainViewModel.Directory_CheckedChanged();
 		}
 	}
 }
