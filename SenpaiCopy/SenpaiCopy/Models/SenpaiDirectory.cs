@@ -124,7 +124,7 @@ namespace SenpaiCopy
 		}
 		private MainViewModel _mainViewModel;
 
-		#endregion
+		#endregion Properties
 
 		/// <summary>
 		/// Ctor.
