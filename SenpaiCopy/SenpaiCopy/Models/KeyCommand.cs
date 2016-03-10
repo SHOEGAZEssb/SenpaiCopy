@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace SenpaiCopy
+namespace SenpaiCopy.Models
 {
 	/// <summary>
 	/// Class that executes a command. Mainly used for key shortcuts.

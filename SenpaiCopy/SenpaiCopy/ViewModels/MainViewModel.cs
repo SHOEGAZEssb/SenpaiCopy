@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Microsoft.VisualBasic.FileIO;
 using RestSharp;
+using SenpaiCopy.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

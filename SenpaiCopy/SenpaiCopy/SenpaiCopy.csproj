@@ -123,7 +123,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Settings.cs" />
-    <Compile Include="ViewModels\KeyCommand.cs" />
+    <Compile Include="Models\KeyCommand.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="Views\FolderToolTipPreview.xaml.cs">
       <DependentUpon>FolderToolTipPreview.xaml</DependentUpon>
