@@ -421,7 +421,7 @@ namespace SenpaiCopy
 		/// </summary>
 		public bool CanCopy
 		{
-			get { return ImageLoaded && (DeleteImage || _directoryList.Count(i => i.Checked) != 0); }
+			get { return ImageLoaded && (DeleteImage || _directoryList.Any(i => i.Checked)); }
 		}
 
 		/// <summary>
@@ -752,6 +752,7 @@ namespace SenpaiCopy
 		{
 			NotifyOfPropertyChange(() => ExecuteButtonColor);
 			NotifyOfPropertyChange(() => ExecuteButtonCountText);
+			NotifyOfPropertyChange(() => CanCopy);
 		}
 
 		/// <summary>
