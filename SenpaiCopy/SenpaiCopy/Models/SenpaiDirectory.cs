@@ -126,20 +126,6 @@ namespace SenpaiCopy
 		}
 		private MainViewModel _mainViewModel;
 
-		/// <summary>
-		/// Gets/sets a list with <see cref="SenpaiTag"/>s of this directory.
-		/// </summary>
-		public ObservableCollection<SenpaiTag> Tags
-		{
-			get { return _tags; }
-			private set
-			{
-				_tags = value;
-				NotifyOfPropertyChange(() => Tags);
-			}
-		}
-		private ObservableCollection<SenpaiTag> _tags;
-
 		#endregion Properties
 
 		/// <summary>
@@ -153,7 +139,6 @@ namespace SenpaiCopy
 			Path = new DirectoryInfo(fullPath).Name;
 			Opacity = 1.0;
 			Visibility = Visibility.Visible;
-			Tags = new ObservableCollection<SenpaiTag>();
 			MainViewModel = mainViewModel;
 		}
 
