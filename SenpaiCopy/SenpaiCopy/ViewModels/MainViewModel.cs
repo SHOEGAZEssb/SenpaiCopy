@@ -916,7 +916,7 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Unchecks all checked PathCheckBoxes.
 		/// </summary>
-		private void ClearCheckBoxes()
+		public void ClearCheckBoxes()
 		{
 			foreach (SenpaiDirectory dir in _directoryList)
 			{
@@ -1153,6 +1153,17 @@ namespace SenpaiCopy
 		public void ClearImagePathFilter()
 		{
 			ImagePathFilter = "";
+		}
+
+		/// <summary>
+		/// Inverts all CheckBoxes.
+		/// </summary>
+		public void InvertCheckBoxes()
+		{
+			foreach(SenpaiDirectory dir in _directoryList)
+			{
+				dir.Checked = !dir.Checked;
+			}
 		}
 
 		/// <summary>
