@@ -628,9 +628,15 @@ namespace SenpaiCopy
 				{
 					IgnoredPaths.Add(path);
 				}
+
+				Logging.LogInfo("Loaded IgnoredPaths.txt");
+				Logging.LogInfo("Loaded " + IgnoredPaths.Count + " ignored paths.");
 			}
 			else
+			{
 				File.Create("IgnoredPaths.txt");
+				Logging.LogInfo("Created IgnoredPaths.txt");
+			}
 		}
 
 		/// <summary>
@@ -647,9 +653,15 @@ namespace SenpaiCopy
 				{
 					FavoritePaths.Add(path);
 				}
+
+				Logging.LogInfo("Loaded FavoritePaths.txt");
+				Logging.LogInfo("Loaded " + FavoritePaths.Count + " favorite paths.");
 			}
 			else
+			{
 				File.Create("FavoritePaths.txt");
+				Logging.LogInfo("Created FavoritePaths.txt");
+			}
 		}
 
 		/// <summary>
@@ -672,6 +684,7 @@ namespace SenpaiCopy
 
 				//get all files
 				string[] files = Directory.GetFiles(dlg.SelectedPath, "*", so);
+				Logging.LogInfo("Searched " + dlg.SelectedPath + " for files. Found " + files.Length + " files.");
 
 				//get all image files
 				foreach (string file in files)
@@ -680,6 +693,8 @@ namespace SenpaiCopy
 					if (SettingsViewModel.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 						_imagePathList.Add(new FileInfo(file));
 				}
+
+				Logging.LogInfo("Filtered supported files. Found " + _imagePathList.Count + " supported files.");
 
 				TaskbarProgress.ProgressValue = 0.0;
 				_sessionCount = _imagePathList.Count;
@@ -768,6 +783,8 @@ namespace SenpaiCopy
 						await LoadNewVideo();
 					else
 						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
+
+					Logging.LogInfo("CurrentImage: " + _imagePathList[_currentImageIndex].FullName);
 				}
 				catch (Exception ex)
 				{
@@ -787,6 +804,8 @@ namespace SenpaiCopy
 					UpdatePictureBox();
 				else
 					TaskbarProgress.ProgressValue = 1.0;
+
+				Logging.LogInfo("No more images to display.");
 			}
 
 			NotifyOfPropertyChange(() => CanPrevious);
@@ -832,9 +851,13 @@ namespace SenpaiCopy
 					{
 						string newPath = MakeNewPathIfExists(_imagePathList[_currentImageIndex].FullName);
 						_imagePathList[_currentImageIndex].CopyTo(newPath, false);
+						Logging.LogInfo("File to copy already exists. Copied " + _imagePathList[_currentImageIndex] + " as " + newPath);
 					}
 					else
+					{
 						_imagePathList[_currentImageIndex].CopyTo(dir + @"\" + _imagePathList[_currentImageIndex].Name, true);
+						Logging.LogInfo("Copied " + _imagePathList[_currentImageIndex] + " to " + dir);
+					}
 
 					if (SettingsViewModel.EnableStatisticTracking)
 					{
@@ -910,6 +933,7 @@ namespace SenpaiCopy
 					recycleOption = RecycleOption.SendToRecycleBin;
 
 				FileSystem.DeleteFile(_imagePathList[_currentImageIndex].FullName, UIOption.OnlyErrorDialogs, recycleOption);
+				Logging.LogInfo(recycleOption == RecycleOption.DeletePermanently ? "Deleted permanently: " : "Send to recycle bin: " + _imagePathList[_currentImageIndex].FullName);
 			});
 		}
 
@@ -963,6 +987,7 @@ namespace SenpaiCopy
 		public void RemoveCheckBox()
 		{
 			_directoryList.Remove(_currentRightClickedDirectory);
+			Logging.LogInfo("Manually removed the CheckBox of the folder " + _currentRightClickedDirectory.FullPath);
 		}
 
 		/// <summary>
@@ -978,6 +1003,8 @@ namespace SenpaiCopy
 
 				if (!ShowIgnoredFolders)
 					_currentRightClickedDirectory.Visibility = Visibility.Collapsed;
+
+				Logging.LogInfo("Manually added " + _currentRightClickedDirectory.FullPath + " to IgnoredPaths.txt");
 			}
 			else
 			{
@@ -985,6 +1012,7 @@ namespace SenpaiCopy
 				ignoredPaths.Remove(_currentRightClickedDirectory.FullPath);
 				File.WriteAllLines("IgnoredPaths.txt", ignoredPaths.ToArray());
 				_currentRightClickedDirectory.Opacity = 1.0;
+				Logging.LogInfo("Manually removed " + _currentRightClickedDirectory.FullPath + " from FavoritePaths.txt");
 			}
 		}
 
@@ -998,6 +1026,7 @@ namespace SenpaiCopy
 				File.AppendAllText("FavoritePaths.txt", _currentRightClickedDirectory.FullPath + "\r\n");
 				FavoritePaths.Add(_currentRightClickedDirectory.FullPath);
 				_currentRightClickedDirectory.BackgroundColor = new SolidColorBrush(Colors.Yellow);
+				Logging.LogInfo("Manually added " + _currentRightClickedDirectory.FullPath + " to FavoritePaths.txt");
 			}
 			else
 			{
@@ -1005,6 +1034,7 @@ namespace SenpaiCopy
 				paths.Remove(_currentRightClickedDirectory.FullPath);
 				File.WriteAllLines("FavoritePaths.txt", paths.ToArray());
 				_currentRightClickedDirectory.BackgroundColor = null;
+				Logging.LogInfo("Manually removed " + _currentRightClickedDirectory.FullPath + " from FavoritePaths.txt");
 			}
 		}
 
@@ -1028,7 +1058,10 @@ namespace SenpaiCopy
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				if (!_directoryList.Any(i => i.FullPath == dlg.SelectedPath))
+				{
 					AddCheckBox(dlg.SelectedPath);
+					Logging.LogInfo("Manually added folder: " + dlg.SelectedPath);
+				}
 				else
 					System.Windows.MessageBox.Show("This folder has already been added!");
 			}
@@ -1134,8 +1167,10 @@ namespace SenpaiCopy
 		/// <param name="ex">Exception with the error message.</param>
 		private void HandleError(Exception ex)
 		{
-			System.Windows.MessageBox.Show("The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message + ".\r\nImage will be skipped.");
+			string error = "The image " + _imagePathList[_currentImageIndex].FullName + " caused this error: " + ex.Message;
+			System.Windows.MessageBox.Show(error + ".\r\nImage will be skipped.");
 			_imagePathList.RemoveAt(_currentImageIndex);
+			Logging.LogInfo(error);
 			UpdatePictureBox();
 		}
 
@@ -1207,11 +1242,15 @@ namespace SenpaiCopy
 				var response = client.Execute(request);
 				int index = response.Content.IndexOf("http");
 				string imgUrl = response.Content.Substring(index, (response.Content.Length - 1) - index);
+				Logging.LogInfo("Google reverse searched this image: " + _imagePathList[_currentImageIndex].FullName);
+				Logging.LogInfo("Google url: " + "https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
 				Process.Start("https://www.google.com/searchbyimage?site=search&sa=X&image_url=" + imgUrl);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				System.Windows.MessageBox.Show("Something went wrong while googling the image.");
+				string error = "Something went wrong while googling the image. " + ex.Message;
+				System.Windows.MessageBox.Show("Something went wrong while googling the image. " + ex.Message);
+				Logging.LogInfo(error);
 			}
 			finally
 			{

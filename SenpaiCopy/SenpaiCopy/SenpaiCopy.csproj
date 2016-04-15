@@ -122,6 +122,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logging.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Models\KeyCommand.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
