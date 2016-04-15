@@ -47,34 +47,35 @@ namespace SenpaiCopy
 		/// <param name="e">EventArgs that contain the set value.</param>
 		private static void OnFolderPathPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
 		{
-			FolderToolTipPreview control = source as FolderToolTipPreview;
-			if (control.DataContext != null)
+			try
 			{
-				SettingsViewModel svm = (control.DataContext as SenpaiDirectory).MainViewModel.SettingsViewModel;
-
-				string dir = e.NewValue.ToString();
-
-				//get all files
-				string[] files = Directory.GetFiles(dir, "*", SearchOption.TopDirectoryOnly);
-
-				//get all image files
-				foreach (string file in files)
+				FolderToolTipPreview control = source as FolderToolTipPreview;
+				if (control.DataContext != null)
 				{
-					string lowerFile = file.ToLower();
-					if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
+					SettingsViewModel svm = (control.DataContext as SenpaiDirectory).MainViewModel.SettingsViewModel;
+
+					string dir = e.NewValue.ToString();
+
+					//get all files
+					string[] files = Directory.GetFiles(dir, "*", SearchOption.TopDirectoryOnly);
+
+					//get all image files
+					foreach (string file in files)
 					{
-						if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
+						string lowerFile = file.ToLower();
+						if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 						{
-							try
+							if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
 							{
 								ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
-								break;
 							}
-							catch (Exception)
-							{ }
 						}
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				Logging.LogInfo("Error displaying folder tool tip: " + ex.Message);
 			}
 		}
 
