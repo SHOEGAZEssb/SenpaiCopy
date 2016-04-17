@@ -18,8 +18,8 @@ namespace SenpaiCopy
 		{
 			lock (_lockAnchor)
 			{
-				if (!File.Exists("log.txt"))
-					File.Create("log.txt").Close();
+				if (!File.Exists("logging.txt"))
+					File.Create("logging.txt").Close();
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace SenpaiCopy
 			{
 				try
 				{
-					File.AppendAllLines("log.txt", new[] { DateTime.Now + ": " + info });
+					File.AppendAllLines("logging.txt", new[] { DateTime.Now + ": " + info });
 				}
 				catch(Exception) { }
 			}
