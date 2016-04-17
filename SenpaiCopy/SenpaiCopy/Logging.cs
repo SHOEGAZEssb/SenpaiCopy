@@ -32,7 +32,11 @@ namespace SenpaiCopy
 		{
 			lock (_lockAnchor)
 			{
-				File.AppendAllLines("log.txt", new[] { DateTime.Now + ": " + info });
+				try
+				{
+					File.AppendAllLines("log.txt", new[] { DateTime.Now + ": " + info });
+				}
+				catch(Exception) { }
 			}
 		}
 	}
