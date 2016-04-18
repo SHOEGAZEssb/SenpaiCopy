@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
+using XamlAnimatedGif;
 
 namespace SenpaiCopy
 {
@@ -65,9 +65,9 @@ namespace SenpaiCopy
 						string lowerFile = file.ToLower();
 						if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 						{
-							if (!lowerFile.EndsWith(".gif") && lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
+							if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
 							{
-								ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
+								AnimationBehavior.SetSourceUri(control.img, new Uri(lowerFile));
 								return;
 							}
 						}

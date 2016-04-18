@@ -120,7 +120,7 @@ namespace SenpaiCopy
 		/// <summary>
 		/// Gets/sets the currently shown image.
 		/// </summary>
-		public ImageSource CurrentImage
+		public string CurrentImage
 		{
 			get { return _currentImage; }
 			private set
@@ -130,7 +130,7 @@ namespace SenpaiCopy
 				NotifyImagePropertyChanges();
 			}
 		}
-		private ImageSource _currentImage;
+		private string _currentImage;
 
 		/// <summary>
 		/// Gets a list of all PathCheckBoxes.
@@ -315,7 +315,7 @@ namespace SenpaiCopy
 		/// <summary>
 		/// The current image of the reverse image search button.
 		/// </summary>
-		public ImageSource ReverseImageSearchButtonImage
+		public string ReverseImageSearchButtonImage
 		{
 			get { return _reverseImageSearchButtonImage; }
 			private set
@@ -324,7 +324,7 @@ namespace SenpaiCopy
 				NotifyOfPropertyChange(() => ReverseImageSearchButtonImage);
 			}
 		}
-		private ImageSource _reverseImageSearchButtonImage;
+		private string _reverseImageSearchButtonImage;
 
 		/// <summary>
 		/// Gets/sets if ignored folders should be shown.
@@ -526,7 +526,7 @@ namespace SenpaiCopy
 					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Width;
 					else
-						return (int)CurrentImage.Width;
+						return 0;//(int)CurrentImage.Width; TODO
 				}
 
 				return 0;
@@ -545,7 +545,7 @@ namespace SenpaiCopy
 					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Height;
 					else
-						return (int)CurrentImage.Height;
+						return 0;// (int)CurrentImage.Height; TODO
 				}
 
 				return 0;
@@ -624,7 +624,7 @@ namespace SenpaiCopy
 			else
 				VlcPlayer.LibVlcPath = @"..\..\..\Libs\Vlc\lib\x86-libs";
 
-			ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
+			ReverseImageSearchButtonImage = "pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png";
 			_reverseImageSearchWorker = new BackgroundWorker();
 			_reverseImageSearchWorker.DoWork += new DoWorkEventHandler(GoogleReverseImageSearch);
 			_dispatcher = Dispatcher.CurrentDispatcher;
@@ -800,7 +800,7 @@ namespace SenpaiCopy
 					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
 						await LoadNewVideo();
 					else
-						CurrentImage = LoadBitmapImage(_imagePathList[_currentImageIndex].FullName);
+						CurrentImage = _imagePathList[_currentImageIndex].FullName;
 
 					Logging.LogInfo("CurrentImage: " + _imagePathList[_currentImageIndex].FullName);
 				}
@@ -991,7 +991,7 @@ namespace SenpaiCopy
 		{
 			try
 			{
-				Process.Start((CurrentImage as BitmapImage).UriSource.LocalPath);
+				Process.Start(CurrentImage);
 			}
 			catch (Exception ex)
 			{
@@ -1176,7 +1176,7 @@ namespace SenpaiCopy
 		public void CurrentImageLabelClicked()
 		{
 			string param = "/select,";
-			param += "\"" + (CurrentImage as BitmapImage).UriSource.LocalPath + "\"";
+			param += "\"" + CurrentImage + "\"";
 			Process.Start("explorer.exe", param);
 		}
 
@@ -1251,7 +1251,7 @@ namespace SenpaiCopy
 		{
 			try
 			{
-				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"))));
+				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = "pack://application:,,,/SenpaiCopy;component/Resources/loading.gif"));
 				var client = new RestClient("http://imagebin.ca");
 				client.Proxy = null;
 				var request = new RestRequest("upload.php", Method.POST);
@@ -1273,7 +1273,7 @@ namespace SenpaiCopy
 			}
 			finally
 			{
-				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = new BitmapImage(new Uri("pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"))));
+				_dispatcher.Invoke(new System.Action(() => ReverseImageSearchButtonImage = "pack://application:,,,/SenpaiCopy;component/Resources/google-favicon.png"));
 			}
 		}
 

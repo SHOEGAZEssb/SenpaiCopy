@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="SenpaiCopy.ImageToolTipPreview"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:gif="http://wpfanimatedgif.codeplex.com"
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+             mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500" MaxWidth="500" MaxHeight="500">
   <Grid>
-    <Image Name="img"/>
+    <Image Name="img" gif:AnimationBehavior.RepeatBehavior="Forever"/>
   </Grid>
 </UserControl>

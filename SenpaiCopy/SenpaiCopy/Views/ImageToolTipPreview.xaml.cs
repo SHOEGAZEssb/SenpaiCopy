@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
+using XamlAnimatedGif;
 
 namespace SenpaiCopy
 {
@@ -47,7 +47,10 @@ namespace SenpaiCopy
 		private static void OnFileNamePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
 		{
 			ImageToolTipPreview control = source as ImageToolTipPreview;
-			ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(e.NewValue.ToString(), control));
+			string fileName = e.NewValue.ToString();
+			if (fileName == "" || Properties.Settings.Default.SupportedVlcFormats.Split(';').Any(f => fileName.EndsWith(f)))
+				return;
+			AnimationBehavior.SetSourceUri(control.img, new Uri(fileName));
 		}
 
 		/// <summary>
