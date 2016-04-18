@@ -59,7 +59,7 @@ namespace SenpaiCopy
 		/// <returns>Loaded image file.</returns>
 		private static BitmapImage LoadBitmapImage(string fileName, ImageToolTipPreview control)
 		{
-			if (fileName == "" || Properties.Settings.Default.SupportedVlcFormats.Split(';').Any(f => fileName.EndsWith(f)))
+			if (fileName.EndsWith(".gif") || fileName == "" || Properties.Settings.Default.SupportedVlcFormats.Split(';').Any(f => fileName.EndsWith(f)))
 				return null;
 
 			try

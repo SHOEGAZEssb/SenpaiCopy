@@ -65,7 +65,7 @@ namespace SenpaiCopy
 						string lowerFile = file.ToLower();
 						if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
 						{
-							if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
+							if (!lowerFile.EndsWith(".gif") && lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
 							{
 								ImageBehavior.SetAnimatedSource(control.img, LoadBitmapImage(lowerFile));
 								return;
