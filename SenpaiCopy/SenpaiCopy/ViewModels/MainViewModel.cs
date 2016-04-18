@@ -433,6 +433,22 @@ namespace SenpaiCopy
 		}
 
 		/// <summary>
+		/// Gets if the "Invert CheckBoxes" button is enabled.
+		/// </summary>
+		public bool CanInvertCheckBoxes
+		{
+			get { return _directoryList.Count != 0; }
+		}
+
+		/// <summary>
+		/// Gets if the "Clear CheckBoxes" button is enabled.
+		/// </summary>
+		public bool CanClearCheckBoxes
+		{
+			get { return _directoryList.Any(i => i.Checked); }
+		}
+
+		/// <summary>
 		/// Gets whether the user can click the "Add Folder" button in
 		/// the context menu of the <see cref="FolderPath"/> label.
 		/// </summary>
@@ -757,6 +773,7 @@ namespace SenpaiCopy
 				dir.BackgroundColor = new SolidColorBrush(Colors.Yellow);
 
 			_directoryList.Add(dir);
+			NotifyOfPropertyChange(() => CanInvertCheckBoxes);
 		}
 
 		/// <summary>
@@ -768,6 +785,7 @@ namespace SenpaiCopy
 			NotifyOfPropertyChange(() => ExecuteButtonColor);
 			NotifyOfPropertyChange(() => ExecuteButtonCountText);
 			NotifyOfPropertyChange(() => CanCopy);
+			NotifyOfPropertyChange(() => CanClearCheckBoxes);
 		}
 
 		/// <summary>
@@ -987,6 +1005,7 @@ namespace SenpaiCopy
 		public void RemoveCheckBox()
 		{
 			_directoryList.Remove(_currentRightClickedDirectory);
+			NotifyOfPropertyChange(() => CanInvertCheckBoxes);
 			Logging.LogInfo("Manually removed the CheckBox of the folder " + _currentRightClickedDirectory.FullPath);
 		}
 

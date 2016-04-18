@@ -260,7 +260,7 @@
           </i:Interaction.Triggers>
           <Button.ToolTip>Inverts all CheckBoxes.</Button.ToolTip>
         </Button>
-        <Button Grid.Column="4" Content="Clear CheckBoxes">
+        <Button Grid.Column="4" Content="Clear CheckBoxes" IsEnabled="{Binding CanClearCheckBoxes}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="Click">
               <cal:ActionMessage MethodName="ClearCheckBoxes"/>
