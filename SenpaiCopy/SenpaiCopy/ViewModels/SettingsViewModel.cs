@@ -245,7 +245,6 @@ namespace SenpaiCopy
 		public void AddToEnabled()
 		{
 			EnabledFormats.Add(SupportedFormats[SupportedIndex]);
-			//SupportedFormats.RemoveAt(SupportedIndex);
 			NotifyOfPropertyChange(() => SupportedFormats);
 		}
 
@@ -254,7 +253,6 @@ namespace SenpaiCopy
 		/// </summary>
 		public void AddToSupported()
 		{
-			//SupportedFormats.Add(EnabledFormats[EnabledIndex]);
 			EnabledFormats.RemoveAt(EnabledIndex);
 			NotifyOfPropertyChange(() => SupportedFormats);
 		}

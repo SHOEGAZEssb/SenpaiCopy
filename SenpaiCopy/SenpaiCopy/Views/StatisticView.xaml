@@ -51,13 +51,41 @@
     <Label Grid.Row="8" Grid.Column="2" Content="{Binding Startups}" HorizontalAlignment="Right" />
     <Label Grid.Row="8" Grid.Column="3" Content="Times" />
 
-    <Button Grid.Row="10" Grid.Column="1" Content="Reset Statistic">
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Click">
-          <cal:ActionMessage MethodName="ResetStatistic"/>
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
-      <Button.ToolTip>Resets the statistic.</Button.ToolTip>
-    </Button>
+    <Grid Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="5"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="5"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Content="Reset Statistic">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Click">
+            <cal:ActionMessage MethodName="ResetStatistic"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.ToolTip>Resets the statistic.</Button.ToolTip>
+      </Button>
+
+      <Button Grid.Column="2" Content="Export Statistic">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Click">
+            <cal:ActionMessage MethodName="ExportStatistic"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.ToolTip>Resets the statistic.</Button.ToolTip>
+      </Button>
+
+      <Button Grid.Column="4" Content="Import Statistic">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Click">
+            <cal:ActionMessage MethodName="ImportStatistic"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.ToolTip>Resets the statistic.</Button.ToolTip>
+      </Button>
+    </Grid>
   </Grid>
 </Window>
