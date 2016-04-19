@@ -52,34 +52,5 @@ namespace SenpaiCopy
 				return;
 			AnimationBehavior.SetSourceUri(control.img, new Uri(fileName));
 		}
-
-		/// <summary>
-		/// Loads an image file from the given <paramref name="fileName"/>.
-		/// This does still allow operations done to the file.
-		/// </summary>
-		/// <param name="fileName">Image file to load.</param>
-		/// <param name="control">Reference to the control that triggered the Load.</param>
-		/// <returns>Loaded image file.</returns>
-		private static BitmapImage LoadBitmapImage(string fileName, ImageToolTipPreview control)
-		{
-			if (fileName.EndsWith(".gif") || fileName == "" || Properties.Settings.Default.SupportedVlcFormats.Split(';').Any(f => fileName.EndsWith(f)))
-				return null;
-
-			try
-			{
-				var bitmapImage = new BitmapImage();
-				bitmapImage.BeginInit();
-				bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-				bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
-				bitmapImage.UriSource = new Uri(fileName);
-				bitmapImage.EndInit();
-				bitmapImage.Freeze();
-				return bitmapImage;
-			}
-			catch (Exception)
-			{
-				return null;
-			}
-		}
 	}
 }

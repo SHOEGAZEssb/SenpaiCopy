@@ -79,23 +79,5 @@ namespace SenpaiCopy
 				Logging.LogInfo("Error displaying folder tool tip: " + ex.Message);
 			}
 		}
-
-		/// <summary>
-		/// Loads an image file from the given <paramref name="fileName"/>.
-		/// This does still allow operations done to the file.
-		/// </summary>
-		/// <param name="fileName">Image file to load.</param>
-		/// <returns>Loaded image file.</returns>
-		private static BitmapImage LoadBitmapImage(string fileName)
-		{
-			var bitmapImage = new BitmapImage();
-			bitmapImage.BeginInit();
-			bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-			bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
-			bitmapImage.UriSource = new Uri(fileName);
-			bitmapImage.EndInit();
-			bitmapImage.Freeze();
-			return bitmapImage;
-		}
 	}
 }
