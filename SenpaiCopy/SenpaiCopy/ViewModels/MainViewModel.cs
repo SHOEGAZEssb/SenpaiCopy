@@ -521,12 +521,19 @@ namespace SenpaiCopy
 		{
 			get
 			{
-				if (ImageLoaded)
+				try
 				{
-					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
-						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Width;
-					else
-						return 0;//(int)CurrentImage.Width; TODO
+					if (ImageLoaded)
+					{
+						if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
+							return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Width;
+						else
+							return (int)LoadBitmapImage(CurrentImage).Width;
+					}
+				}
+				catch(Exception ex)
+				{
+					Logging.LogInfo("Error getting " + CurrentImage + " Width: " + ex.Message);
 				}
 
 				return 0;
@@ -540,12 +547,19 @@ namespace SenpaiCopy
 		{
 			get
 			{
-				if (ImageLoaded)
+				try
 				{
-					if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
-						return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Height;
-					else
-						return 0;// (int)CurrentImage.Height; TODO
+					if (ImageLoaded)
+					{
+						if (SettingsViewModel.SupportedVlcFormats.Contains(_imagePathList[_currentImageIndex].Extension))
+							return (int)VlcPlayer.VlcMediaPlayer.VideoSize.Height;
+						else
+							return (int)LoadBitmapImage(CurrentImage).Height;
+					}
+				}
+				catch(Exception ex)
+				{
+					Logging.LogInfo("Error getting " + CurrentImage + " Height: " + ex.Message);
 				}
 
 				return 0;
@@ -1217,6 +1231,24 @@ namespace SenpaiCopy
 			NotifyOfPropertyChange(() => ImageFileName);
 			NotifyOfPropertyChange(() => ImageFileSize);
 			NotifyOfPropertyChange(() => CanReverseImageSearch);
+		}
+
+		/// <summary>
+		/// Loads an image file from the given <paramref name="fileName"/>.
+		/// This does still allow operations done to the file.
+		/// </summary>
+		/// <param name="fileName">Image file to load.</param>
+		/// <returns>Loaded image file.</returns>
+		private static BitmapImage LoadBitmapImage(string fileName)
+		{
+			var bitmapImage = new BitmapImage();
+			bitmapImage.BeginInit();
+			bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+			bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+			bitmapImage.UriSource = new Uri(fileName);
+			bitmapImage.EndInit();
+			bitmapImage.Freeze();
+			return bitmapImage;
 		}
 
 		/// <summary>
