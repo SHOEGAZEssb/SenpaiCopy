@@ -850,13 +850,20 @@ namespace SenpaiCopy
 		/// </summary>
 		private async Task LoadNewVideo()
 		{
-			await Task.Run(() =>
+			try
 			{
-				VlcPlayer.Stop();
-				VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
-				VlcPlayer.Play();
-				CurrentImage = null;
-			});
+				await Task.Run(() =>
+				{
+					VlcPlayer.Stop();
+					VlcPlayer.LoadMedia(_imagePathList[_currentImageIndex].FullName);
+					VlcPlayer.Play();
+					CurrentImage = null;
+				});
+			}
+			catch(Exception ex)
+			{
+				HandleError(ex);
+			}
 		}
 
 		/// <summary>
