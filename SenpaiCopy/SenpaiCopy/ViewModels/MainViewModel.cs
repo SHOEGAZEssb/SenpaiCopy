@@ -17,7 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shell;
 using System.Windows.Threading;
-using xZune.Vlc.Wpf;
+using Meta.Vlc.Wpf;
 
 namespace SenpaiCopy
 {

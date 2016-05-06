@@ -1,6 +1,4 @@
 ﻿using Caliburn.Micro;
-using SenpaiCopy.Models;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;

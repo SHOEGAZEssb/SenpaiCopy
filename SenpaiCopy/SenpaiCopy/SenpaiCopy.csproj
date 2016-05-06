@@ -82,6 +82,12 @@
     <Reference Include="Caliburn.Micro.Platform">
       <HintPath>Libs\Caliburn.Micro.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Meta.Vlc">
+      <HintPath>Libs\Vlc\Meta.Vlc.dll</HintPath>
+    </Reference>
+    <Reference Include="Meta.Vlc.Wpf">
+      <HintPath>Libs\Vlc\Meta.Vlc.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="RestSharp">
       <HintPath>Libs\RestSharp.dll</HintPath>
@@ -109,12 +115,6 @@
     <Reference Include="XamlAnimatedGif, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\XamlAnimatedGif.1.1.2\lib\net45\XamlAnimatedGif.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="xZune.Vlc">
-      <HintPath>Libs\Vlc\xZune.Vlc.dll</HintPath>
-    </Reference>
-    <Reference Include="xZune.Vlc.Wpf">
-      <HintPath>Libs\Vlc\xZune.Vlc.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
