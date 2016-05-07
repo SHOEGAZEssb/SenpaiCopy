@@ -852,6 +852,7 @@ namespace SenpaiCopy
 		{
 			try
 			{
+				VlcPlayer.RebuildPlayer();
 				await Task.Run(() =>
 				{
 					VlcPlayer.Stop();
