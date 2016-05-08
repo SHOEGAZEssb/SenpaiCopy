@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using SenpaiCopy.Properties;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -180,6 +181,20 @@ namespace SenpaiCopy
 		}
 		private bool _enableStatisticTracking;
 
+		/// <summary>
+		/// Gets/sets if logging is enabled.
+		/// </summary>
+		public bool EnableLogging
+		{
+			get { return _enableLogging; }
+			set
+			{
+				_enableLogging = value;
+				NotifyOfPropertyChange(() => EnableLogging);
+			}
+		}
+		private bool _enableLogging;
+
 		#region Read-Only Properties
 
 		/// <summary>
@@ -225,18 +240,19 @@ namespace SenpaiCopy
 		/// </summary>
 		private void LoadSettings()
 		{
-			PreviousHotkey = (Key)Properties.Settings.Default.PreviousHotkey;
-			ExecuteHotkey = (Key)Properties.Settings.Default.ExecuteHotkey;
-			NextHotkey = (Key)Properties.Settings.Default.NextHotkey;
-			ClearCheckBoxesHotkey = (Key)Properties.Settings.Default.ClearCheckBoxesHotkey;
+			PreviousHotkey = (Key)Settings.Default.PreviousHotkey;
+			ExecuteHotkey = (Key)Settings.Default.ExecuteHotkey;
+			NextHotkey = (Key)Settings.Default.NextHotkey;
+			ClearCheckBoxesHotkey = (Key)Settings.Default.ClearCheckBoxesHotkey;
 
-			EnabledFormats = new ObservableCollection<string>(Properties.Settings.Default.EnabledFormats.Split(';').OrderBy(i => i));
-			SupportedImageFormats = new List<string>(Properties.Settings.Default.SupportedImageFormats.Split(';'));
-			SupportedVlcFormats = new List<string>(Properties.Settings.Default.SupportedVlcFormats.Split(';'));
+			EnabledFormats = new ObservableCollection<string>(Settings.Default.EnabledFormats.Split(';').OrderBy(i => i));
+			SupportedImageFormats = new List<string>(Settings.Default.SupportedImageFormats.Split(';'));
+			SupportedVlcFormats = new List<string>(Settings.Default.SupportedVlcFormats.Split(';'));
 
-			SendToRecycleBin = Properties.Settings.Default.SendToRecycleBin;
-			OverwriteFiles = Properties.Settings.Default.WarnIfOverwrite;
-			EnableStatisticTracking = Properties.Settings.Default.EnableStatisticTracking;
+			SendToRecycleBin = Settings.Default.SendToRecycleBin;
+			OverwriteFiles = Settings.Default.WarnIfOverwrite;
+			EnableStatisticTracking = Settings.Default.EnableStatisticTracking;
+			EnableLogging = Settings.Default.EnableLogging;
 		}
 
 		/// <summary>
@@ -263,18 +279,19 @@ namespace SenpaiCopy
 		/// <param name="sender">Should be the <see cref="SettingsView"/>, but is the clicked button for some reason.</param>
 		public void Save(object sender)
 		{
-			Properties.Settings.Default.PreviousHotkey = (int)PreviousHotkey;
-			Properties.Settings.Default.ExecuteHotkey = (int)ExecuteHotkey;
-			Properties.Settings.Default.NextHotkey = (int)NextHotkey;
-			Properties.Settings.Default.ClearCheckBoxesHotkey = (int)ClearCheckBoxesHotkey;
+			Settings.Default.PreviousHotkey = (int)PreviousHotkey;
+			Settings.Default.ExecuteHotkey = (int)ExecuteHotkey;
+			Settings.Default.NextHotkey = (int)NextHotkey;
+			Settings.Default.ClearCheckBoxesHotkey = (int)ClearCheckBoxesHotkey;
 
-			Properties.Settings.Default.EnabledFormats = string.Join(";", EnabledFormats.Select(i => i.ToString()).ToArray());
+			Settings.Default.EnabledFormats = string.Join(";", EnabledFormats.Select(i => i.ToString()).ToArray());
 
-			Properties.Settings.Default.SendToRecycleBin = SendToRecycleBin;
-			Properties.Settings.Default.WarnIfOverwrite = OverwriteFiles;
-			Properties.Settings.Default.EnableStatisticTracking = EnableStatisticTracking;
+			Settings.Default.SendToRecycleBin = SendToRecycleBin;
+			Settings.Default.WarnIfOverwrite = OverwriteFiles;
+			Settings.Default.EnableStatisticTracking = EnableStatisticTracking;
+			Settings.Default.EnableLogging = EnableLogging;
 
-			Properties.Settings.Default.Save();
+			Settings.Default.Save();
 			(((sender as FrameworkElement).Parent as FrameworkElement).Parent as Window).Close(); //TODO ULTRA HACKY CHECK THIS!!!!!
 		}
 

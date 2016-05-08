@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SenpaiCopy.Properties;
+using System;
 using System.IO;
 
 namespace SenpaiCopy
@@ -30,13 +31,16 @@ namespace SenpaiCopy
 		/// <param name="info">Info to log.</param>
 		public static void LogInfo(string info)
 		{
-			lock (_lockAnchor)
+			if (Settings.Default.EnableLogging)
 			{
-				try
+				lock (_lockAnchor)
 				{
-					File.AppendAllLines("logging.txt", new[] { DateTime.Now + ": " + info });
+					try
+					{
+						File.AppendAllLines("logging.txt", new[] { DateTime.Now + ": " + info });
+					}
+					catch (Exception) { }
 				}
-				catch(Exception) { }
 			}
 		}
 	}

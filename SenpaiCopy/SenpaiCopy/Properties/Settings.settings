@@ -56,5 +56,8 @@
     <Setting Name="SupportedVlcFormats" Type="System.String" Scope="User">
       <Value Profile="(Default)">.avi;.mp4;.webm</Value>
     </Setting>
+    <Setting Name="EnableLogging" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

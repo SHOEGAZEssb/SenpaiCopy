@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="Settings" Height="300" Width="500" WindowStyle="None">
+        Title="Settings" Height="315" Width="500" WindowStyle="None">
 
   <Window.Resources>
     <ObjectDataProvider MethodName="GetValues"
@@ -112,6 +112,8 @@
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="5"/>
           <RowDefinition Height="Auto"/>
+          <RowDefinition Height="5"/>
+          <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <CheckBox Grid.Row="1" Content="Send deleted files to recycle bin" IsChecked="{Binding SendToRecycleBin}" VerticalAlignment="Center">
@@ -122,6 +124,9 @@
         </CheckBox>
         <CheckBox Grid.Row="5" Content="Enable statistic tracking" IsChecked="{Binding EnableStatisticTracking}" VerticalAlignment="Center">
           <CheckBox.ToolTip>If checked, will track certain things in the program. See statistic window.</CheckBox.ToolTip>
+        </CheckBox>
+        <CheckBox Grid.Row="7" Content="Enable logging" IsChecked="{Binding EnableLogging}" VerticalAlignment="Center">
+          <CheckBox.ToolTip>If checked, will log certain events to a log file.</CheckBox.ToolTip>
         </CheckBox>
       </Grid>
     </GroupBox>
