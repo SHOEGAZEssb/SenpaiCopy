@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Meta.Vlc;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -13,6 +14,7 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: VlcSettings(@"vlclib", new string[] { "-I", "dummy", "--dummy-quiet", "--ignore-config", "--no-video-title" })]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
