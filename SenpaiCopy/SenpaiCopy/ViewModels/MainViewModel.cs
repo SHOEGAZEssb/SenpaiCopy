@@ -1226,6 +1226,16 @@ namespace SenpaiCopy
 			}
 		}
 
+    /// <summary>
+    /// Selects and displays a random image.
+    /// </summary>
+    public void RandomImage()
+    {
+      Random rnd = new Random(DateTime.Now.Ticks.GetHashCode());
+      _currentImageIndex = rnd.Next(0, _imagePathList.Count - 1);
+      UpdatePictureBox();
+    }
+
 		/// <summary>
 		/// Notifies the UI of image related changes.
 		/// </summary>

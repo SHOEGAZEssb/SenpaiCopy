@@ -131,6 +131,9 @@
         <RowDefinition Height="Auto" />
         <RowDefinition Height="5"/>
         <RowDefinition Height="Auto"/>
+        <RowDefinition Height="5"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="5"/>
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
@@ -282,7 +285,17 @@
         </i:Interaction.Triggers>
         <Button.ToolTip>Clears the image list filter.</Button.ToolTip>
       </Button>
-      <ListBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding ImagePathList}"
+
+      <Button Grid.Row="8" Content="Random" Grid.ColumnSpan="2" HorizontalAlignment="Left" IsEnabled="{Binding ImageLoaded}">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Click">
+            <cal:ActionMessage MethodName="RandomImage"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.ToolTip>Selects a random image.</Button.ToolTip>
+      </Button>
+
+      <ListBox Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding ImagePathList}"
                SelectedItem="{Binding SelectedImage}">
         <ListBox.ItemTemplate>
           <DataTemplate>
