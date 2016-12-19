@@ -92,9 +92,6 @@
       <HintPath>Libs\Vlc\Meta.Vlc.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="RestSharp">
-      <HintPath>Libs\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
