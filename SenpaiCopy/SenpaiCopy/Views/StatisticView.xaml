@@ -75,7 +75,7 @@
             <cal:ActionMessage MethodName="ExportStatistic"/>
           </i:EventTrigger>
         </i:Interaction.Triggers>
-        <Button.ToolTip>Resets the statistic.</Button.ToolTip>
+        <Button.ToolTip>Exports the statistic to a file.</Button.ToolTip>
       </Button>
 
       <Button Grid.Column="4" Content="Import Statistic">
@@ -84,7 +84,7 @@
             <cal:ActionMessage MethodName="ImportStatistic"/>
           </i:EventTrigger>
         </i:Interaction.Triggers>
-        <Button.ToolTip>Resets the statistic.</Button.ToolTip>
+        <Button.ToolTip>Imports the statistic from a file.</Button.ToolTip>
       </Button>
     </Grid>
   </Grid>
