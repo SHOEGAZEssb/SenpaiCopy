@@ -85,12 +85,7 @@ namespace SenpaiCopy
             if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
             {
               if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
-              {
-                if (lowerFile.EndsWith(".gif"))
-                  AnimationBehavior.SetSourceUri(control.img, new Uri(lowerFile));
-                else
-                  control.img.Source = new BitmapImage(new Uri(lowerFile));
-              }
+                AnimationBehavior.SetSourceUri(control.img, new Uri(lowerFile));
             }
           }
         }

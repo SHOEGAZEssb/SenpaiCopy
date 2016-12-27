@@ -69,10 +69,8 @@ namespace SenpaiCopy
       string fileName = e.NewValue.ToString();
       if (fileName == "" || Properties.Settings.Default.SupportedVlcFormats.Split(';').Any(f => fileName.EndsWith(f)))
         return;
-      if (fileName.EndsWith(".gif"))
-        AnimationBehavior.SetSourceUri(control.img, new Uri(fileName));
-      else
-        control.img.Source = new BitmapImage(new Uri(fileName));
+
+      AnimationBehavior.SetSourceUri(control.img, new Uri(fileName));
     }
   }
 }
