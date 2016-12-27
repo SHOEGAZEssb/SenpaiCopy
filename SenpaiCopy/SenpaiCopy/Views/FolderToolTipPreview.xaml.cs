@@ -1,82 +1,104 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using XamlAnimatedGif;
 
 namespace SenpaiCopy
 {
-	/// <summary>
-	/// Interaction logic for FolderToolTipPreview.xaml
-	/// </summary>
-	public partial class FolderToolTipPreview : UserControl
-	{
-		#region Properties
+  /// <summary>
+  /// Interaction logic for FolderToolTipPreview.xaml
+  /// </summary>
+  public partial class FolderToolTipPreview : UserControl
+  {
+    #region Properties
 
-		/// <summary>
-		/// DependencyProperty of <see cref="FolderPath"/>
-		/// </summary>
-		public static readonly DependencyProperty FolderPathProperty = DependencyProperty.Register("FolderPath", typeof(string),
-		 typeof(FolderToolTipPreview), new PropertyMetadata("", OnFolderPathPropertyChanged));
+    /// <summary>
+    /// DependencyProperty of <see cref="FolderPath"/>
+    /// </summary>
+    public static readonly DependencyProperty FolderPathProperty = DependencyProperty.Register("FolderPath", typeof(string),
+     typeof(FolderToolTipPreview), new PropertyMetadata("", OnFolderPathPropertyChanged));
 
-		/// <summary>
-		/// Path of the folder.
-		/// </summary>
-		public string FolderPath
-		{
-			get { return (string)GetValue(FolderPathProperty); }
-			set { SetValue(FolderPathProperty, value); }
-		}
+    /// <summary>
+    /// Path of the folder.
+    /// </summary>
+    public string FolderPath
+    {
+      get { return (string)GetValue(FolderPathProperty); }
+      set { SetValue(FolderPathProperty, value); }
+    }
 
-		#endregion Properties
+    #endregion Properties
 
-		/// <summary>
-		/// Ctor.
-		/// </summary>
-		public FolderToolTipPreview()
-		{
-			InitializeComponent();
-		}
+    /// <summary>
+    /// Ctor.
+    /// </summary>
+    public FolderToolTipPreview()
+    {
+      InitializeComponent();
+      var descriptor = DependencyPropertyDescriptor.FromProperty(Image.SourceProperty, typeof(Image));
+      descriptor.AddValueChanged(img,
+          (sender, e) =>
+          {
+            var source = img.Source;
+            if (source != null)
+            {
+              if (source.Width > MaxWidth)
+                img.Width = MaxWidth;
+              else
+                img.Width = source.Width;
 
-		/// <summary>
-		/// Loads the first image from the given <see cref="FolderPath"/> and assigns it to the image.
-		/// </summary>
-		/// <param name="source">DependencyObject that triggered this event.</param>
-		/// <param name="e">EventArgs that contain the set value.</param>
-		private static void OnFolderPathPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
-		{
-			try
-			{
-				FolderToolTipPreview control = source as FolderToolTipPreview;
-				if (control.DataContext != null)
-				{
-					SettingsViewModel svm = (control.DataContext as SenpaiDirectory).MainViewModel.SettingsViewModel;
+              if (source.Height > MaxHeight)
+                img.Height = MaxHeight;
+              else
+                img.Height = source.Height;
+            }
+          });
+    }
 
-					string dir = e.NewValue.ToString();
+    /// <summary>
+    /// Loads the first image from the given <see cref="FolderPath"/> and assigns it to the image.
+    /// </summary>
+    /// <param name="source">DependencyObject that triggered this event.</param>
+    /// <param name="e">EventArgs that contain the set value.</param>
+    private static void OnFolderPathPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+    {
+      try
+      {
+        FolderToolTipPreview control = source as FolderToolTipPreview;
+        if (control.DataContext != null)
+        {
+          SettingsViewModel svm = (control.DataContext as SenpaiDirectory).MainViewModel.SettingsViewModel;
 
-					//get all files
-					string[] files = Directory.GetFiles(dir, "*", SearchOption.TopDirectoryOnly);
+          string dir = e.NewValue.ToString();
 
-					//get all image files
-					foreach (string file in files)
-					{
-						string lowerFile = file.ToLower();
-						if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
-						{
-							if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
-							{
-								AnimationBehavior.SetSourceUri(control.img, new Uri(lowerFile));
-								return;
-							}
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Logging.LogInfo("Error displaying folder tool tip: " + ex.Message);
-			}
-		}
-	}
+          //get all files
+          string[] files = Directory.GetFiles(dir, "*", SearchOption.TopDirectoryOnly);
+
+          //get all image files
+          foreach (string file in files)
+          {
+            string lowerFile = file.ToLower();
+            if (svm.EnabledFormats.Any(i => lowerFile.EndsWith(i)))
+            {
+              if (lowerFile != "" && !svm.SupportedVlcFormats.Any(f => lowerFile.EndsWith(f)))
+              {
+                if (lowerFile.EndsWith(".gif"))
+                  AnimationBehavior.SetSourceUri(control.img, new Uri(lowerFile));
+                else
+                  control.img.Source = new BitmapImage(new Uri(lowerFile));
+              }
+            }
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        Logging.LogInfo("Error displaying folder tool tip: " + ex.Message);
+      }
+    }
+  }
 }
